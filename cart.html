@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- مكتبة الإرسال -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
     <style>
@@ -99,28 +98,28 @@
                     <option value="100">الجيزة</option>
                     <option value="100">الإسكندرية</option>
                     <option value="100">الدقهلية</option>
+                    <option value="100">البحر الأحمر</option>
+                    <option value="100">البحيرة</option>
+                    <option value="100">الفيوم</option>
                     <option value="100">الغربية</option>
                     <option value="100">المنوفية</option>
                     <option value="100">القليوبية</option>
-                    <option value="100">البحيرة</option>
-                    <option value="100">كفر الشيخ</option>
-                    <option value="100">دمياط</option>
-                    <option value="100">بورسعيد</option>
-                    <option value="100">الشرقية</option>
-                    <option value="100">السويس</option>
-                    <option value="100">بني سويف</option>
-                    <option value="100">الفيوم</option>
-                    <option value="100">المنيا</option>
-                    <option value="100">أسيوط</option>
-                    <option value="100">سوهاج</option>
-                    <option value="100">قنا</option>
-                    <option value="100">الأقصر</option>
-                    <option value="100">أسوان</option>
-                    <option value="100">البحر الأحمر</option>
                     <option value="100">الوادي الجديد</option>
-                    <option value="100">مطروح</option>
-                    <option value="100">شمال سيناء</option>
+                    <option value="100">السويس</option>
+                    <option value="100">الشرقية</option>
+                    <option value="100">بورسعيد</option>
+                    <option value="100">دمياط</option>
                     <option value="100">جنوب سيناء</option>
+                    <option value="100">شمال سيناء</option>
+                    <option value="100">كفر الشيخ</option>
+                    <option value="100">مطروح</option>
+                    <option value="100">الأقصر</option>
+                    <option value="100">قنا</option>
+                    <option value="100">بني سويف</option>
+                    <option value="100">سوهاج</option>
+                    <option value="100">المنيا</option>
+                    <option value="100">أسوان</option>
+                    <option value="100">أسيوط</option>
                 </select>
             </div>
             <div class="input-group">
@@ -139,12 +138,12 @@
 
     <div class="empty-cart" id="empty-msg">
         <p>سلتك فارغة</p>
-        <a href="index.html" class="back-store">تسوق الآن من هنا</a>
+        <a href="index.html" class="back-store">تسوق الآن</a>
     </div>
 </div>
 
 <script>
-    // تهيئة نظام الإرسال - تم وضع مفاتيحك هنا مباشرة
+    // تهيئة - حط المفاتيح هنا
     (function(){
         emailjs.init("aqVLt2xtoeggqTEMiEkmWB430wZi_va15TsHQaOeK1o"); 
     })();
@@ -174,7 +173,7 @@
 
             list.innerHTML += `
                 <div class="cart-item">
-                    <div class="item-info"><h3>${key}</h3><p>${unitPrice} ج.م للقطعة</p></div>
+                    <div class="item-info"><h3>${key}</h3><p>${unitPrice} ج.م</p></div>
                     <div class="item-actions">
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="updateQty('${key}', 1)">+</button>
@@ -221,10 +220,10 @@
         const cityName = citySelect.options[citySelect.selectedIndex].text;
         const total = document.getElementById('total_amount').innerText;
 
-        if(!name || !phone || !address) { alert("من فضلك أكمل البيانات بالكامل"); return; }
+        if(!name || !phone || !address) { alert("من فضلك أكمل البيانات"); return; }
 
         btn.disabled = true;
-        btn.innerText = "جاري الحفظ وإرسال الطلب...";
+        btn.innerText = "جاري إرسال الطلب...";
 
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let productsString = Object.keys(cart).map(key => `${key} (عدد: ${cart[key]})`).join(', ');
@@ -238,14 +237,15 @@
             total_price: total
         };
 
-        // إرسال البيانات
+        // الإرسال الفعلي
         emailjs.send('service_default', 'template_leil_order', templateParams)
             .then(function() {
-                alert("تم استلام طلبك بنجاح يا فنان! سنتواصل معك قريباً.");
+                alert("تم استلام طلبك بنجاح! سنتواصل معك قريباً.");
                 localStorage.removeItem('leilCart');
                 window.location.href = "index.html";
             }, function(error) {
-                alert("حدث خطأ في الإرسال، جرب مرة تانية.");
+                console.log("Error details:", error);
+                alert("حدث خطأ، يرجى التأكد من اتصال الإنترنت أو المحاولة لاحقاً.");
                 btn.disabled = false;
                 btn.innerText = "إتمام الطلب الآن";
             });
