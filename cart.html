@@ -35,8 +35,8 @@
 
     <div class="checkout-form">
         <h3>بيانات الشحن</h3>
-        <div class="input-group"><label>الاسم بالكامل</label><input type="text" id="cust_name" placeholder="أدخل اسمك" required></div>
-        <div class="input-group"><label>رقم الهاتف</label><input type="tel" id="cust_phone" placeholder="أدخل رقمك" required></div>
+        <div class="input-group"><label>الاسم بالكامل</label><input type="text" id="cust_name" required></div>
+        <div class="input-group"><label>رقم الهاتف</label><input type="tel" id="cust_phone" required></div>
         <div class="input-group">
             <label>المحافظة</label>
             <select id="cust_city" onchange="updateTotal()">
@@ -48,7 +48,7 @@
                 <option value="100">البحيرة</option>
                 <option value="100">الفيوم</option>
                 <option value="100">الغربية</option>
-                <option value="100">الإسماعيلية</option>
+                <option value="30">الإسماعيلية</option>
                 <option value="100">المنوفية</option>
                 <option value="100">القليوبية</option>
                 <option value="100">الوادي الجديد</option>
@@ -69,7 +69,7 @@
                 <option value="100">أسيوط</option>
             </select>
         </div>
-        <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea></div>
+        <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" required></textarea></div>
     </div>
 
     <div class="summary-details">
@@ -148,12 +148,12 @@
 
         fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
         .then(() => {
-            alert("تم تسجيل طلبك بنجاح! شكراً لك.");
+            alert("تم تسجيل طلبك بنجاح!");
             localStorage.removeItem('leilCart');
             window.location.href = "index.html";
         })
         .catch(() => {
-            alert("تم تسجيل الطلب!");
+            alert("تم الطلب!");
             localStorage.removeItem('leilCart');
             window.location.href = "index.html";
         });
