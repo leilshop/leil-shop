@@ -7,10 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- مكتبة الإرسال -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
     <style>
         :root { --main: #600a1c; --bg: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
-        body { background: var(--bg); min-height: 100vh; }
+        body { background: var(--bg); min-height: 100vh; padding-bottom: 50px; }
 
         header {
             background: var(--bg); padding: 15px 4%;
@@ -49,24 +52,20 @@
             border: 1px solid rgba(255,255,255,0.2); border-radius: 5px;
             color: white; outline: none; transition: 0.3s; text-align: right;
         }
-        .input-group select option { background: var(--bg); color: white; }
 
         .summary-details { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 5px; }
         .summary-line { display: flex; justify-content: space-between; margin-bottom: 10px; opacity: 0.8; }
         .total-line { display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 24px; font-weight: 700; }
 
         .checkout-btn {
-            display: block; width: 100%; padding: 18px; background: #25D366;
+            display: block; width: 100%; padding: 18px; background: var(--main);
             color: white; text-decoration: none; font-weight: 700; font-size: 18px;
             border-radius: 5px; transition: 0.3s; border: none; cursor: pointer; margin-top: 20px;
         }
+        .checkout-btn:disabled { background: #555; cursor: not-allowed; }
+
         .empty-cart { text-align: center; padding: 50px; display: none; }
         .back-store { display: inline-block; margin-top: 20px; color: var(--main); text-decoration: none; }
-
-        @media (max-width: 600px) {
-            .cart-item { flex-direction: column; gap: 15px; }
-            .item-actions { width: 100%; justify-content: space-between; }
-        }
     </style>
 </head>
 <body>
@@ -86,69 +85,70 @@
             <h3>بيانات الشحن</h3>
             <div class="input-group">
                 <label>الاسم بالكامل</label>
-                <input type="text" id="cust-name" placeholder="أدخل اسمك" required>
+                <input type="text" id="cust_name" placeholder="أدخل اسمك" required>
             </div>
             <div class="input-group">
                 <label>رقم الهاتف</label>
-                <input type="tel" id="cust-phone" placeholder="أدخل رقمك" required>
+                <input type="tel" id="cust_phone" placeholder="أدخل رقمك" required>
             </div>
             <div class="input-group">
                 <label>المحافظة</label>
-                <select id="cust-city" onchange="updateShipping()">
+                <select id="cust_city" onchange="updateShipping()">
                     <option value="30">الإسماعيلية</option>
                     <option value="100">القاهرة</option>
                     <option value="100">الجيزة</option>
                     <option value="100">الإسكندرية</option>
                     <option value="100">الدقهلية</option>
-                    <option value="100">البحر الأحمر</option>
-                    <option value="100">البحيرة</option>
-                    <option value="100">الفيوم</option>
                     <option value="100">الغربية</option>
-                    <option value="100">الإسكندرية</option>
                     <option value="100">المنوفية</option>
                     <option value="100">القليوبية</option>
-                    <option value="100">الوادي الجديد</option>
-                    <option value="100">السويس</option>
-                    <option value="100">الشرقية</option>
-                    <option value="100">بورسعيد</option>
-                    <option value="100">دمياط</option>
-                    <option value="100">جنوب سيناء</option>
-                    <option value="100">شمال سيناء</option>
+                    <option value="100">البحيرة</option>
                     <option value="100">كفر الشيخ</option>
-                    <option value="100">مطروح</option>
-                    <option value="100">الأقصر</option>
-                    <option value="100">قنا</option>
+                    <option value="100">دمياط</option>
+                    <option value="100">بورسعيد</option>
+                    <option value="100">الشرقية</option>
+                    <option value="100">السويس</option>
                     <option value="100">بني سويف</option>
-                    <option value="100">سوهاج</option>
+                    <option value="100">الفيوم</option>
                     <option value="100">المنيا</option>
-                    <option value="100">أسوان</option>
                     <option value="100">أسيوط</option>
+                    <option value="100">سوهاج</option>
+                    <option value="100">قنا</option>
+                    <option value="100">الأقصر</option>
+                    <option value="100">أسوان</option>
+                    <option value="100">البحر الأحمر</option>
+                    <option value="100">الوادي الجديد</option>
+                    <option value="100">مطروح</option>
+                    <option value="100">شمال سيناء</option>
+                    <option value="100">جنوب سيناء</option>
                 </select>
             </div>
             <div class="input-group">
                 <label>العنوان بالتفصيل</label>
-                <textarea id="cust-address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea>
+                <textarea id="cust_address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea>
             </div>
         </div>
 
         <div class="summary-details">
             <div class="summary-line"><span>المشتريات:</span> <span id="subtotal">0</span> ج.م</div>
-            <div class="summary-line"><span>التوصيل:</span> <span id="shipping-cost">30</span> ج.م</div>
-            <div class="total-line"><span>الإجمالي:</span> <span id="total-amount">0</span> ج.م</div>
-            <button onclick="submitOrder()" class="checkout-btn">
-                <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
-            </button>
+            <div class="summary-line"><span>التوصيل:</span> <span id="shipping_cost">30</span> ج.م</div>
+            <div class="total-line"><span>الإجمالي:</span> <span id="total_amount">0</span> ج.م</div>
+            <button id="submit-btn" onclick="submitOrder()" class="checkout-btn">إتمام الطلب الآن</button>
         </div>
     </div>
 
     <div class="empty-cart" id="empty-msg">
-        <i class="fas fa-shopping-basket" style="font-size: 50px; opacity: 0.2;"></i>
-        <p style="margin-top:20px;">سلتك فارغة</p>
-        <a href="index.html" class="back-store">تسوق الآن</a>
+        <p>سلتك فارغة</p>
+        <a href="index.html" class="back-store">تسوق الآن من هنا</a>
     </div>
 </div>
 
 <script>
+    // تهيئة نظام الإرسال - تم وضع مفاتيحك هنا مباشرة
+    (function(){
+        emailjs.init("aqVLt2xtoeggqTEMiEkmWB430wZi_va15TsHQaOeK1o"); 
+    })();
+
     const prices = { "3 جرام": 30, "5 جرام": 50, "10 جرام": 70, "Pinky Edition": 80 };
 
     function loadCart() {
@@ -174,7 +174,7 @@
 
             list.innerHTML += `
                 <div class="cart-item">
-                    <div class="item-info"><h3>${key}</h3><p>${unitPrice} ج.م</p></div>
+                    <div class="item-info"><h3>${key}</h3><p>${unitPrice} ج.م للقطعة</p></div>
                     <div class="item-actions">
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="updateQty('${key}', 1)">+</button>
@@ -191,10 +191,10 @@
     }
 
     function updateShipping() {
-        const shipping = parseInt(document.getElementById('cust-city').value);
+        const shipping = parseInt(document.getElementById('cust_city').value);
         const subtotal = parseInt(document.getElementById('subtotal').innerText);
-        document.getElementById('shipping-cost').innerText = shipping;
-        document.getElementById('total-amount').innerText = subtotal + shipping;
+        document.getElementById('shipping_cost').innerText = shipping;
+        document.getElementById('total_amount').innerText = subtotal + shipping;
     }
 
     function updateQty(key, change) {
@@ -213,31 +213,42 @@
     }
 
     function submitOrder() {
-        const name = document.getElementById('cust-name').value;
-        const phone = document.getElementById('cust-phone').value;
-        const citySelect = document.getElementById('cust-city');
+        const btn = document.getElementById('submit-btn');
+        const name = document.getElementById('cust_name').value;
+        const phone = document.getElementById('cust_phone').value;
+        const address = document.getElementById('cust_address').value;
+        const citySelect = document.getElementById('cust_city');
         const cityName = citySelect.options[citySelect.selectedIndex].text;
-        const address = document.getElementById('cust-address').value;
-        const shipping = document.getElementById('shipping-cost').innerText;
-        const total = document.getElementById('total-amount').innerText;
+        const total = document.getElementById('total_amount').innerText;
 
-        if(!name || !phone || !address) { alert("من فضلك أكمل بيانات الشحن"); return; }
+        if(!name || !phone || !address) { alert("من فضلك أكمل البيانات بالكامل"); return; }
+
+        btn.disabled = true;
+        btn.innerText = "جاري الحفظ وإرسال الطلب...";
 
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        let message = `*طلب جديد من ليل*%0A`;
-        message += `--------------------------%0A`;
-        message += `*الاسم:* ${name}%0A`;
-        message += `*الهاتف:* ${phone}%0A`;
-        message += `*المحافظة:* ${cityName}%0A`;
-        message += `*العنوان:* ${address}%0A`;
-        message += `--------------------------%0A`;
-        message += `*المنتجات:*%0A`;
-        Object.keys(cart).forEach(key => { message += `- ${key} (العدد: ${cart[key]})%0A`; });
-        message += `--------------------------%0A`;
-        message += `*الشحن:* ${shipping} ج.م%0A`;
-        message += `*الإجمالي النهائي:* ${total} ج.م`;
+        let productsString = Object.keys(cart).map(key => `${key} (عدد: ${cart[key]})`).join(', ');
 
-        window.open(`https://wa.me/201037322374?text=${message}`, '_blank');
+        const templateParams = {
+            cust_name: name,
+            cust_phone: phone,
+            cust_city: cityName,
+            cust_address: address,
+            products: productsString,
+            total_price: total
+        };
+
+        // إرسال البيانات
+        emailjs.send('service_default', 'template_leil_order', templateParams)
+            .then(function() {
+                alert("تم استلام طلبك بنجاح يا فنان! سنتواصل معك قريباً.");
+                localStorage.removeItem('leilCart');
+                window.location.href = "index.html";
+            }, function(error) {
+                alert("حدث خطأ في الإرسال، جرب مرة تانية.");
+                btn.disabled = false;
+                btn.innerText = "إتمام الطلب الآن";
+            });
     }
 
     window.onload = loadCart;
