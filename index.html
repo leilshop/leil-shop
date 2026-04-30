@@ -8,14 +8,12 @@
     <style>
         :root { 
             --main: #600a1c; 
-            --bg-site: #3d0000; /* لون خلفية الموقع */
+            --bg-site: #3d0000; 
         }
 
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
-        
         body { background: var(--bg-site); }
 
-        /* الهيدر بنفس لون الخلفية */
         header {
             background: var(--bg-site); 
             padding: 15px 4%;
@@ -29,7 +27,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* اللوجو الأبيض الصغير */
         .logo { 
             display: block; 
             font-family: 'Noto Nastaliq Urdu', serif !important; 
@@ -52,7 +49,6 @@
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
-        /* البانر المنور */
         .hero {
             height: 80vh;
             background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), 
@@ -67,7 +63,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* كلمة ليل البيضاء الكبيرة */
         .hero h1 { 
             font-family: 'Noto Nastaliq Urdu', serif !important;
             font-size: clamp(70px, 18vw, 130px); 
@@ -86,7 +81,6 @@
         }
         .hero-btn:hover { background: white; color: black; }
 
-        /* قسم المنتجات */
         .section-title { text-align: center; padding: 60px 0 30px 0; font-size: 28px; letter-spacing: 2px; }
         .container {
             max-width: 1100px; margin: auto; padding: 20px;
@@ -99,23 +93,19 @@
         
         .card-info { padding: 25px; text-align: center; }
         
-        /* أسماء المنتجات باللون الأبيض الصريح */
         .card-title { 
             font-size: 24px; 
             margin-bottom: 5px; 
-            color: white !important; /* اللون الأبيض زي الموقع القديم */
+            color: white !important; 
             font-weight: 700; 
         }
         
-        /* الوصف تحت الاسم */
         .card-desc { 
             font-size: 14px; 
             opacity: 0.7; 
-            margin-bottom: 15px; 
+            margin-bottom: 25px; /* زودت المسافة عشان مفيش سعر */
             line-height: 1.5;
         }
-
-        .price { font-size: 26px; font-weight: 700; margin-bottom: 20px; display: block; }
         
         .btn-view {
             display: block; width: 100%; padding: 14px; background: var(--main);
@@ -123,7 +113,6 @@
         }
         .btn-view:hover { filter: brightness(1.2); }
 
-        /* ضبط الموبايل */
         @media (max-width: 480px) {
             nav { gap: 10px; }
             nav a { font-size: 11px; }
@@ -136,14 +125,12 @@
 
 <header>
     <a href="index.html" class="logo">ليل</a>
-    
     <nav>
         <a href="index.html">الصفحة الرئيسية</a>
         <a href="product-dam.html">دم الغزال</a>
         <a href="product-sarab.html">سراب</a>
         <a href="#">تواصل معنا</a>
     </nav>
-
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
@@ -164,9 +151,8 @@
         <img src="FIMG9626WEB.webp" class="card-img" alt="دم الغزال">
         <div class="card-info">
             <h3 class="card-title">دم الغزال</h3>
-            <p class="card-desc">عطر زيتي مركز - ثبات يدوم طويلاً</p>
-            <span class="price">30 ج.م</span>
-            <a href="product-dam.html" class="btn-view">عرض المنتج</a>
+            <p class="card-desc">أثر لا يغيب</p>
+            <a href="product-dam.html" class="btn-view">عرض المزيد</a>
         </div>
     </div>
 
@@ -174,9 +160,8 @@
         <img src="FIMG9631WEB.webp" class="card-img" alt="سراب">
         <div class="card-info">
             <h3 class="card-title">سراب</h3>
-            <p class="card-desc">عطر فواح غامض - مزيج شرقي ساحر</p>
-            <span class="price">30 ج.م</span>
-            <a href="product-sarab.html" class="btn-view">عرض المنتج</a>
+            <p class="card-desc">عطر من الخيال</p>
+            <a href="product-sarab.html" class="btn-view">عرض المزيد</a>
         </div>
     </div>
 </div>
