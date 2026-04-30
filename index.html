@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leil | ليل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --main: #600a1c; --bg: #0a0a0a; }
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--bg); color: white; margin: 0; padding: 0; }
+        header { background: #151515; padding: 20px; text-align: center; border-bottom: 2px solid var(--main); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 35px; font-weight: 700; letter-spacing: 5px; color: white; text-decoration: none; }
+        .container { max-width: 1200px; margin: auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .product-card { background: #111; border-radius: 20px; padding: 25px; text-align: right; border: 1px solid #222; transition: 0.3s; }
+        .product-card:hover { border-color: var(--main); }
+        h2 { color: var(--main); margin-top: 0; }
+        .price { font-size: 28px; font-weight: 700; margin: 20px 0; }
+        .add-btn { width: 100%; padding: 15px; background: var(--main); border: none; color: white; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 17px; }
+        .desc-list { font-size: 14px; line-height: 1.8; opacity: 0.9; margin-top: 20px; border-top: 1px solid #222; padding-top: 15px; }
+        
+        /* السلة العائمة */
+        #cart-btn { position: fixed; bottom: 30px; left: 30px; background: white; width: 65px; height: 65px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 1000; text-decoration: none; }
+        #cart-count { position: absolute; top: 0; right: 0; background: var(--main); color: white; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="#" class="logo">LEIL</a>
+</header>
+
+<div class="container">
+    <div class="product-card">
+        <h2>مخمرية دم الغزال</h2>
+        <div class="price">30 ج.م</div>
+        <button class="add-btn" onclick="addToCart('دم_الغزال', 30)">أضف إلى السلة</button>
+        <div class="desc-list">
+            • مزيج ساحر بين المسك الأبيض والرمان المخملي.<br>
+            • صُممت لنظافة وانتعاش يدوم طويلاً.<br>
+            • ريحة "بناتى" رقيقة تخطف القلب.<br>
+            • ثبات عالٍ جداً للجسم والشعر.
+        </div>
+    </div>
+
+    <div class="product-card">
+        <h2>مخمرية سراب</h2>
+        <div class="price">30 ج.م</div>
+        <button class="add-btn" onclick="addToCart('سراب', 30)">أضف إلى السلة</button>
+        <div class="desc-list">
+            • عبير غامض وفخم يتحدى الوقت.<br>
+            • تترك أثراً لا يُنسى أينما ذهبتِ.<br>
+            • نعومة كالحرير برائحة منعشة.<br>
+            • ثبات أسطوري يدوم لأيام.
+        </div>
+    </div>
+</div>
+
+<a href="https://www.leil.shop/cart" id="cart-btn">
+    <span style="font-size: 28px;">🛒</span>
+    <div id="cart-count">0</div>
+</a>
+
+<script>
+    function addToCart(id, price) {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        cart[id] = (cart[id] || 0) + 1;
+        localStorage.setItem('leilCart', JSON.stringify(cart));
+        updateCart();
+        alert("تمت الإضافة للسلة ✨");
+    }
+
+    function updateCart() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        let total = Object.values(cart).reduce((a, b) => a + b, 0);
+        document.getElementById('cart-count').innerText = total;
+        document.getElementById('cart-btn').style.display = total > 0 ? 'flex' : 'none';
+    }
+    window.onload = updateCart;
+</script>
+
+</body>
+</html>
