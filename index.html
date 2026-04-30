@@ -3,229 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leil | ليل - المتجر الرسمي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Leil Official | ليل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --main-color: #600a1c; /* لون ليل النبيتي */
-            --bg-black: #0a0a0a;
-            --card-bg: #111111;
-            --text-gold: #c5a059;
-        }
+        :root { --main: #600a1c; --bg: #0a0a0a; }
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif !important; margin: 0; padding: 0; color: white; }
+        body { background: var(--bg); }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif !important;
-            color: white;
-        }
-
-        body {
-            background-color: var(--bg-black);
-            overflow-x: hidden;
-        }
-
-        /* هيدر فخم باللوجو */
+        /* الشريط العلوي الاحترافي (Header) */
         header {
-            padding: 60px 20px;
-            text-align: center;
-            background: linear-gradient(to bottom, #1a1a1a, var(--bg-black));
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
-        .logo {
-            font-size: 55px;
-            font-weight: 700;
-            letter-spacing: 12px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
-            text-decoration: none;
+        .logo { font-size: 28px; font-weight: 700; text-decoration: none; letter-spacing: 2px; }
+        
+        nav { display: flex; gap: 25px; }
+        nav a { text-decoration: none; font-size: 16px; opacity: 0.8; transition: 0.3s; }
+        nav a:hover { opacity: 1; color: var(--main); }
+
+        .header-icons { display: flex; align-items: center; gap: 20px; }
+        
+        /* أيقونة السلة الثابتة في الهيدر */
+        .cart-trigger { position: relative; cursor: pointer; text-decoration: none; }
+        .cart-count {
+            position: absolute; -10px; -10px; background: var(--main);
+            width: 18px; height: 18px; border-radius: 50%; font-size: 11px;
+            display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
-        .tagline {
-            font-size: 14px;
-            opacity: 0.6;
-            letter-spacing: 2px;
-        }
-
-        /* حاوية المنتجات */
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 25px;
-            padding: 30px;
-            text-align: center;
-            border: 1px solid #222;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        /* الجزء الرئيسي (Hero Section) */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1920x1080'); /* حط رابط صورتك الكبيرة هنا */
+            background-size: cover;
+            background-position: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .product-card:hover {
-            border-color: var(--main-color);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .product-name {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--main-color);
-        }
-
-        .product-brief {
-            font-size: 14px;
-            line-height: 1.6;
-            opacity: 0.8;
-            margin-bottom: 20px;
-        }
-
-        .price-tag {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 25px;
-        }
-
-        /* الأزرار */
-        .view-btn {
-            background: var(--main-color);
-            color: white;
-            text-decoration: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            transition: 0.3s;
-            display: block;
-        }
-
-        .view-btn:hover {
-            filter: brightness(1.2);
-        }
-
-        /* أيقونة السلة العائمة المودرن */
-        #cart-trigger {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background: white;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: none; /* تظهر فقط لو فيه منتجات */
-            align-items: center;
             justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            z-index: 1000;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        #cart-count {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--main-color);
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            font-size: 12px;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            border: 2px solid white;
-        }
-
-        .cart-svg { width: 30px; height: 30px; fill: var(--main-color); }
-
-        footer {
             text-align: center;
-            padding: 40px;
-            opacity: 0.4;
-            font-size: 12px;
         }
+        
+        .hero h1 { font-size: 45px; margin-bottom: 20px; letter-spacing: 5px; }
+        .hero-btn {
+            padding: 12px 35px; border: 1px solid white; background: none;
+            color: white; text-decoration: none; font-weight: 700; transition: 0.3s;
+        }
+        .hero-btn:hover { background: white; color: black; }
+
+        /* قسم المنتجات */
+        .section-title { text-align: center; padding: 40px 0; font-size: 30px; }
+        .container {
+            max-width: 1100px; margin: auto; padding: 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+        }
+        
+        .card { background: #111; border-radius: 5px; overflow: hidden; transition: 0.3s; border: 1px solid #222; }
+        .card:hover { transform: translateY(-5px); border-color: var(--main); }
+        .card-img { width: 100%; height: 350px; background: #222; object-fit: cover; }
+        .card-info { padding: 20px; text-align: center; }
+        .card-title { font-size: 20px; margin-bottom: 10px; color: var(--main); }
+        .price { font-size: 24px; font-weight: 700; margin-bottom: 15px; display: block; }
+        .btn-view {
+            display: block; width: 100%; padding: 12px; background: var(--main);
+            text-decoration: none; font-weight: 700; border-radius: 4px;
+        }
+
     </style>
 </head>
 <body>
 
 <header>
-    <a href="index.html" class="logo">LEIL</a>
-    <p class="tagline">المتجر الرسمي للمخمريات والعناية</p>
+    <a href="index.html" class="logo">ليل</a>
+    
+    <nav>
+        <a href="index.html">الصفحة الرئيسية</a>
+        <a href="product-dam.html">دم الغزال</a>
+        <a href="#">سراب</a>
+        <a href="#">السلة</a>
+        <a href="#">تواصل معنا</a>
+    </nav>
+
+    <div class="header-icons">
+        <a href="cart.html" class="cart-trigger">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            <div class="cart-count" id="cart-count">0</div>
+        </a>
+    </div>
 </header>
 
+<section class="hero">
+    <h1>ليـل</h1>
+    <a href="#" class="hero-btn">تواصل معنا</a>
+</section>
+
+<h2 class="section-title">منتجاتنا</h2>
+
 <div class="container">
-    <div class="product-card">
-        <div>
-            <h2 class="product-name">دم الغزال</h2>
-            <p class="product-brief">مزيج ساحر يجمع بين طهارة المسك الأبيض وعبير الرمان المخملي لنظافة تدوم.</p>
-        </div>
-        <div>
-            <div class="price-tag">30 جنيه</div>
-            <a href="product-dam.html" class="view-btn">عرض التفاصيل</a>
+    <div class="card">
+        <img src="https://via.placeholder.com/400x400" class="card-img" alt="دم الغزال">
+        <div class="card-info">
+            <h3 class="card-title">دم الغزال</h3>
+            <span class="price">30 ج.م</span>
+            <a href="product-dam.html" class="btn-view">عرض المنتج</a>
         </div>
     </div>
 
-    <div class="product-card">
-        <div>
-            <h2 class="product-name">سراب</h2>
-            <p class="product-brief">عبير غامض وفخم يعطي إحساساً بالتميز والثبات الأسطوري للجسم والشعر.</p>
+    <div class="card">
+        <img src="https://via.placeholder.com/400x400" class="card-img" alt="سراب">
+        <div class="card-info">
+            <h3 class="card-title">سراب</h3>
+            <span class="price">30 ج.م</span>
+            <a href="#" class="btn-view" style="background: #333;">قريباً</a>
         </div>
-        <div>
-            <div class="price-tag">30 جنيه</div>
-            <a href="#" class="view-btn" style="background: #333; pointer-events: none;">قريباً</a>
-        </div>
-    </div>
-    
-    <div class="product-card" style="opacity: 0.5; border-style: dashed;">
-        <h2 class="product-name" style="color: #666;">منتجات جديدة</h2>
-        <p class="product-brief">نعمل على ابتكار روائح جديدة تليق بكم..</p>
-        <div class="price-tag">...</div>
     </div>
 </div>
 
-<a href="cart.html" id="cart-trigger">
-    <svg class="cart-svg" viewBox="0 0 24 24">
-        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-    </svg>
-    <div id="cart-count">0</div>
-</a>
-
-<footer>
-    &copy; 2026 LEIL Official Store. All Rights Reserved.
-</footer>
-
 <script>
-    // وظيفة لتحديث عداد السلة من الذاكرة الحقيقية
-    function updateCartUI() {
+    function updateCartCount() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let total = Object.values(cart).reduce((a, b) => a + b, 0);
-        let trigger = document.getElementById('cart-trigger');
-        let count = document.getElementById('cart-count');
-        
-        if (total > 0) {
-            trigger.style.display = 'flex';
-            count.innerText = total;
-        } else {
-            trigger.style.display = 'none';
-        }
+        document.getElementById('cart-count').innerText = total;
     }
-    
-    // التحديث عند تحميل الصفحة
-    window.onload = updateCartUI;
+    window.onload = updateCartCount;
 </script>
 
 </body>
