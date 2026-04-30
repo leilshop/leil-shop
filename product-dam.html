@@ -3,159 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دم الغزال | ليل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <title>مخمرية دم الغزال | ليل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --main: #600a1c; 
-            --bg-site: #3d0000; 
-        }
-
+        :root { --main: #600a1c; --bg: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
-        body { background: var(--bg-site); }
+        body { background: var(--bg); line-height: 1.6; }
 
-        /* الهيدر ثابت */
-        header {
-            background: var(--bg-site); 
-            padding: 15px 4%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        header { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 25px; text-decoration: none; }
+
+        .product-container {
+            max-width: 1100px; margin: 20px auto; padding: 20px;
+            display: flex; flex-wrap: wrap; gap: 50px;
         }
 
-        .logo { 
-            display: block; 
-            font-family: 'Noto Nastaliq Urdu', serif !important; 
-            font-size: 22px; 
-            text-decoration: none; 
-            color: white;
-        }
+        .image-section { flex: 1; min-width: 350px; }
+        .image-section img { width: 100%; border-radius: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
-        /* حاوية المنتج */
-        .product-page {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* تقسيم الصفحة نصين */
-            gap: 50px;
-            align-items: start;
-        }
-
-        .product-image-side img {
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .product-info-side {
-            padding-top: 20px;
-        }
-
-        .product-info-side h1 {
-            font-family: 'Noto Nastaliq Urdu', serif !important;
-            font-size: 50px;
-            margin-bottom: 10px;
-            font-weight: 400;
-        }
-
-        .product-info-side .subtitle {
-            font-size: 18px;
-            opacity: 0.8;
-            margin-bottom: 30px;
-            display: block;
-        }
-
-        .price-box {
-            margin-bottom: 30px;
-        }
-
-        .price-box .starts-from {
-            font-size: 14px;
-            opacity: 0.6;
-            display: block;
-        }
-
-        .price-box .amount {
-            font-size: 35px;
-            font-weight: 700;
-        }
-
-        .description {
-            line-height: 1.8;
-            font-size: 16px;
-            opacity: 0.9;
-            margin-bottom: 40px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 20px;
-        }
-
-        /* زرار الشراء */
-        .buy-now-btn {
-            display: inline-block;
-            background: var(--main);
-            padding: 15px 40px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 18px;
+        .info-section { flex: 1; min-width: 350px; text-align: right; }
+        h1 { font-size: 35px; margin-bottom: 20px; font-weight: 700; }
+        
+        .label { font-size: 12px; opacity: 0.6; margin-bottom: 10px; display: block; }
+        
+        /* نظام اختيار الأحجام */
+        .size-options { display: flex; gap: 10px; margin-bottom: 30px; }
+        .size-btn {
+            padding: 8px 15px; border: 1px solid rgba(255,255,255,0.3);
+            background: none; cursor: pointer; border-radius: 20px; font-size: 13px;
             transition: 0.3s;
-            text-align: center;
         }
+        .size-btn.active { background: white; color: black; border-color: white; }
 
-        .buy-now-btn:hover {
-            filter: brightness(1.2);
-            transform: scale(1.05);
-        }
+        .price-box { margin-bottom: 30px; }
+        .price-value { font-size: 40px; font-weight: 700; }
 
-        .back-link {
-            display: block;
-            margin-top: 30px;
-            text-decoration: none;
-            font-size: 14px;
-            opacity: 0.5;
+        .add-to-cart {
+            width: 100%; padding: 18px; background: var(--main);
+            border: none; font-weight: 700; font-size: 18px; cursor: pointer;
+            margin-bottom: 40px; transition: 0.3s;
         }
+        .add-to-cart:hover { filter: brightness(1.2); }
 
-        /* ضبط الموبايل */
-        @media (max-width: 768px) {
-            .product-page {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .product-info-side h1 { font-size: 40px; }
-        }
+        .description-box h3 { font-size: 20px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .description-box p { font-size: 15px; opacity: 0.8; white-space: pre-line; }
+
+        @media (max-width: 768px) { .product-container { flex-direction: column; } }
     </style>
 </head>
 <body>
 
 <header>
     <a href="index.html" class="logo">ليل</a>
-    <div style="font-size: 14px; opacity: 0.7;">تفاصيل المنتج</div>
+    <nav style="display: flex; gap: 15px; font-size: 14px;">
+        <a href="index.html" style="text-decoration: none;">الرئيسية</a>
+        <span style="opacity: 0.5;">/</span>
+        <span>دم الغزال</span>
+    </nav>
 </header>
 
-<main class="product-page">
-    <div class="product-image-side">
-        <img src="FIMG9626WEB.webp" alt="دم الغزال">
+<div class="product-container">
+    <div class="image-section">
+        <img src="FIMG9626WEB.webp" alt="مخمرية دم الغزال">
     </div>
 
-    <div class="product-info-side">
-        <h1>دم الغزال</h1>
-        <span class="subtitle">أثر لا يغيب</span>
-
-        <div class="price-box">
-            <span class="starts-from">يبدأ من</span>
-            <span class="amount">30 ج.م</span>
-        </div>
-
-        <div class="description">
-            <p>مخمرية "دم الغزال" من ليل، تتميز بتركيبتها الفريدة التي تمنحك ثباتاً يدوم طويلاً وعطراً فواحاً يملأ المكان. صُممت لتناسب ذوقك الرفيع وتترك خلفك أثراً لا ينسى.</p>
-        </div>
-
-        <a href="https://wa.me/201234567890" target="_blank" class="buy-now-btn">طلب المنتج عبر واتساب</a>
+    <div class="info-section">
+        <h1>مخمرية - دم الغزال</h1>
         
-        <a href="index.html" class="back-link">← العودة للرئيسية</a>
+        <span class="label">الحجم:</span>
+        <div class="size-options">
+            <button class="size-btn active">3 جرام</button>
+            <button class="size-btn">5 جرام</button>
+            <button class="size-btn">10 جرام</button>
+            <button class="size-btn">Pinky Edition</button>
+        </div>
+
+        <span class="label">السعر:</span>
+        <div class="price-box">
+            <span class="price-value">30 جنيه</span>
+        </div>
+
+        <button class="add-to-cart">أضف إلى السلة</button>
+
+        <div class="description-box">
+            <h3>وصف المنتج:</h3>
+            <p>
+                مزيج ساحر يجمع بين طهارة المسك الأبيض وعبير الرمان المخملي.
+                صُممت هذه المخمرية لنظافة وانتعاش يدوم طويلاً.
+                ريحة "بناتى" رقيقة، مبهجة، وتخطف القلب من أول لمسة.
+                الإحساس: نظافة، أنوثة طاغية، وحيوية.
+                الثبات: عالٍ جداً (الجسم و الشعر).
+                لماذا ليل؟ تترك جسمك ناعماً كالحرير برائحة منعشة.
+            </p>
+        </div>
+        
+        <a href="index.html" style="display: block; margin-top: 30px; text-decoration: none; opacity: 0.5; font-size: 13px;">← العودة للمتجر</a>
     </div>
-</main>
+</div>
 
 </body>
 </html>
