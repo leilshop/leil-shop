@@ -42,8 +42,7 @@
 
         .label { font-size: 13px; opacity: 0.6; margin-bottom: 10px; display: block; }
 
-        /* ترتيب الأحجام يبدأ من اليمين 3 جرام */
-        .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; flex-direction: row; }
+        .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
         
         .size-btn, .pinky-btn {
             padding: 8px 18px; border: 1px solid rgba(255,255,255,0.4);
@@ -55,15 +54,14 @@
         .active { background: white !important; color: black !important; border-color: white !important; }
         
         .out-of-stock {
-            opacity: 0.2;
+            opacity: 0.4;
             border-style: dashed;
-            cursor: pointer; /* خليته يتداس عليه عشان يغير الزرار تحت */
+            cursor: pointer;
             text-decoration: line-through;
         }
 
         .price-tag { font-size: 35px; font-weight: 700; margin-bottom: 30px; display: block; }
 
-        /* نظام أزرار السلة */
         .cart-controls { margin-bottom: 40px; }
         .add-to-cart-btn {
             width: 100%; padding: 16px; background: var(--main);
@@ -73,7 +71,7 @@
         .add-to-cart-btn:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
 
         .quantity-btn-group {
-            display: none; /* مخفي افتراضياً */
+            display: none;
             grid-template-columns: 1fr 2fr 1fr;
             width: 100%; gap: 10px;
         }
@@ -116,7 +114,7 @@
         <span class="label">الحجم</span>
         <div class="size-selector">
             <button class="size-btn active" data-price="30" onclick="selectSize(this, '3 جرام')">3 جرام</button>
-            <button class="size-btn out-of-stock" data-price="0" onclick="selectSize(this, '5 جرام')">5 جرام</button>
+            <button class="size-btn out-of-stock" data-price="50" onclick="selectSize(this, '5 جرام')">5 جرام</button>
             <button class="size-btn" data-price="70" onclick="selectSize(this, '10 جرام')">10 جرام</button>
             <button class="pinky-btn" data-price="80" onclick="selectSize(this, 'Pinky Edition')">Pinky Edition</button>
         </div>
@@ -159,14 +157,15 @@
         const qtyGroup = document.getElementById('qty-group');
         const priceTag = document.getElementById('main-price');
 
+        // تحديث السعر دائماً
+        priceTag.innerText = price + " ج.م";
+
         if (sizeName === "5 جرام") {
-            priceTag.innerText = "غير متوفر";
             addBtn.style.display = "block";
             addBtn.innerText = "المنتج غير متاح حالياً";
             addBtn.disabled = true;
             qtyGroup.style.display = "none";
         } else {
-            priceTag.innerText = price + " ج.م";
             addBtn.disabled = false;
             addBtn.innerText = "أضف إلى السلة";
             checkCartState();
