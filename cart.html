@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سلة المشتريات | ليل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root { --main: #600a1c; --bg: #3d0000; }
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
+        body { background: var(--bg); min-height: 100vh; }
+
+        header {
+            background: var(--bg); padding: 15px 4%;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px);
+        }
+        .logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; }
+
+        .cart-container { max-width: 800px; margin: 40px auto; padding: 20px; }
+        h1 { text-align: center; margin-bottom: 40px; font-weight: 700; letter-spacing: 1px; }
+
+        .cart-items { margin-bottom: 30px; }
+        .cart-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px;
+            border-radius: 5px; transition: 0.3s;
+        }
+        .item-info h3 { font-size: 18px; margin-bottom: 5px; }
+        .item-info p { opacity: 0.6; font-size: 14px; }
+        
+        .item-controls { display: flex; align-items: center; gap: 20px; }
+        .price { font-weight: 700; color: var(--main); font-size: 18px; }
+        .remove-btn { background: none; border: none; color: #ff4444; cursor: pointer; font-size: 18px; opacity: 0.7; }
+        .remove-btn:hover { opacity: 1; }
+
+        .cart-summary {
+            background: rgba(0,0,0,0.2); padding: 30px;
+            border-top: 2px solid var(--main); text-align: center;
+        }
+        .total-price { font-size: 28px; font-weight: 700; margin-bottom: 25px; }
+        .total-price span { color: var(--main); }
+
+        .checkout-btn {
+            display: block; width: 100%; padding: 18px; background: #25D366;
+            color: white; text-decoration: none; font-weight: 700; font-size: 18px;
+            border-radius: 5px; transition: 0.3s;
+        }
+        .checkout-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        
+        .empty-cart { text-align: center; padding: 50px; display: none; }
+        .empty-cart i { font-size: 60px; opacity: 0.2; margin-bottom: 20px; }
+        .back-store { display: inline-block; margin-top: 20px; color: var(--main); text-decoration: none; }
+
+        @media (max-width: 600px) {
+            .cart-item { flex-direction: column; text-align: center; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">ليل</a>
+    <a href="index.html" style="text-decoration:none; font-size: 14px; opacity: 0.7;">← العودة للمتجر</a>
+</header>
+
+<div class="cart-container">
+    <h1>سلة المشتريات</h1>
+
+    <div id="cart-content">
+        <div class="cart-items" id="items-list">
+            </div>
+
+        <div class="cart-summary">
+            <div class="total-price">الإجمالي: <span id="total-amount">0</span> ج.م</div>
+            <a href="#" onclick="sendToWhatsApp()" class="checkout-btn">
+                <i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب
+            </a>
+        </div>
+    </div>
+
+    <div class="empty-cart" id="empty-msg">
+        <i class="fas fa-shopping-basket"></i>
+        <p>سلتك فارغة حالياً</p>
+        <a href="index.html" class="back-store">تصفح المنتجات من هنا</a>
+    </div>
+</div>
+
+<script>
+    const prices = {
+        "3 جرام": 30,
+        "5 جرام": 50,
+        "10 جرام": 70,
+        "Pinky Edition": 80
+    };
+
+    function loadCart() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        const list = document.getElementById('items-list');
+        const content = document.getElementById('cart-content');
+        const empty = document.getElementById('empty-msg');
+        
+        list.innerHTML = '';
+        let total = 0;
+        let keys = Object.keys(cart);
+
+        if (keys.length === 0) {
+            content.style.display = 'none';
+            empty.style.display = 'block';
+            return;
+        }
+
+        keys.forEach(key => {
+            let qty = cart[key];
+            // استخراج السعر من اسم الحجم الموجود في المفتاح
+            let size = key.split(' - ')[1];
+            let unitPrice = prices[size] || 30;
+            let itemTotal = unitPrice * qty;
+            total += itemTotal;
+
+            list.innerHTML += `
+                <div class="cart-item">
+                    <div class="item-info">
+                        <h3>${key}</h3>
+                        <p>الكمية: ${qty} × ${unitPrice} ج.م</p>
+                    </div>
+                    <div class="item-controls">
+                        <div class="price">${itemTotal} ج.م</div>
+                        <button class="remove-btn" onclick="removeItem('${key}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('total-amount').innerText = total;
+    }
+
+    function removeItem(key) {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        delete cart[key];
+        localStorage.setItem('leilCart', JSON.stringify(cart));
+        loadCart();
+    }
+
+    function sendToWhatsApp() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        let total = document.getElementById('total-amount').innerText;
+        let message = "طلب جديد من موقع ليل:%0A%0A";
+        
+        Object.keys(cart).forEach(key => {
+            message += `- ${key} (الكمية: ${cart[key]})%0A`;
+        });
+        
+        message += `%0A*الإجمالي: ${total} ج.م*`;
+        window.open(`https://wa.me/201037322374?text=${message}`, '_blank');
+    }
+
+    window.onload = loadCart;
+</script>
+
+</body>
+</html>
