@@ -12,7 +12,7 @@
 
         /* الشريط العلوي الاحترافي (Header) */
         header {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
@@ -32,18 +32,18 @@
 
         .header-icons { display: flex; align-items: center; gap: 20px; }
         
-        /* أيقونة السلة الثابتة في الهيدر */
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; }
         .cart-count {
-            position: absolute; -10px; -10px; background: var(--main);
+            position: absolute; top: -10px; left: -10px; background: var(--main);
             width: 18px; height: 18px; border-radius: 50%; font-size: 11px;
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
-        /* الجزء الرئيسي (Hero Section) */
+        /* الجزء الرئيسي - تم تعديل اسم الصورة هنا */
         .hero {
-            height: 60vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1920x1080'); /* حط رابط صورتك الكبيرة هنا */
+            height: 75vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+                        url('Logo on IMG 2.webp'); /* ده الاسم اللي قولت عليه بالظبط */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -51,32 +51,35 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            border-bottom: 2px solid var(--main);
         }
         
-        .hero h1 { font-size: 45px; margin-bottom: 20px; letter-spacing: 5px; }
+        .hero h1 { font-size: 55px; margin-bottom: 20px; letter-spacing: 8px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
         .hero-btn {
-            padding: 12px 35px; border: 1px solid white; background: none;
+            padding: 14px 40px; border: 1px solid white; background: none;
             color: white; text-decoration: none; font-weight: 700; transition: 0.3s;
+            border-radius: 2px;
         }
         .hero-btn:hover { background: white; color: black; }
 
         /* قسم المنتجات */
-        .section-title { text-align: center; padding: 40px 0; font-size: 30px; }
+        .section-title { text-align: center; padding: 60px 0 30px 0; font-size: 32px; letter-spacing: 2px; }
         .container {
             max-width: 1100px; margin: auto; padding: 20px;
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
         }
         
-        .card { background: #111; border-radius: 5px; overflow: hidden; transition: 0.3s; border: 1px solid #222; }
-        .card:hover { transform: translateY(-5px); border-color: var(--main); }
-        .card-img { width: 100%; height: 350px; background: #222; object-fit: cover; }
-        .card-info { padding: 20px; text-align: center; }
-        .card-title { font-size: 20px; margin-bottom: 10px; color: var(--main); }
-        .price { font-size: 24px; font-weight: 700; margin-bottom: 15px; display: block; }
+        .card { background: #111; border-radius: 0; overflow: hidden; transition: 0.4s; border: 1px solid #222; }
+        .card:hover { transform: translateY(-8px); border-color: var(--main); }
+        .card-img { width: 100%; height: 380px; background: #222; object-fit: cover; }
+        .card-info { padding: 25px; text-align: center; }
+        .card-title { font-size: 22px; margin-bottom: 12px; color: var(--main); font-weight: 700; }
+        .price { font-size: 26px; font-weight: 700; margin-bottom: 20px; display: block; opacity: 0.9; }
         .btn-view {
-            display: block; width: 100%; padding: 12px; background: var(--main);
-            text-decoration: none; font-weight: 700; border-radius: 4px;
+            display: block; width: 100%; padding: 14px; background: var(--main);
+            text-decoration: none; font-weight: 700; border-radius: 0; transition: 0.3s;
         }
+        .btn-view:hover { filter: brightness(1.2); }
 
     </style>
 </head>
@@ -89,7 +92,7 @@
         <a href="index.html">الصفحة الرئيسية</a>
         <a href="product-dam.html">دم الغزال</a>
         <a href="#">سراب</a>
-        <a href="#">السلة</a>
+        <a href="cart.html">السلة</a>
         <a href="#">تواصل معنا</a>
     </nav>
 
@@ -110,7 +113,7 @@
 
 <div class="container">
     <div class="card">
-        <img src="https://via.placeholder.com/400x400" class="card-img" alt="دم الغزال">
+        <img src="dam-alghazal.webp" class="card-img" alt="دم الغزال">
         <div class="card-info">
             <h3 class="card-title">دم الغزال</h3>
             <span class="price">30 ج.م</span>
@@ -119,7 +122,7 @@
     </div>
 
     <div class="card">
-        <img src="https://via.placeholder.com/400x400" class="card-img" alt="سراب">
+        <img src="sarab.webp" class="card-img" alt="سراب">
         <div class="card-info">
             <h3 class="card-title">سراب</h3>
             <span class="price">30 ج.م</span>
