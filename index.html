@@ -32,6 +32,7 @@
 
         .header-icons { display: flex; align-items: center; gap: 20px; }
         
+        /* أيقونة السلة الثابتة في الهيدر */
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; }
         .cart-count {
             position: absolute; top: -10px; left: -10px; background: var(--main);
@@ -39,11 +40,11 @@
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
-        /* الجزء الرئيسي - تم تعديل اسم الصورة هنا */
+        /* الجزء الرئيسي (Hero Section) مع البانر الجديد */
         .hero {
             height: 75vh;
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
-                        url('Logo on IMG 2.webp'); /* ده الاسم اللي قولت عليه بالظبط */
+                        url('./LogoonIMG.webp'); 
             background-size: cover;
             background-position: center;
             display: flex;
@@ -137,6 +138,7 @@
         let total = Object.values(cart).reduce((a, b) => a + b, 0);
         document.getElementById('cart-count').innerText = total;
     }
+    // تحديث العداد فور تحميل الصفحة
     window.onload = updateCartCount;
 </script>
 
