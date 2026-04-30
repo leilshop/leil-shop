@@ -45,36 +45,24 @@
         /* تنسيق الأحجام المطور */
         .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; align-items: center; }
         
-        .size-btn {
+        .size-btn, .pinky-btn {
             padding: 8px 18px; border: 1px solid rgba(255,255,255,0.4);
             background: none; border-radius: 25px; cursor: pointer; transition: 0.3s;
             font-size: 14px; color: white;
         }
-        .size-btn.active { background: white; color: black; border-color: white; }
         
-        /* شكل الـ 5 جرام غير المتوفر */
-        .size-btn.out-of-stock {
-            opacity: 0.3;
+        .pinky-btn { border-radius: 50px; padding: 10px 25px; }
+
+        /* حالة الزر النشط */
+        .active { background: white !important; color: black !important; border-color: white !important; }
+        
+        /* الحجم غير المتوفر */
+        .out-of-stock {
+            opacity: 0.2;
             border-style: dashed;
             cursor: not-allowed;
-            position: relative;
+            text-decoration: line-through;
         }
-        .size-btn.out-of-stock::after {
-            content: ""; position: absolute; top: 50%; left: 0; width: 100%;
-            height: 1px; background: rgba(255,255,255,0.5); transform: rotate(-15deg);
-        }
-
-        /* تصميم Pinky Edition المخصص */
-        .pinky-btn {
-            padding: 10px 25px;
-            border: 1px solid rgba(255,255,255,0.8);
-            border-radius: 50px;
-            font-size: 15px;
-            background: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .pinky-btn.active { background: white; color: black; }
 
         .price-tag { font-size: 35px; font-weight: 700; margin-bottom: 30px; display: block; }
 
@@ -87,7 +75,7 @@
 
         .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .product-desc h3 { margin-bottom: 15px; font-size: 20px; }
-        .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; }
+        .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
 
     </style>
 </head>
@@ -126,19 +114,24 @@
         <button class="add-to-cart-btn" onclick="addToCart('دم الغزال')">أضف إلى السلة</button>
 
         <div class="product-desc">
-            <h3>وصف المنتج</h3>
-            <p>مخمرية "دم الغزال" بتركيبتها الفريدة التي تمنحك ثباتاً خرافياً ونعومة فائقة.
-            ريحة تعبر عن الأنوثة والنظافة، وتدوم معكِ على الجسم والشعر لأيام.</p>
+            <h3>وصف المنتج:</h3>
+            <p>مزيج ساحر يجمع بين طهارة المسك الأبيض وعبير الرمان المخملي.
+صُممت هذه المخمرية لنظافة وانتعاش يدوم طويلاً.
+ريحة "بناتى" رقيقة، مبهجة، وتخطف القلب من أول لمسة.
+الإحساس: نظافة، أنوثة طاغية، وحيوية.
+الثبات: عالٍ جداً (الجسم و الشعر).
+لماذا ليل؟ تترك جسمك ناعماً كالحرير برائحة منعشة.</p>
         </div>
     </div>
 </div>
 
 <script>
-    // وظيفة التنقل بين الأحجام
+    // وظيفة التنقل الصحيحة
     function selectSize(btn) {
-        // حذف حالة النشاط من كل الزراير
-        document.querySelectorAll('.size-btn, .pinky-btn').forEach(b => b.classList.remove('active'));
-        // إضافة حالة النشاط للزرار المختار
+        // بنشيل الـ active من كل الزراير في الـ selector
+        const allBtns = document.querySelectorAll('.size-btn, .pinky-btn');
+        allBtns.forEach(b => b.classList.remove('active'));
+        // بنضيفها للزرار اللي اداس عليه
         btn.classList.add('active');
     }
 
