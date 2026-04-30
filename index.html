@@ -8,7 +8,7 @@
     <style>
         :root { 
             --main: #600a1c; 
-            --bg-site: #3d0000; /* لون خلفية الموقع والشريط */
+            --bg-site: #3d0000; /* لون خلفية الموقع */
         }
 
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
@@ -52,10 +52,10 @@
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
-        /* البانر */
+        /* البانر المنور */
         .hero {
             height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.1)), 
+            background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), 
                         url('./LogoonIMG.webp'); 
             background-size: cover;
             background-position: center;
@@ -67,7 +67,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* كلمة ليل البيضاء الكبيرة في النص */
+        /* كلمة ليل البيضاء الكبيرة */
         .hero h1 { 
             font-family: 'Noto Nastaliq Urdu', serif !important;
             font-size: clamp(70px, 18vw, 130px); 
@@ -90,19 +90,38 @@
         .section-title { text-align: center; padding: 60px 0 30px 0; font-size: 28px; letter-spacing: 2px; }
         .container {
             max-width: 1100px; margin: auto; padding: 20px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
         }
         
         .card { background: rgba(0,0,0,0.2); border-radius: 0; overflow: hidden; transition: 0.4s; border: 1px solid rgba(255,255,255,0.05); }
         .card:hover { transform: translateY(-5px); border-color: var(--main); }
         .card-img { width: 100%; height: 380px; background: #222; object-fit: cover; }
+        
         .card-info { padding: 25px; text-align: center; }
-        .card-title { font-size: 22px; margin-bottom: 12px; color: var(--main); font-weight: 700; }
+        
+        /* أسماء المنتجات باللون الأبيض الصريح */
+        .card-title { 
+            font-size: 24px; 
+            margin-bottom: 5px; 
+            color: white !important; /* اللون الأبيض زي الموقع القديم */
+            font-weight: 700; 
+        }
+        
+        /* الوصف تحت الاسم */
+        .card-desc { 
+            font-size: 14px; 
+            opacity: 0.7; 
+            margin-bottom: 15px; 
+            line-height: 1.5;
+        }
+
         .price { font-size: 26px; font-weight: 700; margin-bottom: 20px; display: block; }
+        
         .btn-view {
             display: block; width: 100%; padding: 14px; background: var(--main);
             text-decoration: none; font-weight: 700; border-radius: 0; transition: 0.3s;
         }
+        .btn-view:hover { filter: brightness(1.2); }
 
         /* ضبط الموبايل */
         @media (max-width: 480px) {
@@ -121,7 +140,7 @@
     <nav>
         <a href="index.html">الصفحة الرئيسية</a>
         <a href="product-dam.html">دم الغزال</a>
-        <a href="#">سراب</a>
+        <a href="product-sarab.html">سراب</a>
         <a href="#">تواصل معنا</a>
     </nav>
 
@@ -145,6 +164,7 @@
         <img src="FIMG9626WEB.webp" class="card-img" alt="دم الغزال">
         <div class="card-info">
             <h3 class="card-title">دم الغزال</h3>
+            <p class="card-desc">عطر زيتي مركز - ثبات يدوم طويلاً</p>
             <span class="price">30 ج.م</span>
             <a href="product-dam.html" class="btn-view">عرض المنتج</a>
         </div>
@@ -154,8 +174,9 @@
         <img src="FIMG9631WEB.webp" class="card-img" alt="سراب">
         <div class="card-info">
             <h3 class="card-title">سراب</h3>
+            <p class="card-desc">عطر فواح غامض - مزيج شرقي ساحر</p>
             <span class="price">30 ج.م</span>
-            <a href="#" class="btn-view" style="background: #333;">قريباً</a>
+            <a href="product-sarab.html" class="btn-view">عرض المنتج</a>
         </div>
     </div>
 </div>
