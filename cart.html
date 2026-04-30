@@ -4,17 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سلة المشتريات | ليل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root { --main: #600a1c; --bg: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         body { background: var(--bg); min-height: 100vh; padding-bottom: 50px; }
         header { background: var(--bg); padding: 15px 4%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; }
         .cart-container { max-width: 800px; margin: 40px auto; padding: 20px; }
-        h1 { text-align: center; margin-bottom: 40px; font-weight: 700; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; border-radius: 5px; }
         .qty-controls { display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
         .qty-btn { background: white; color: black; border: none; width: 30px; height: 30px; cursor: pointer; font-weight: bold; }
@@ -24,161 +21,116 @@
         .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
         .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; }
         .summary-details { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 5px; }
-        .summary-line { display: flex; justify-content: space-between; margin-bottom: 10px; opacity: 0.8; }
-        .total-line { display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 24px; font-weight: 700; }
+        .total-line { display: flex; justify-content: space-between; font-size: 24px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px; }
         .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
-        .checkout-btn:disabled { background: #555; }
-        .empty-cart { text-align: center; padding: 50px; display: none; }
     </style>
 </head>
 <body>
 
-<header>
-    <a href="index.html" class="logo">ليل</a>
-    <a href="index.html" style="text-decoration:none; font-size: 14px; opacity: 0.7;">← العودة للمتجر</a>
-</header>
+<header><a href="index.html" style="text-decoration:none; color:white; font-size:22px;">ليل</a></header>
 
 <div class="cart-container">
     <h1>سلة المشتريات</h1>
-    <div id="cart-content">
-        <div id="items-list"></div>
-        <div class="checkout-form">
-            <h3>بيانات الشحن</h3>
-            <div class="input-group"><label>الاسم بالكامل</label><input type="text" id="cust_name" required></div>
-            <div class="input-group"><label>رقم الهاتف</label><input type="tel" id="cust_phone" required></div>
-            <div class="input-group">
-                <label>المحافظة</label>
-                <select id="cust_city" onchange="updateShipping()">
-                    <option value="30">الإسماعيلية</option>
-                    <option value="100">القاهرة</option>
-                    <option value="100">الجيزة</option>
-                    <option value="100">الإسكندرية</option>
-                    <option value="100">الدقهلية</option>
-                    <option value="100">البحر الأحمر</option>
-                    <option value="100">البحيرة</option>
-                    <option value="100">الفيوم</option>
-                    <option value="100">الغربية</option>
-                    <option value="100">المنوفية</option>
-                    <option value="100">القليوبية</option>
-                    <option value="100">الوادي الجديد</option>
-                    <option value="100">السويس</option>
-                    <option value="100">الشرقية</option>
-                    <option value="100">بورسعيد</option>
-                    <option value="100">دمياط</option>
-                    <option value="100">جنوب سيناء</option>
-                    <option value="100">شمال سيناء</option>
-                    <option value="100">كفر الشيخ</option>
-                    <option value="100">مطروح</option>
-                    <option value="100">الأقصر</option>
-                    <option value="100">قنا</option>
-                    <option value="100">بني سويف</option>
-                    <option value="100">سوهاج</option>
-                    <option value="100">المنيا</option>
-                    <option value="100">أسوان</option>
-                    <option value="100">أسيوط</option>
-                </select>
-            </div>
-            <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" required></textarea></div>
+    <div id="items-list"></div>
+
+    <div class="checkout-form">
+        <h3>بيانات الشحن</h3>
+        <div class="input-group"><label>الاسم بالكامل</label><input type="text" id="cust_name" placeholder="أدخل اسمك" required></div>
+        <div class="input-group"><label>رقم الهاتف</label><input type="tel" id="cust_phone" placeholder="أدخل رقمك" required></div>
+        <div class="input-group">
+            <label>المحافظة</label>
+            <select id="cust_city" onchange="updateTotal()">
+                <option value="30">الإسماعيلية (30 ج.م)</option>
+                <option value="100">محافظة أخرى (100 ج.م)</option>
+            </select>
         </div>
-        <div class="summary-details">
-            <div class="summary-line"><span>المشتريات:</span> <span id="subtotal_amount">0</span> ج.م</div>
-            <div class="summary-line"><span>التوصيل:</span> <span id="shipping_amount">30</span> ج.م</div>
-            <div class="total-line"><span>الإجمالي:</span> <span id="total_amount">0</span> ج.م</div>
-            <button id="submit-btn" onclick="submitToSheet()" class="checkout-btn">تأكيد الطلب</button>
-        </div>
+        <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea></div>
     </div>
-    <div id="empty-msg" class="empty-cart"><p>سلتك فارغة</p><a href="index.html">تسوق الآن</a></div>
+
+    <div class="summary-details">
+        <div style="display:flex; justify-content:space-between; opacity:0.8; margin-bottom:10px;"><span>المشتريات:</span> <span id="subtotal">0</span> ج.م</div>
+        <div style="display:flex; justify-content:space-between; opacity:0.8;"><span>التوصيل:</span> <span id="ship_cost">30</span> ج.م</div>
+        <div class="total-line"><span>الإجمالي:</span> <span><span id="total_amount">0</span> ج.م</span></div>
+        <button id="submit-btn" onclick="submitOrder()" class="checkout-btn">تأكيد الطلب</button>
+    </div>
 </div>
 
 <script>
-    const SHEET_URL = "https://script.google.com/macros/s/AKfycbxkqs30Fn8u0z7unXRAFinQpVQ4UTYceqTHe_CUWj5jdNdSpXiENEbWVIK3wOR98VhiEw/exec";
+    // الرابط الجديد الخاص بك
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbzaM0OP5F2numDOCHkf54tlJJNjXEQKIob_M5D-suZ0uQ1xUHu6rP23jliZLY_keN6B7Q/exec";
     const prices = { "3 جرام": 30, "5 جرام": 50, "10 جرام": 70, "Pinky Edition": 80 };
 
-    function loadCart() {
+    function renderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const list = document.getElementById('items-list');
-        const content = document.getElementById('cart-content');
-        const empty = document.getElementById('empty-msg');
         list.innerHTML = '';
-        let subtotal = 0;
-        let keys = Object.keys(cart);
-
-        if (keys.length === 0) { content.style.display = 'none'; empty.style.display = 'block'; return; }
-        content.style.display = 'block'; empty.style.display = 'none';
-
-        keys.forEach(key => {
-            let qty = cart[key];
+        let sub = 0;
+        Object.keys(cart).forEach(key => {
+            let q = cart[key];
             let size = key.includes("Pinky Edition") ? "Pinky Edition" : (key.split(' - ')[1] || "3 جرام");
-            let unitPrice = prices[size] || 30;
-            subtotal += unitPrice * qty;
-
+            let p = prices[size] || 30;
+            sub += p * q;
             list.innerHTML += `
                 <div class="cart-item">
-                    <div><h3>${key}</h3><p>${unitPrice} ج.م</p></div>
+                    <div><h3>${key}</h3><p>${p} ج.م</p></div>
                     <div class="qty-controls">
-                        <button class="qty-btn" onclick="changeQty('${key}', 1)">+</button>
-                        <span class="qty-val">${qty}</span>
-                        <button class="qty-btn" onclick="changeQty('${key}', -1)">-</button>
+                        <button class="qty-btn" onclick="editQty('${key}', 1)">+</button>
+                        <span class="qty-val">${q}</span>
+                        <button class="qty-btn" onclick="editQty('${key}', -1)">-</button>
                     </div>
                 </div>`;
         });
-        document.getElementById('subtotal_amount').innerText = subtotal;
-        updateShipping();
+        document.getElementById('subtotal').innerText = sub;
+        updateTotal();
     }
 
-    function changeQty(key, delta) {
+    function editQty(k, d) {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        cart[key] = (cart[key] || 0) + delta;
-        if (cart[key] <= 0) delete cart[key];
+        cart[k] = (cart[k] || 0) + d;
+        if(cart[k] <= 0) delete cart[k];
         localStorage.setItem('leilCart', JSON.stringify(cart));
-        loadCart();
+        renderCart();
     }
 
-    function updateShipping() {
-        const subtotal = parseInt(document.getElementById('subtotal_amount').innerText);
-        const shipping = parseInt(document.getElementById('cust_city').value);
-        document.getElementById('shipping_amount').innerText = shipping;
-        document.getElementById('total_amount').innerText = subtotal + shipping;
+    function updateTotal() {
+        const sub = parseInt(document.getElementById('subtotal').innerText);
+        const ship = parseInt(document.getElementById('cust_city').value);
+        document.getElementById('ship_cost').innerText = ship;
+        document.getElementById('total_amount').innerText = sub + ship;
     }
 
-    function submitToSheet() {
-        const btn = document.getElementById('submit-btn');
+    function submitOrder() {
         const name = document.getElementById('cust_name').value;
         const phone = document.getElementById('cust_phone').value;
         const address = document.getElementById('cust_address').value;
-        const citySelect = document.getElementById('cust_city');
-        const cityName = citySelect.options[citySelect.selectedIndex].text;
+        const city = document.getElementById('cust_city').options[document.getElementById('cust_city').selectedIndex].text;
         const total = document.getElementById('total_amount').innerText;
 
-        if(!name || !phone || !address) { alert("أكمل البيانات"); return; }
+        if(!name || !phone || !address) return alert("من فضلك أكمل البيانات");
+
+        const btn = document.getElementById('submit-btn');
         btn.disabled = true;
-        btn.innerText = "جاري الإرسال...";
+        btn.innerText = "جاري الحفظ...";
 
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        let products = Object.keys(cart).map(k => `${k} (${cart[k]})`).join('\n');
+        let orderString = Object.keys(cart).map(k => `${k} (${cart[k]})`).join(', ');
 
         const formData = new FormData();
         formData.append('الأسم', name);
         formData.append('الرقم', phone);
-        formData.append('المحافظة', cityName);
+        formData.append('المحافظة', city);
         formData.append('العنوان بالتفصيل', address);
-        formData.append('الأوردر', products);
+        formData.append('الأوردر', orderString);
         formData.append('الإجمالي', total + " ج.م");
 
         fetch(SHEET_URL, { method: 'POST', body: formData, mode: 'no-cors' })
         .then(() => {
-            alert("تم الطلب بنجاح!");
-            localStorage.removeItem('leilCart');
-            window.location.href = "index.html";
-        })
-        .catch(() => {
-            alert("تم الطلب بنجاح!");
+            alert("تم تسجيل طلبك بنجاح!");
             localStorage.removeItem('leilCart');
             window.location.href = "index.html";
         });
     }
-
-    window.onload = loadCart;
+    window.onload = renderCart;
 </script>
 </body>
 </html>
