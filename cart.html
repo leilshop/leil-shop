@@ -35,11 +35,12 @@
 
     <div class="checkout-form">
         <h3>بيانات الشحن</h3>
-        <div class="input-group"><label>الاسم بالكامل</label><input type="text" id="cust_name" required></div>
-        <div class="input-group"><label>رقم الهاتف</label><input type="tel" id="cust_phone" required></div>
+        <div class="input-group"><label>الاسم بالكامل</label><input type="text" id="cust_name" placeholder="أدخل اسمك" required></div>
+        <div class="input-group"><label>رقم الهاتف</label><input type="tel" id="cust_phone" placeholder="أدخل رقمك" required></div>
         <div class="input-group">
             <label>المحافظة</label>
             <select id="cust_city" onchange="updateTotal()">
+                <option value="30">الإسماعيلية</option>
                 <option value="100">القاهرة</option>
                 <option value="100">الجيزة</option>
                 <option value="100">الإسكندرية</option>
@@ -48,7 +49,6 @@
                 <option value="100">البحيرة</option>
                 <option value="100">الفيوم</option>
                 <option value="100">الغربية</option>
-                <option value="30">الإسماعيلية</option>
                 <option value="100">المنوفية</option>
                 <option value="100">القليوبية</option>
                 <option value="100">الوادي الجديد</option>
@@ -69,12 +69,12 @@
                 <option value="100">أسيوط</option>
             </select>
         </div>
-        <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" required></textarea></div>
+        <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea></div>
     </div>
 
     <div class="summary-details">
         <div style="display:flex; justify-content:space-between; opacity:0.8; margin-bottom:10px;"><span>المشتريات:</span> <span id="subtotal">0</span> ج.م</div>
-        <div style="display:flex; justify-content:space-between; opacity:0.8;"><span>التوصيل:</span> <span id="ship_cost">100</span> ج.م</div>
+        <div style="display:flex; justify-content:space-between; opacity:0.8;"><span>التوصيل:</span> <span id="ship_cost">30</span> ج.م</div>
         <div class="total-line"><span>الإجمالي:</span> <span><span id="total_amount">0</span> ج.م</span></div>
         <button id="submit-btn" onclick="submitOrder()" class="checkout-btn">تأكيد الطلب</button>
     </div>
@@ -153,7 +153,7 @@
             window.location.href = "index.html";
         })
         .catch(() => {
-            alert("تم الطلب!");
+            alert("تم تسجيل الطلب!");
             localStorage.removeItem('leilCart');
             window.location.href = "index.html";
         });
