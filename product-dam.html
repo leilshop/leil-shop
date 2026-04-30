@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دم الغزال | ليل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
@@ -12,16 +13,34 @@
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         body { background: var(--bg); overflow-x: hidden; }
 
+        /* الشريط العلوي الموحد (Header) */
         header {
             background: var(--bg); 
-            padding: 20px 5%;
+            padding: 15px 4%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
-        .logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 24px; text-decoration: none; color: white; }
+
+        .logo { 
+            display: block; 
+            font-family: 'Noto Nastaliq Urdu', serif !important; 
+            font-size: 22px; 
+            text-decoration: none; 
+            color: white;
+            line-height: 1;
+        }
+
+        nav { display: flex; gap: 20px; flex-grow: 1; justify-content: center; }
+        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; }
+        nav a:hover { opacity: 1; color: var(--main); }
+
+        .header-icons { display: flex; align-items: center; }
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
         .cart-count {
             position: absolute; top: -10px; right: -12px; background: var(--main);
@@ -59,13 +78,24 @@
         .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
 
-        @media (max-width: 768px) { .product-wrapper { flex-direction: column; } }
+        @media (max-width: 768px) { 
+            .product-wrapper { flex-direction: column; } 
+            nav { gap: 10px; }
+            nav a { font-size: 11px; }
+            .logo { font-size: 18px; }
+        }
     </style>
 </head>
 <body>
 
 <header>
     <a href="index.html" class="logo">ليل</a>
+    <nav>
+        <a href="index.html">الصفحة الرئيسية</a>
+        <a href="product-dam.html">دم الغزال</a>
+        <a href="product-sarab.html">سراب</a>
+        <a href="#">تواصل معنا</a>
+    </nav>
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
@@ -130,6 +160,7 @@
         pagination: { el: '.swiper-pagination', clickable: true },
     });
 
+    let currentProductName = "دم الغزال";
     let currentSelectedSize = "3 جرام";
     let currentUnitPrice = 30;
 
@@ -139,7 +170,6 @@
         btn.classList.add('active');
 
         currentUnitPrice = parseInt(btn.getAttribute('data-price'));
-        
         const addBtn = document.getElementById('add-btn');
         const qtyGroup = document.getElementById('qty-group');
 
@@ -148,7 +178,7 @@
             addBtn.innerText = "المنتج غير متاح حالياً";
             addBtn.disabled = true;
             qtyGroup.style.display = "none";
-            updateDisplayPrice(currentUnitPrice); // يظهر الـ 50 ج.م
+            updateDisplayPrice(currentUnitPrice);
         } else {
             addBtn.disabled = false;
             addBtn.innerText = "أضف إلى السلة";
@@ -162,7 +192,7 @@
 
     function checkCartState() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const itemKey = "دم الغزال - " + currentSelectedSize;
+        const itemKey = currentProductName + " - " + currentSelectedSize;
         const addBtn = document.getElementById('add-btn');
         const qtyGroup = document.getElementById('qty-group');
         const currentQtyDisplay = document.getElementById('current-qty');
@@ -172,7 +202,7 @@
             addBtn.style.display = "none";
             qtyGroup.style.display = "grid";
             currentQtyDisplay.innerText = qty;
-            updateDisplayPrice(currentUnitPrice * qty); // تحديث السعر بناءً على الكمية
+            updateDisplayPrice(currentUnitPrice * qty);
         } else {
             addBtn.style.display = "block";
             qtyGroup.style.display = "none";
@@ -185,7 +215,7 @@
 
     function changeQty(amount) {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const itemKey = "دم الغزال - " + currentSelectedSize;
+        const itemKey = currentProductName + " - " + currentSelectedSize;
         cart[itemKey] = (cart[itemKey] || 0) + amount;
         if (cart[itemKey] <= 0) delete cart[itemKey];
         localStorage.setItem('leilCart', JSON.stringify(cart));
