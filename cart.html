@@ -27,19 +27,45 @@
         .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
         .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; }
         
-        /* التعديل هنا لحل مشكلة اللون الأبيض في القائمة */
         .input-group select option { color: black; background: white; }
 
         .summary-details { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 5px; }
         .total-line { display: flex; justify-content: space-between; font-size: 24px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px; }
         .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+
+        /* ستايل صفحة النجاح - Success Overlay */
+        #success-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); display: none; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 2000;
+            text-align: center; padding: 20px;
+        }
+        .success-icon { font-size: 80px; color: #25D366; margin-bottom: 20px; animation: scaleUp 0.5s ease; }
+        .success-msg h2 { font-size: 30px; margin-bottom: 10px; }
+        .success-msg p { opacity: 0.8; margin-bottom: 20px; }
+        .timer-text { font-size: 14px; opacity: 0.6; }
+
+        @keyframes scaleUp {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
 
-<header><a href="index.html" style="text-decoration:none; color:white; font-size:22px;">ليل</a></header>
+<header><a href="/" style="text-decoration:none; color:white; font-size:22px;">ليل</a></header>
 
-<div class="cart-container">
+<!-- Success Overlay Section -->
+<div id="success-overlay">
+    <i class="fas fa-check-circle success-icon"></i>
+    <div class="success-msg">
+        <h2>تم استلام طلبك بنجاح!</h2>
+        <p>شكراً لثقتك في ليل. سيتم التواصل معك قريباً لتأكيد الشحن.</p>
+        <div class="timer-text">سيتم تحويلك للصفحة الرئيسية خلال <span id="countdown">5</span> ثوانٍ...</div>
+    </div>
+</div>
+
+<div class="cart-container" id="cart-content">
     <h1>سلة المشتريات</h1>
     <div id="items-list"></div>
 
@@ -133,6 +159,20 @@
         document.getElementById('total_amount').innerText = sub + ship;
     }
 
+    function showSuccess() {
+        document.getElementById('cart-content').style.display = 'none';
+        document.getElementById('success-overlay').style.display = 'flex';
+        let timeLeft = 5;
+        let downloadTimer = setInterval(function(){
+            if(timeLeft <= 0){
+                clearInterval(downloadTimer);
+                window.location.href = "/";
+            }
+            document.getElementById("countdown").innerHTML = timeLeft;
+            timeLeft -= 1;
+        }, 1000);
+    }
+
     function submitOrder() {
         const name = document.getElementById('cust_name').value;
         const phone = document.getElementById('cust_phone').value;
@@ -158,14 +198,12 @@
 
         fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
         .then(() => {
-            alert("تم تسجيل طلبك بنجاح!");
             localStorage.removeItem('leilCart');
-            window.location.href = "index.html";
+            showSuccess();
         })
         .catch(() => {
-            alert("تم تسجيل الطلب!");
             localStorage.removeItem('leilCart');
-            window.location.href = "index.html";
+            showSuccess();
         });
     }
     window.onload = renderCart;
