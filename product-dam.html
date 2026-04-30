@@ -10,7 +10,6 @@
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         body { background: var(--bg); }
 
-        /* ضبط الهيدر والسلة */
         header {
             background: var(--bg); 
             padding: 20px 5%;
@@ -27,7 +26,6 @@
             position: absolute; top: -10px; right: -12px; background: var(--main);
             width: 20px; height: 20px; border-radius: 50%; font-size: 12px;
             display: flex; align-items: center; justify-content: center; font-weight: 700;
-            border: 1px solid var(--bg);
         }
 
         .product-wrapper {
@@ -36,7 +34,7 @@
         }
 
         .product-image { flex: 1; min-width: 300px; }
-        .product-image img { width: 100%; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .product-image img { width: 100%; border: 1px solid rgba(255,255,255,0.1); }
 
         .product-details { flex: 1; min-width: 300px; text-align: right; }
         .product-details h1 { font-size: 40px; margin-bottom: 5px; font-weight: 700; }
@@ -44,22 +42,39 @@
 
         .label { font-size: 13px; opacity: 0.6; margin-bottom: 10px; display: block; }
 
-        /* تنسيق الأحجام */
-        .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        /* تنسيق الأحجام المطور */
+        .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; align-items: center; }
+        
         .size-btn {
-            padding: 8px 18px; border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 18px; border: 1px solid rgba(255,255,255,0.4);
             background: none; border-radius: 25px; cursor: pointer; transition: 0.3s;
             font-size: 14px; color: white;
         }
         .size-btn.active { background: white; color: black; border-color: white; }
         
-        /* شكل الحجم غير الموجود */
-        .size-btn.disabled { 
-            opacity: 0.3; 
-            text-decoration: line-through; 
-            cursor: not-allowed; 
+        /* شكل الـ 5 جرام غير المتوفر */
+        .size-btn.out-of-stock {
+            opacity: 0.3;
             border-style: dashed;
+            cursor: not-allowed;
+            position: relative;
         }
+        .size-btn.out-of-stock::after {
+            content: ""; position: absolute; top: 50%; left: 0; width: 100%;
+            height: 1px; background: rgba(255,255,255,0.5); transform: rotate(-15deg);
+        }
+
+        /* تصميم Pinky Edition المخصص */
+        .pinky-btn {
+            padding: 10px 25px;
+            border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 50px;
+            font-size: 15px;
+            background: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .pinky-btn.active { background: white; color: black; }
 
         .price-tag { font-size: 35px; font-weight: 700; margin-bottom: 30px; display: block; }
 
@@ -72,9 +87,8 @@
 
         .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .product-desc h3 { margin-bottom: 15px; font-size: 20px; }
-        .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
+        .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; }
 
-        @media (max-width: 768px) { .product-wrapper { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -83,7 +97,7 @@
     <a href="index.html" class="logo">ليل</a>
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             <div class="cart-count" id="cart-count">0</div>
         </a>
     </div>
@@ -100,10 +114,10 @@
 
         <span class="label">الحجم</span>
         <div class="size-selector">
-            <button class="size-btn active">3 جرام</button>
-            <button class="size-btn disabled" title="غير متوفر">5 جرام</button>
-            <button class="size-btn">10 جرام</button>
-            <button class="size-btn">Pinky Edition</button>
+            <button class="pinky-btn" onclick="selectSize(this)">Pinky Edition جرام 10</button>
+            <button class="size-btn" onclick="selectSize(this)">10 جرام</button>
+            <button class="size-btn out-of-stock" disabled>5 جرام</button>
+            <button class="size-btn active" onclick="selectSize(this)">3 جرام</button>
         </div>
 
         <span class="label">السعر</span>
@@ -114,39 +128,34 @@
         <div class="product-desc">
             <h3>وصف المنتج</h3>
             <p>مخمرية "دم الغزال" بتركيبتها الفريدة التي تمنحك ثباتاً خرافياً ونعومة فائقة.
-            ريحة تعبر عن الأنوثة والنظافة، وتدوم معكِ على الجسم والشعر لأيام.
-            الخيار الأمثل لمن يبحث عن التميز والجاذبية الهادئة.</p>
+            ريحة تعبر عن الأنوثة والنظافة، وتدوم معكِ على الجسم والشعر لأيام.</p>
         </div>
     </div>
 </div>
 
 <script>
-    // وظيفة تحديث العداد
+    // وظيفة التنقل بين الأحجام
+    function selectSize(btn) {
+        // حذف حالة النشاط من كل الزراير
+        document.querySelectorAll('.size-btn, .pinky-btn').forEach(b => b.classList.remove('active'));
+        // إضافة حالة النشاط للزرار المختار
+        btn.classList.add('active');
+    }
+
     function updateCartCount() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let total = Object.values(cart).reduce((a, b) => a + b, 0);
         document.getElementById('cart-count').innerText = total;
     }
 
-    // وظيفة الإضافة للسلة
     function addToCart(productName) {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         cart[productName] = (cart[productName] || 0) + 1;
         localStorage.setItem('leilCart', JSON.stringify(cart));
         updateCartCount();
-        
-        // تأثير بصري عند الإضافة
-        const btn = document.querySelector('.add-to-cart-btn');
-        const originalText = btn.innerText;
-        btn.innerText = 'تمت الإضافة ✓';
-        btn.style.background = '#28a745';
-        setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.background = '#600a1c';
-        }, 1500);
+        alert('تمت إضافة المنتج للسلة');
     }
 
-    // تشغيل العداد عند فتح الصفحة
     window.onload = updateCartCount;
 </script>
 
