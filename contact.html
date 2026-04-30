@@ -30,13 +30,15 @@
         }
         .logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; }
         
-        .header-left { display: flex; align-items: center; gap: 25px; }
-        nav { display: flex; gap: 20px; }
-        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; }
+        /* التعديل هنا لسنترة الشريط */
+        nav { display: flex; gap: 20px; flex-grow: 1; justify-content: center; }
+        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; }
         nav a:hover { opacity: 1; color: var(--main); }
 
+        .header-left { display: flex; align-items: center; }
+
         /* ستايل السلة */
-        .cart-icon { position: relative; cursor: pointer; text-decoration: none; }
+        .cart-icon { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
         .cart-icon i { font-size: 20px; color: white; transition: 0.3s; }
         .cart-icon:hover i { color: var(--main); }
         .cart-badge { 
@@ -105,14 +107,14 @@
 <header>
     <a href="index.html" class="logo">ليل</a>
     
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="product-dam.html">دم الغزال</a>
+        <a href="product-sarab.html">سراب</a>
+        <a href="contact.html">تواصل معنا</a>
+    </nav>
+
     <div class="header-left">
-        <nav>
-            <a href="index.html">الرئيسية</a>
-            <a href="product-dam.html">دم الغزال</a>
-            <a href="product-sarab.html">سراب</a>
-            <a href="contact.html">تواصل معنا</a>
-        </nav>
-        
         <!-- أيقونة السلة -->
         <a href="cart.html" class="cart-icon">
             <i class="fas fa-shopping-cart"></i>
@@ -143,14 +145,11 @@
 </div>
 
 <script>
-    // تحديث عدد المنتجات في السلة
     function updateCartCount() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let count = Object.values(cart).reduce((a, b) => a + b, 0);
         document.getElementById('cart-count').innerText = count;
     }
-
-    // تشغيل التحديث عند تحميل الصفحة
     window.onload = updateCartCount;
 </script>
 
