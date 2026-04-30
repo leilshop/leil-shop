@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دم الغزال | ليل</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <style>
         :root { --main: #600a1c; --bg: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
-        body { background: var(--bg); }
+        body { background: var(--bg); overflow-x: hidden; }
 
         header {
             background: var(--bg); 
@@ -17,6 +20,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky; top: 0; z-index: 1000;
         }
         .logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 24px; text-decoration: none; color: white; }
         
@@ -29,12 +33,33 @@
         }
 
         .product-wrapper {
-            max-width: 1100px; margin: 40px auto;
+            max-width: 1200px; margin: 20px auto;
             display: flex; flex-wrap: wrap; gap: 40px; padding: 20px;
         }
 
-        .product-image { flex: 1; min-width: 300px; }
-        .product-image img { width: 100%; border: 1px solid rgba(255,255,255,0.1); }
+        /* تنسيق السلايدر */
+        .image-section {
+            flex: 1;
+            min-width: 300px;
+            max-width: 550px;
+            width: 100%;
+        }
+
+        .swiper {
+            width: 100%;
+            height: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--main) !important;
+        }
 
         .product-details { flex: 1; min-width: 300px; text-align: right; }
         .product-details h1 { font-size: 40px; margin-bottom: 5px; font-weight: 700; }
@@ -88,6 +113,9 @@
         .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
 
+        @media (max-width: 768px) {
+            .product-wrapper { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -103,8 +131,15 @@
 </header>
 
 <div class="product-wrapper">
-    <div class="product-image">
-        <img src="FIMG9626WEB.webp" alt="دم الغزال">
+    <div class="image-section">
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="FIMG9622WEB.webp" alt="دم الغزال 1"></div>
+                <div class="swiper-slide"><img src="FIMG9626WEB.webp" alt="دم الغزال 2"></div>
+                <div class="swiper-slide"><img src="FIMG9629WEB.webp" alt="دم الغزال 3"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
     </div>
 
     <div class="product-details">
@@ -124,7 +159,6 @@
 
         <div class="cart-controls">
             <button class="add-to-cart-btn" id="add-btn" onclick="initAdd()">أضف إلى السلة</button>
-            
             <div class="quantity-btn-group" id="qty-group">
                 <button class="q-btn" onclick="changeQty(1)">+</button>
                 <div class="q-val" id="current-qty">1</div>
@@ -144,7 +178,14 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
+    const swiper = new Swiper('.swiper', {
+        loop: true,
+        pagination: { el: '.swiper-pagination', clickable: true },
+    });
+
     let currentSelectedSize = "3 جرام";
 
     function selectSize(btn, sizeName) {
@@ -157,7 +198,6 @@
         const qtyGroup = document.getElementById('qty-group');
         const priceTag = document.getElementById('main-price');
 
-        // تحديث السعر دائماً
         priceTag.innerText = price + " ج.م";
 
         if (sizeName === "5 جرام") {
@@ -190,17 +230,13 @@
         updateHeaderCart();
     }
 
-    function initAdd() {
-        changeQty(1);
-    }
+    function initAdd() { changeQty(1); }
 
     function changeQty(amount) {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const itemKey = "دم الغزال - " + currentSelectedSize;
-        
         cart[itemKey] = (cart[itemKey] || 0) + amount;
         if (cart[itemKey] <= 0) delete cart[itemKey];
-
         localStorage.setItem('leilCart', JSON.stringify(cart));
         checkCartState();
     }
@@ -213,6 +249,5 @@
 
     window.onload = checkCartState;
 </script>
-
 </body>
 </html>
