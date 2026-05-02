@@ -66,12 +66,17 @@
         .label { font-size: 13px; opacity: 0.6; margin-bottom: 10px; display: block; }
 
         .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
-        .size-btn, .pinky-btn { padding: 8px 18px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; transition: 0.3s; font-size: 14px; color: white; }
+        .size-btn, .pinky-btn { padding: 8px 18px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; transition: 0.3s; font-size: 14px; color: white; display: flex; flex-direction: column; align-items: center; }
         .pinky-btn { border-radius: 50px; padding: 10px 25px; }
         .active { background: white !important; color: black !important; border-color: white !important; }
+        .active span { color: black !important; }
         .out-of-stock { opacity: 0.4; border-style: dashed; cursor: pointer; text-decoration: line-through; }
+        
+        .old-price-inline { font-size: 10px; text-decoration: line-through; opacity: 0.6; margin-top: 2px; }
 
-        .price-tag { font-size: 35px; font-weight: 700; margin-bottom: 30px; display: block; }
+        .price-container { margin-bottom: 30px; display: flex; align-items: baseline; gap: 15px; }
+        .price-tag { font-size: 35px; font-weight: 700; display: block; }
+        .old-price-tag { font-size: 20px; text-decoration: line-through; opacity: 0.5; font-weight: 400; }
 
         .cart-controls { margin-bottom: 40px; }
         .add-to-cart-btn { width: 100%; padding: 16px; background: var(--main); border: none; color: white; font-weight: 700; font-size: 18px; cursor: pointer; transition: 0.3s; }
@@ -117,7 +122,6 @@
                 <div class="swiper-slide"><img src="FIMG9622WEB.webp" alt="دم الغزال 1"></div>
                 <div class="swiper-slide"><img src="FIMG9626WEB.webp" alt="دم الغزال 2"></div>
                 <div class="swiper-slide"><img src="FIMG9629WEB.webp" alt="دم الغزال 3"></div>
-                <!-- الصورة الرابعة المضافة حديثاً -->
                 <div class="swiper-slide"><img src="FIMG9693WEB.webp" alt="دم الغزال 4"></div>
             </div>
             <div class="swiper-pagination"></div>
@@ -130,15 +134,28 @@
 
         <span class="label">الحجم</span>
         <div class="size-selector">
-            <button class="size-btn active" data-price="30" onclick="selectSize(this, '3 جرام')">3 جرام</button>
-            <button class="size-btn out-of-stock" data-price="50" onclick="selectSize(this, '5 جرام')">5 جرام</button>
-            <button class="size-btn" data-price="70" onclick="selectSize(this, '10 جرام')">10 جرام</button>
-            <!-- التعديل على نص الزر وربطه بالصورة الرابعة -->
-            <button class="pinky-btn" data-price="80" onclick="selectSize(this, '10 جرام Pinky Edition')">10 جرام Pinky Edition</button>
+            <button class="size-btn active" data-price="25" data-old="30" onclick="selectSize(this, '3 جرام')">
+                3 جرام
+                <span class="old-price-inline">30 ج.م</span>
+            </button>
+            <button class="size-btn out-of-stock" data-price="50" data-old="50" onclick="selectSize(this, '5 جرام')">
+                5 جرام
+            </button>
+            <button class="size-btn" data-price="60" data-old="70" onclick="selectSize(this, '10 جرام')">
+                10 جرام
+                <span class="old-price-inline">70 ج.م</span>
+            </button>
+            <button class="pinky-btn" data-price="60" data-old="80" onclick="selectSize(this, '10 جرام Pinky Edition')">
+                10 جرام Pinky Edition
+                <span class="old-price-inline">80 ج.م</span>
+            </button>
         </div>
 
-        <span class="label">السعر</span>
-        <span class="price-tag" id="main-price">30 ج.م</span>
+        <span class="label">السعر الحالي</span>
+        <div class="price-container">
+            <span class="price-tag" id="main-price">25 ج.م</span>
+            <span class="old-price-tag" id="old-price">30 ج.م</span>
+        </div>
 
         <div class="cart-controls">
             <button class="add-to-cart-btn" id="add-btn" onclick="initAdd()">أضف إلى السلة</button>
@@ -164,7 +181,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-    // إعدادات Swiper لضمان الأداء السلس ومنع التهنيج
     const swiper = new Swiper('.swiper', {
         loop: false, 
         speed: 400, 
@@ -175,21 +191,23 @@
 
     let currentProductName = "دم الغزال";
     let currentSelectedSize = "3 جرام";
-    let currentUnitPrice = 30;
+    let currentUnitPrice = 25;
+    let currentOldPrice = 30;
 
     function selectSize(btn, sizeName) {
         currentSelectedSize = sizeName;
         document.querySelectorAll('.size-btn, .pinky-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // التنقل التلقائي للصور بناءً على الاختيار
         if (sizeName.includes("Pinky Edition")) {
-            swiper.slideTo(3, 400, true); // الصورة الرابعة
+            swiper.slideTo(3, 400, true);
         } else {
-            swiper.slideTo(0, 400, true); // العودة للصورة الأولى للأحجام الأخرى
+            swiper.slideTo(0, 400, true);
         }
 
         currentUnitPrice = parseInt(btn.getAttribute('data-price'));
+        currentOldPrice = parseInt(btn.getAttribute('data-old'));
+        
         const addBtn = document.getElementById('add-btn');
         const qtyGroup = document.getElementById('qty-group');
 
@@ -198,7 +216,7 @@
             addBtn.innerText = "المنتج غير متاح حالياً";
             addBtn.disabled = true;
             qtyGroup.style.display = "none";
-            updateDisplayPrice(currentUnitPrice);
+            updateDisplayPrice(currentUnitPrice, currentOldPrice);
         } else {
             addBtn.disabled = false;
             addBtn.innerText = "أضف إلى السلة";
@@ -206,8 +224,15 @@
         }
     }
 
-    function updateDisplayPrice(price) {
+    function updateDisplayPrice(price, oldPrice) {
         document.getElementById('main-price').innerText = price + " ج.م";
+        const oldPriceEl = document.getElementById('old-price');
+        if (price < oldPrice) {
+            oldPriceEl.style.display = "block";
+            oldPriceEl.innerText = oldPrice + " ج.م";
+        } else {
+            oldPriceEl.style.display = "none";
+        }
     }
 
     function checkCartState() {
@@ -222,11 +247,11 @@
             addBtn.style.display = "none";
             qtyGroup.style.display = "grid";
             currentQtyDisplay.innerText = qty;
-            updateDisplayPrice(currentUnitPrice * qty);
+            updateDisplayPrice(currentUnitPrice * qty, currentOldPrice * qty);
         } else {
             addBtn.style.display = "block";
             qtyGroup.style.display = "none";
-            updateDisplayPrice(currentUnitPrice);
+            updateDisplayPrice(currentUnitPrice, currentOldPrice);
         }
         updateHeaderCart();
     }
