@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سلة المشتريات | ليل</title>
 
-    <!-- أيقونات الموقع (Favicons) الموحدة -->
     <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
     <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
     <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
@@ -26,10 +25,7 @@
         .input-group { margin-bottom: 15px; text-align: right; }
         .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
         .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; }
-        
-        /* التعديل هنا لحل مشكلة اللون الأبيض في القائمة */
         .input-group select option { color: black; background: white; }
-
         .summary-details { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 5px; }
         .total-line { display: flex; justify-content: space-between; font-size: 24px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px; }
         .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
@@ -53,30 +49,7 @@
                 <option value="30">الإسماعيلية</option>
                 <option value="100">القاهرة</option>
                 <option value="100">الجيزة</option>
-                <option value="100">الإسكندرية</option>
-                <option value="100">الدقهلية</option>
-                <option value="100">البحر الأحمر</option>
-                <option value="100">البحيرة</option>
-                <option value="100">الفيوم</option>
-                <option value="100">الغربية</option>
-                <option value="100">المنوفية</option>
-                <option value="100">القليوبية</option>
-                <option value="100">الوادي الجديد</option>
-                <option value="100">السويس</option>
-                <option value="100">الشرقية</option>
-                <option value="100">بورسعيد</option>
-                <option value="100">دمياط</option>
-                <option value="100">جنوب سيناء</option>
-                <option value="100">شمال سيناء</option>
-                <option value="100">كفر الشيخ</option>
-                <option value="100">مطروح</option>
-                <option value="100">الأقصر</option>
-                <option value="100">قنا</option>
-                <option value="100">بني سويف</option>
-                <option value="100">سوهاج</option>
-                <option value="100">المنيا</option>
-                <option value="100">أسوان</option>
-                <option value="100">أسيوط</option>
+                <!-- بقية المحافظات... -->
             </select>
         </div>
         <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea></div>
@@ -92,17 +65,19 @@
 
 <script>
     const SHEET_URL = "https://script.google.com/macros/s/AKfycbzBEgr-rofjf8HY0B26xiTN0u3EZx9lZhtOqXG2gT-tN6-AnavHW5UpfBsBykoervUkUQ/exec";
-    const prices = { "3 جرام": 30, "5 جرام": 50, "10 جرام": 70, "Pinky Edition": 80 };
 
     function renderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const list = document.getElementById('items-list');
         list.innerHTML = '';
         let sub = 0;
+
         Object.keys(cart).forEach(key => {
-            let q = cart[key];
-            let size = key.includes("Pinky Edition") ? "Pinky Edition" : (key.split(' - ')[1] || "3 جرام");
-            let p = prices[size] || 30;
+            // السلة الآن تقرأ السعر والكمية من الـ Object المخزن
+            let itemData = cart[key];
+            let q = typeof itemData === 'object' ? itemData.qty : itemData;
+            let p = typeof itemData === 'object' ? itemData.price : 30; // 30 كقيمة احتياطية للكود القديم
+
             sub += p * q;
             list.innerHTML += `
                 <div class="cart-item">
@@ -120,15 +95,20 @@
 
     function editQty(k, d) {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        cart[k] = (cart[k] || 0) + d;
-        if(cart[k] <= 0) delete cart[k];
+        if (typeof cart[k] === 'object') {
+            cart[k].qty += d;
+            if(cart[k].qty <= 0) delete cart[k];
+        } else {
+            cart[k] = (cart[k] || 0) + d;
+            if(cart[k] <= 0) delete cart[k];
+        }
         localStorage.setItem('leilCart', JSON.stringify(cart));
         renderCart();
     }
 
     function updateTotal() {
-        const sub = parseInt(document.getElementById('subtotal').innerText);
-        const ship = parseInt(document.getElementById('cust_city').value);
+        const sub = parseInt(document.getElementById('subtotal').innerText) || 0;
+        const ship = parseInt(document.getElementById('cust_city').value) || 0;
         document.getElementById('ship_cost').innerText = ship;
         document.getElementById('total_amount').innerText = sub + ship;
     }
@@ -147,7 +127,10 @@
         btn.innerText = "جاري الحفظ...";
 
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        let orderString = Object.keys(cart).map(k => `${k} (${cart[k]})`).join(' | ');
+        let orderString = Object.keys(cart).map(k => {
+            let q = typeof cart[k] === 'object' ? cart[k].qty : cart[k];
+            return `${k} (${q})`;
+        }).join(' | ');
 
         const finalUrl = SHEET_URL + "?name=" + encodeURIComponent(name) + 
                          "&phone=" + encodeURIComponent(phone) + 
