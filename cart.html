@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سلة المشتريات | ليل</title>
 
+    <!-- أيقونات الموقع (Favicons) الموحدة -->
     <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
     <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
     <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
@@ -49,7 +50,30 @@
                 <option value="30">الإسماعيلية</option>
                 <option value="100">القاهرة</option>
                 <option value="100">الجيزة</option>
-                <!-- بقية المحافظات... -->
+                <option value="100">الإسكندرية</option>
+                <option value="100">الدقهلية</option>
+                <option value="100">البحر الأحمر</option>
+                <option value="100">البحيرة</option>
+                <option value="100">الفيوم</option>
+                <option value="100">الغربية</option>
+                <option value="100">المنوفية</option>
+                <option value="100">القليوبية</option>
+                <option value="100">الوادي الجديد</option>
+                <option value="100">السويس</option>
+                <option value="100">الشرقية</option>
+                <option value="100">بورسعيد</option>
+                <option value="100">دمياط</option>
+                <option value="100">جنوب سيناء</option>
+                <option value="100">شمال سيناء</option>
+                <option value="100">كفر الشيخ</option>
+                <option value="100">مطروح</option>
+                <option value="100">الأقصر</option>
+                <option value="100">قنا</option>
+                <option value="100">بني سويف</option>
+                <option value="100">سوهاج</option>
+                <option value="100">المنيا</option>
+                <option value="100">أسوان</option>
+                <option value="100">أسيوط</option>
             </select>
         </div>
         <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea></div>
@@ -73,10 +97,9 @@
         let sub = 0;
 
         Object.keys(cart).forEach(key => {
-            // السلة الآن تقرأ السعر والكمية من الـ Object المخزن
             let itemData = cart[key];
             let q = typeof itemData === 'object' ? itemData.qty : itemData;
-            let p = typeof itemData === 'object' ? itemData.price : 30; // 30 كقيمة احتياطية للكود القديم
+            let p = typeof itemData === 'object' ? itemData.price : 30;
 
             sub += p * q;
             list.innerHTML += `
