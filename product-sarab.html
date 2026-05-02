@@ -215,8 +215,9 @@
         const qtyGroup = document.getElementById('qty-group');
         const currentQtyDisplay = document.getElementById('current-qty');
 
-        if (cart[itemKey] && cart[itemKey] > 0) {
-            const qty = cart[itemKey];
+        if (cart[itemKey] && (cart[itemKey].qty || cart[itemKey]) > 0) {
+            const itemData = cart[itemKey];
+            const qty = typeof itemData === 'object' ? itemData.qty : itemData;
             addBtn.style.display = "none";
             qtyGroup.style.display = "grid";
             currentQtyDisplay.innerText = qty;
@@ -234,15 +235,31 @@
     function changeQty(amount) {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const itemKey = currentProductName + " - " + currentSelectedSize;
-        cart[itemKey] = (cart[itemKey] || 0) + amount;
-        if (cart[itemKey] <= 0) delete cart[itemKey];
+        
+        // التعديل الديناميكي لإرسال السعر والكمية كـ Object لصفحة السلة
+        if (!cart[itemKey]) {
+            cart[itemKey] = { qty: 0, price: currentUnitPrice };
+        }
+        
+        if (typeof cart[itemKey] !== 'object') {
+            cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice };
+        }
+
+        cart[itemKey].qty += amount;
+        cart[itemKey].price = currentUnitPrice; 
+
+        if (cart[itemKey].qty <= 0) delete cart[itemKey];
+        
         localStorage.setItem('leilCart', JSON.stringify(cart));
         checkCartState();
     }
 
     function updateHeaderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        let total = Object.values(cart).reduce((a, b) => a + b, 0);
+        let total = Object.values(cart).reduce((a, b) => {
+            const q = typeof b === 'object' ? b.qty : b;
+            return a + q;
+        }, 0);
         const countEl = document.getElementById('cart-count');
         if(countEl) countEl.innerText = total;
     }
