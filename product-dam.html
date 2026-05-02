@@ -19,7 +19,6 @@
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         body { background: var(--bg); overflow-x: hidden; }
 
-        /* الشريط العلوي الموحد (Header) */
         header {
             background: var(--bg); 
             padding: 15px 4%;
@@ -66,13 +65,10 @@
         .label { font-size: 13px; opacity: 0.6; margin-bottom: 10px; display: block; }
 
         .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
-        .size-btn, .pinky-btn { padding: 8px 18px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; transition: 0.3s; font-size: 14px; color: white; display: flex; flex-direction: column; align-items: center; }
-        .pinky-btn { border-radius: 50px; padding: 10px 25px; }
+        .size-btn, .pinky-btn { padding: 12px 20px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; transition: 0.3s; font-size: 14px; color: white; }
+        .pinky-btn { border-radius: 50px; padding: 12px 25px; }
         .active { background: white !important; color: black !important; border-color: white !important; }
-        .active span { color: black !important; }
         .out-of-stock { opacity: 0.4; border-style: dashed; cursor: pointer; text-decoration: line-through; }
-        
-        .old-price-inline { font-size: 10px; text-decoration: line-through; opacity: 0.6; margin-top: 2px; }
 
         .price-container { margin-bottom: 30px; display: flex; align-items: baseline; gap: 15px; }
         .price-tag { font-size: 35px; font-weight: 700; display: block; }
@@ -134,21 +130,10 @@
 
         <span class="label">الحجم</span>
         <div class="size-selector">
-            <button class="size-btn active" data-price="25" data-old="30" onclick="selectSize(this, '3 جرام')">
-                3 جرام
-                <span class="old-price-inline">30 ج.م</span>
-            </button>
-            <button class="size-btn out-of-stock" data-price="50" data-old="50" onclick="selectSize(this, '5 جرام')">
-                5 جرام
-            </button>
-            <button class="size-btn" data-price="60" data-old="70" onclick="selectSize(this, '10 جرام')">
-                10 جرام
-                <span class="old-price-inline">70 ج.م</span>
-            </button>
-            <button class="pinky-btn" data-price="60" data-old="80" onclick="selectSize(this, '10 جرام Pinky Edition')">
-                10 جرام Pinky Edition
-                <span class="old-price-inline">80 ج.م</span>
-            </button>
+            <button class="size-btn active" data-price="25" data-old="30" onclick="selectSize(this, '3 جرام')">3 جرام</button>
+            <button class="size-btn out-of-stock" data-price="50" data-old="50" onclick="selectSize(this, '5 جرام')">5 جرام</button>
+            <button class="size-btn" data-price="60" data-old="70" onclick="selectSize(this, '10 جرام')">10 جرام</button>
+            <button class="pinky-btn" data-price="60" data-old="80" onclick="selectSize(this, '10 جرام Pinky Edition')">10 جرام Pinky Edition</button>
         </div>
 
         <span class="label">السعر الحالي</span>
