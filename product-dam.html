@@ -19,7 +19,6 @@
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         body { background: var(--bg); overflow-x: hidden; }
 
-        /* الشريط العلوي الموحد (Header) */
         header {
             background: var(--bg); 
             padding: 15px 4%;
@@ -129,10 +128,10 @@
 
         <span class="label">الحجم</span>
         <div class="size-selector">
-            <button class="size-btn active" data-price="30" onclick="selectSize(this, '3 جرام')">3 جرام</button>
-            <button class="size-btn out-of-stock" data-price="50" onclick="selectSize(this, '5 جرام')">5 جرام</button>
-            <button class="size-btn" data-price="70" onclick="selectSize(this, '10 جرام')">10 جرام</button>
-            <button class="pinky-btn" data-price="80" onclick="selectSize(this, 'Pinky Edition')">Pinky Edition</button>
+            <button class="size-btn active" data-price="30" onclick="selectSize(this, '3 جرام', 0)">3 جرام</button>
+            <button class="size-btn out-of-stock" data-price="50" onclick="selectSize(this, '5 جرام', 0)">5 جرام</button>
+            <button class="size-btn" data-price="70" onclick="selectSize(this, '10 جرام', 0)">10 جرام</button>
+            <button class="pinky-btn" data-price="80" onclick="selectSize(this, '10 جرام Pinky Edition', 3)">10 جرام Pinky Edition</button>
         </div>
 
         <span class="label">السعر</span>
@@ -155,7 +154,6 @@
 الإحساس: نظافة، أنوثة طاغية، وحيوية.
 الثبات: عالٍ جداً (الجسم و الشعر).
 لماذا ليل؟ تترك جسمك ناعماً كالحرير برائحة منعشة.</p>
-
         </div>
     </div>
 </div>
@@ -164,7 +162,7 @@
 
 <script>
     const swiper = new Swiper('.swiper', {
-        loop: true,
+        loop: false, // تم تعطيل الـ loop لضمان دقة التنقل للـ index المحدد
         pagination: { el: '.swiper-pagination', clickable: true },
     });
 
@@ -172,10 +170,15 @@
     let currentSelectedSize = "3 جرام";
     let currentUnitPrice = 30;
 
-    function selectSize(btn, sizeName) {
+    function selectSize(btn, sizeName, slideIndex) {
         currentSelectedSize = sizeName;
         document.querySelectorAll('.size-btn, .pinky-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+
+        // التنقل للصورة الرابعة إذا تم اختيار Pinky Edition
+        if (sizeName.includes("Pinky Edition")) {
+            swiper.slideTo(slideIndex);
+        }
 
         currentUnitPrice = parseInt(btn.getAttribute('data-price'));
         const addBtn = document.getElementById('add-btn');
