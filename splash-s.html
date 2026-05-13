@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بادي سبلاش سراب</title>
+    <title>بادي سبلاش سراب | ليل</title>
 
     <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
     <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
@@ -256,7 +256,7 @@
         pagination: { el: '.swiper-pagination', clickable: true },
     });
 
-    let currentProductName = "سبلاش دم الغزال";
+    let currentProductName = "سبلاش سراب"; // مسمى السلة
     let currentSelectedSize = "5 مل";
     let currentUnitPrice = 25;
     let currentOldPrice = 35;
@@ -266,7 +266,6 @@
         document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
         btn.classList.add('active-size');
 
-        // تغيير الصورة بناءً على الحجم
         swiper.slideTo(imgIndex, 400, true);
 
         currentUnitPrice = parseInt(btn.getAttribute('data-price'));
