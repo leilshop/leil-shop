@@ -41,14 +41,35 @@
             line-height: 1;
         }
 
-        nav { display: flex; gap: 20px; flex-grow: 1; justify-content: center; }
-        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; }
-        nav a:hover { opacity: 1; color: var(--main); }
+        /* تعديل الـ Nav لضمان المحاذاة */
+        nav { 
+            display: flex; 
+            gap: 20px; 
+            flex-grow: 1; 
+            justify-content: center; 
+            align-items: center; /* بيخلي الكلام كله على خط واحد بالظبط */
+        }
+        
+        nav a { 
+            text-decoration: none; 
+            font-size: 14px; 
+            opacity: 0.8; 
+            transition: 0.3s; 
+            white-space: nowrap; 
+            color: white; 
+        }
 
-        /* --- تنسيق القائمة المنسدلة (الـ CSS الجديد) --- */
+        /* تعديل عشان اللون يفضل أبيض في الـ Hover */
+        nav a:hover, .dropdown:hover > a { 
+            opacity: 1; 
+            color: white !important; 
+        }
+
+        /* --- تنسيق القائمة المنسدلة --- */
         .dropdown {
             position: relative;
-            display: inline-block;
+            display: flex;
+            align-items: center;
         }
 
         .dropdown-content {
@@ -83,6 +104,7 @@
             background-color: var(--main);
             padding-right: 20px;
             opacity: 1;
+            color: white !important;
         }
 
         .dropdown:hover .dropdown-content {
@@ -101,7 +123,6 @@
             vertical-align: middle;
             opacity: 0.5;
         }
-        /* --- نهاية تنسيق الـ Dropdown --- */
 
         .header-icons { display: flex; align-items: center; }
         
@@ -197,9 +218,10 @@
         }
         .btn-view:hover { filter: brightness(1.2); }
 
+        /* تعديلات الموبايل لضمان بقاء اللينكات في سطر واحد */
         @media (max-width: 480px) {
-            nav { gap: 10px; }
-            nav a { font-size: 11px; }
+            nav { gap: 8px; } /* تقليل المسافة بين اللينكات */
+            nav a { font-size: 12px; } /* تصغير الخط سيكا عشان يلم */
             .logo { font-size: 18px; }
             header { padding: 10px 3%; }
         }
