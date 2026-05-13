@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تواصل معنا | ليل</title>
 
-    <!-- أيقونات الموقع (Favicons) -->
     <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
     <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
     <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
@@ -18,6 +17,7 @@
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         body { background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; }
 
+        /* --- شريط التنقل الموحد (نفس الرئيسية بالملي) --- */
         header {
             background: var(--bg); 
             padding: 15px 4%;
@@ -25,30 +25,109 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: sticky; top: 0; z-index: 1000;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             backdrop-filter: blur(10px);
         }
-        .logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; }
-        
-        /* التعديل هنا لسنترة الشريط */
-        nav { display: flex; gap: 20px; flex-grow: 1; justify-content: center; }
-        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; }
-        nav a:hover { opacity: 1; color: var(--main); }
 
-        .header-left { display: flex; align-items: center; }
-
-        /* ستايل السلة */
-        .cart-icon { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
-        .cart-icon i { font-size: 20px; color: white; transition: 0.3s; }
-        .cart-icon:hover i { color: var(--main); }
-        .cart-badge { 
-            position: absolute; top: -8px; right: -10px; 
-            background: var(--main); color: white; font-size: 10px; 
-            width: 18px; height: 18px; display: flex; 
-            align-items: center; justify-content: center; 
-            border-radius: 50%; font-weight: bold;
+        .logo { 
+            display: block; 
+            font-family: 'Noto Nastaliq Urdu', serif !important; 
+            font-size: 22px; 
+            text-decoration: none; 
+            color: white;
+            line-height: 1;
         }
 
+        nav { 
+            display: flex; 
+            gap: 25px; 
+            flex-grow: 1; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        nav a { 
+            text-decoration: none; 
+            font-size: 14px; 
+            opacity: 0.8; 
+            transition: 0.3s; 
+            white-space: nowrap; 
+            color: white;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+        }
+
+        nav a:hover, .dropdown.active > a { 
+            opacity: 1; 
+            color: white !important; 
+        }
+
+        .dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--bg);
+            min-width: 160px;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.6);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            top: 100%;
+            right: 0; 
+            border-radius: 4px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+            animation: fadeInSlide 0.3s ease forwards;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            text-align: right;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; opacity: 1; color: white !important; }
+
+        @keyframes fadeInSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown > a::after {
+            content: ' ▾';
+            font-size: 10px;
+            margin-right: 4px;
+            display: inline-block;
+            opacity: 0.5;
+        }
+
+        .header-icons { display: flex; align-items: center; }
+        .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
+        .cart-count {
+            position: absolute; top: -8px; left: -10px; background: var(--main);
+            width: 18px; height: 18px; border-radius: 50%; font-size: 11px;
+            display: flex; align-items: center; justify-content: center; font-weight: 700;
+        }
+
+        /* تنسيقات صفحة التواصل */
         .contact-container {
             flex: 1;
             display: flex;
@@ -96,9 +175,13 @@
         .facebook { color: #1877F2; }
         .social-card:hover i, .social-card:hover span { color: white; }
 
-        @media (max-width: 600px) {
+        /* تعديل الموبايل الموحد */
+        @media (max-width: 480px) {
+            header { padding: 10px 4%; }
+            nav { gap: 15px; } 
+            nav a { font-size: 12px; display: flex; align-items: center; }
+            .logo { font-size: 18px; }
             .contact-container h1 { font-size: 28px; }
-            nav { display: none; }
         }
     </style>
 </head>
@@ -106,19 +189,23 @@
 
 <header>
     <a href="index.html" class="logo">ليل</a>
-    
     <nav>
-        <a href="index.html">الرئيسية</a>
-        <a href="product-dam.html">دم الغزال</a>
-        <a href="product-sarab.html">سراب</a>
+        <a href="index.html">الصفحة الرئيسية</a>
+        
+        <div class="dropdown" id="makhmariatToggle">
+            <a href="javascript:void(0)">مخمريات</a>
+            <div class="dropdown-content">
+                <a href="product-dam.html">دم الغزال</a>
+                <a href="product-sarab.html">سراب</a>
+            </div>
+        </div>
+
         <a href="contact.html">تواصل معنا</a>
     </nav>
-
-    <div class="header-left">
-        <!-- أيقونة السلة -->
-        <a href="cart.html" class="cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-badge" id="cart-count">0</span>
+    <div class="header-icons">
+        <a href="cart.html" class="cart-trigger">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            <div class="cart-count" id="cart-count">0</div>
         </a>
     </div>
 </header>
@@ -145,10 +232,24 @@
 </div>
 
 <script>
+    // --- كود الشريط الجديد لفتح وقفل القائمة ---
+    const dropdown = document.getElementById('makhmariatToggle');
+    dropdown.addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+    });
+    document.addEventListener('click', function() {
+        dropdown.classList.remove('active');
+    });
+
+    // تحديث عدد السلة
     function updateCartCount() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        let count = Object.values(cart).reduce((a, b) => a + b, 0);
-        document.getElementById('cart-count').innerText = count;
+        let total = Object.values(cart).reduce((a, b) => {
+            const q = typeof b === 'object' ? b.qty : b;
+            return a + q;
+        }, 0);
+        document.getElementById('cart-count').innerText = total;
     }
     window.onload = updateCartCount;
 </script>
