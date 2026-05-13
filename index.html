@@ -45,6 +45,64 @@
         nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; }
         nav a:hover { opacity: 1; color: var(--main); }
 
+        /* --- تنسيق القائمة المنسدلة (الـ CSS الجديد) --- */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--bg-site);
+            min-width: 160px;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.6);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            top: 100%;
+            right: 0; 
+            border-radius: 4px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            text-align: right;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .dropdown-content a:last-child { border-bottom: none; }
+
+        .dropdown-content a:hover {
+            background-color: var(--main);
+            padding-right: 20px;
+            opacity: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInSlide 0.3s ease forwards;
+        }
+
+        @keyframes fadeInSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown > a::after {
+            content: ' ▾';
+            font-size: 10px;
+            vertical-align: middle;
+            opacity: 0.5;
+        }
+        /* --- نهاية تنسيق الـ Dropdown --- */
+
         .header-icons { display: flex; align-items: center; }
         
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
@@ -92,16 +150,15 @@
             font-size: 28px; 
             font-weight: 700; 
             opacity: 1;
-            margin-bottom: 15px; /* مسافة صغيرة عشان الخط يكون تحتها علطول */
+            margin-bottom: 15px; 
             letter-spacing: 2px;
         }
 
-        /* كود الخط الرفيع تحت الكلمة */
         .line-divider {
             width: 60px;
             height: 1px;
             background: rgba(255, 255, 255, 0.2);
-            margin: 0 auto 15px auto; /* مسافة من تحت عشان يفصل عن المنتجات */
+            margin: 0 auto 15px auto; 
             display: block;
         }
 
@@ -154,7 +211,15 @@
     <a href="/" class="logo">ليل</a>
     <nav>
         <a href="/">الصفحة الرئيسية</a>
-        <a href="/#makhmariats">مخمريات</a>
+        
+        <div class="dropdown">
+            <a href="javascript:void(0)">مخمريات</a>
+            <div class="dropdown-content">
+                <a href="product-dam.html">دم الغزال</a>
+                <a href="product-sarab.html">سراب</a>
+            </div>
+        </div>
+
         <a href="contact.html">تواصل معنا</a>
     </nav>
     <div class="header-icons">
