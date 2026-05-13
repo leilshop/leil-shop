@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leil | ليل</title>
 
-    <!-- الأيقونات اللي رفعتها يا فنان -->
     <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
     <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
     <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
@@ -87,7 +86,26 @@
         }
         .hero-btn:hover { background: white; color: black; }
 
-        .section-title { text-align: center; padding: 60px 0 30px 0; font-size: 28px; letter-spacing: 2px; }
+        /* تعديل العنوان والخط الرفيع */
+        .section-title { text-align: center; padding: 60px 0 0 0; font-size: 28px; letter-spacing: 2px; }
+        .sub-title { 
+            text-align: center; 
+            font-size: 18px; 
+            font-weight: 400; 
+            opacity: 0.8; 
+            margin-bottom: 40px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .sub-title::before { 
+            content: ""; 
+            width: 60px; 
+            height: 1px; 
+            background: rgba(255, 255, 255, 0.2); 
+            margin: 15px 0; 
+        }
+
         .container {
             max-width: 1100px; margin: auto; padding: 20px;
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
@@ -134,10 +152,8 @@
 <body>
 
 <header>
-    <!-- تم تعديل الرابط ليشير للدومين فقط -->
     <a href="/" class="logo">ليل</a>
     <nav>
-        <!-- تم تعديل الرابط ليشير للدومين فقط -->
         <a href="/">الصفحة الرئيسية</a>
         <a href="product-dam.html">دم الغزال</a>
         <a href="product-sarab.html">سراب</a>
@@ -157,6 +173,7 @@
 </section>
 
 <h2 class="section-title">منتجاتنا</h2>
+<div class="sub-title">مخمرية</div>
 
 <div class="container">
     <div class="card">
