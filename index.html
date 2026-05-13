@@ -41,13 +41,12 @@
             line-height: 1;
         }
 
-        /* توحيد المحاذاة والارتفاع */
         nav { 
             display: flex; 
             gap: 25px; 
             flex-grow: 1; 
             justify-content: center; 
-            align-items: center; /* سنترة رأسية */
+            align-items: center; 
         }
         
         nav a { 
@@ -57,17 +56,16 @@
             transition: 0.3s; 
             white-space: nowrap; 
             color: white;
-            line-height: 1.2; /* ارتفاع ثابت عشان السهم ميسحبش الكلمة */
+            line-height: 1.2;
             display: flex;
             align-items: center;
         }
 
-        nav a:hover, .dropdown:hover > a { 
+        nav a:hover, .dropdown.active > a { 
             opacity: 1; 
             color: white !important; 
         }
 
-        /* الـ Dropdown كـ Flex لضمان المحاذاة */
         .dropdown {
             position: relative;
             display: flex;
@@ -76,7 +74,7 @@
         }
 
         .dropdown-content {
-            display: none;
+            display: none; /* مخفي افتراضياً */
             position: absolute;
             background-color: var(--bg-site);
             min-width: 160px;
@@ -88,6 +86,12 @@
             border-radius: 4px;
             overflow: hidden;
             backdrop-filter: blur(15px);
+        }
+
+        /* الكلاس ده اللي الـ JavaScript هيضيفه عشان يفتح ويقفل */
+        .dropdown.active .dropdown-content {
+            display: block;
+            animation: fadeInSlide 0.3s ease forwards;
         }
 
         .dropdown-content a {
@@ -102,25 +106,13 @@
         }
 
         .dropdown-content a:last-child { border-bottom: none; }
-
-        .dropdown-content a:hover {
-            background-color: var(--main);
-            padding-right: 20px;
-            opacity: 1;
-            color: white !important;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-            animation: fadeInSlide 0.3s ease forwards;
-        }
+        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; opacity: 1; }
 
         @keyframes fadeInSlide {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* السهم متسنتر بالملي */
         .dropdown > a::after {
             content: ' ▾';
             font-size: 10px;
@@ -131,7 +123,6 @@
         }
 
         .header-icons { display: flex; align-items: center; }
-        
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
         .cart-count {
             position: absolute; top: -8px; left: -10px; background: var(--main);
@@ -139,7 +130,6 @@
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
-        /* قسم الهيرو */
         .hero {
             height: 80vh;
             background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), 
@@ -166,62 +156,28 @@
         .hero-btn {
             padding: 8px 20px; border: 1px solid white; background: none;
             color: white; text-decoration: none; font-weight: 700; transition: 0.3s;
-            border-radius: 2px;
-            margin-top: 20px;
-            font-size: 15px;
+            border-radius: 2px; margin-top: 20px; font-size: 15px;
         }
         .hero-btn:hover { background: white; color: black; }
 
-        .sub-title { 
-            text-align: center; 
-            padding-top: 60px; 
-            font-size: 28px; 
-            font-weight: 700; 
-            opacity: 1;
-            margin-bottom: 15px; 
-            letter-spacing: 2px;
-        }
-
-        .line-divider {
-            width: 60px;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.2);
-            margin: 0 auto 15px auto; 
-            display: block;
-        }
-
-        .container {
-            max-width: 1100px; margin: auto; padding: 20px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
-        }
-        
+        .sub-title { text-align: center; padding-top: 60px; font-size: 28px; font-weight: 700; opacity: 1; margin-bottom: 15px; letter-spacing: 2px; }
+        .line-divider { width: 60px; height: 1px; background: rgba(255, 255, 255, 0.2); margin: 0 auto 15px auto; display: block; }
+        .container { max-width: 1100px; margin: auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .card { background: rgba(0,0,0,0.2); border-radius: 0; overflow: hidden; transition: 0.4s; border: 1px solid rgba(255,255,255,0.05); }
         .card:hover { transform: translateY(-5px); border-color: var(--main); }
         .card-img { width: 100%; height: 380px; background: #222; object-fit: cover; }
-        
         .card-info { padding: 25px; text-align: center; }
-        
         .card-title { font-size: 24px; margin-bottom: 5px; color: white !important; font-weight: 700; }
         .card-desc { font-size: 14px; opacity: 0.7; margin-bottom: 10px; line-height: 1.5; }
-
         .price-area { margin-bottom: 20px; }
         .price-label { font-size: 12px; opacity: 0.6; display: block; margin-bottom: 2px; }
         .price-value { font-size: 24px; font-weight: 700; color: white; }
-        
-        .btn-view {
-            display: block; width: 100%; padding: 14px; background: var(--main);
-            text-decoration: none; font-weight: 700; border-radius: 0; transition: 0.3s;
-        }
+        .btn-view { display: block; width: 100%; padding: 14px; background: var(--main); text-decoration: none; font-weight: 700; border-radius: 0; transition: 0.3s; }
         .btn-view:hover { filter: brightness(1.2); }
 
-        /* تعديل الموبايل النهائي لضبط المسطرة */
         @media (max-width: 480px) {
             nav { gap: 15px; } 
-            nav a { 
-                font-size: 12px;
-                display: flex;
-                align-items: center; /* يخلي الكلمة والسهم في نص الخط */
-            } 
+            nav a { font-size: 12px; display: flex; align-items: center; } 
             .logo { font-size: 18px; }
             header { padding: 10px 4%; }
         }
@@ -234,7 +190,7 @@
     <nav>
         <a href="/">الصفحة الرئيسية</a>
         
-        <div class="dropdown">
+        <div class="dropdown" id="makhmariatToggle">
             <a href="javascript:void(0)">مخمريات</a>
             <div class="dropdown-content">
                 <a href="product-dam.html">دم الغزال</a>
@@ -289,11 +245,26 @@
 </div>
 
 <script>
+    // تحديث عدد السلة
     function updateCartCount() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let total = Object.values(cart).reduce((a, b) => a + b, 0);
         document.getElementById('cart-count').innerText = total;
     }
+
+    // كود فتح وقفل القائمة المنسدلة
+    const dropdown = document.getElementById('makhmariatToggle');
+    
+    dropdown.addEventListener('click', function(e) {
+        e.stopPropagation(); // عشان الكليك ميوصلش للـ body
+        this.classList.toggle('active');
+    });
+
+    // قفل القائمة لو دوست في أي حتة تانية في الصفحة
+    document.addEventListener('click', function() {
+        dropdown.classList.remove('active');
+    });
+
     window.onload = updateCartCount;
 </script>
 
