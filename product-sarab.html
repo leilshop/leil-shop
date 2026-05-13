@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سراب | ليل</title>
 
-    <!-- أيقونات الموقع (Favicons) الموحدة -->
     <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
     <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
     <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
@@ -19,7 +18,7 @@
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         body { background: var(--bg); overflow-x: hidden; }
 
-        /* الشريط العلوي الموحد (Header) */
+        /* --- شريط التنقل الموحد بالملي --- */
         header {
             background: var(--bg); 
             padding: 15px 4%;
@@ -42,18 +41,94 @@
             line-height: 1;
         }
 
-        nav { display: flex; gap: 20px; flex-grow: 1; justify-content: center; }
-        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; }
-        nav a:hover { opacity: 1; color: var(--main); }
+        nav { 
+            display: flex; 
+            gap: 25px; 
+            flex-grow: 1; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        nav a { 
+            text-decoration: none; 
+            font-size: 14px; 
+            opacity: 0.8; 
+            transition: 0.3s; 
+            white-space: nowrap; 
+            color: white;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+        }
+
+        nav a:hover, .dropdown.active > a { 
+            opacity: 1; 
+            color: white !important; 
+        }
+
+        .dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--bg);
+            min-width: 160px;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.6);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            top: 100%;
+            right: 0; 
+            border-radius: 4px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+            animation: fadeInSlide 0.3s ease forwards;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            text-align: right;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; opacity: 1; }
+
+        @keyframes fadeInSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown > a::after {
+            content: ' ▾';
+            font-size: 10px;
+            margin-right: 4px;
+            display: inline-block;
+            opacity: 0.5;
+        }
 
         .header-icons { display: flex; align-items: center; }
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
         .cart-count {
-            position: absolute; top: -10px; right: -12px; background: var(--main);
-            width: 20px; height: 20px; border-radius: 50%; font-size: 12px;
+            position: absolute; top: -8px; left: -10px; background: var(--main);
+            width: 18px; height: 18px; border-radius: 50%; font-size: 11px;
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
+        /* تنسيقات المنتج */
         .product-wrapper { max-width: 1200px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 40px; padding: 20px; }
         .image-section { flex: 1; min-width: 300px; max-width: 550px; width: 100%; }
         .swiper { width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); }
@@ -67,7 +142,7 @@
 
         .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
         .size-btn { padding: 12px 20px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; transition: 0.3s; font-size: 14px; color: white; }
-        .active { background: white !important; color: black !important; border-color: white !important; }
+        .active-size { background: white !important; color: black !important; border-color: white !important; } /* تم تغيير الاسم لـ active-size لمنع تداخل الكود */
         .out-of-stock { opacity: 0.4; border-style: dashed; cursor: pointer; text-decoration: line-through; }
 
         .price-container { margin-bottom: 30px; display: flex; align-items: baseline; gap: 15px; }
@@ -85,11 +160,12 @@
         .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
 
-        @media (max-width: 768px) { 
-            .product-wrapper { flex-direction: column; } 
-            nav { gap: 10px; }
-            nav a { font-size: 11px; }
+        @media (max-width: 480px) { 
+            header { padding: 10px 4%; }
+            nav { gap: 15px; }
+            nav a { font-size: 12px; display: flex; align-items: center; }
             .logo { font-size: 18px; }
+            .product-wrapper { flex-direction: column; } 
         }
     </style>
 </head>
@@ -99,13 +175,20 @@
     <a href="index.html" class="logo">ليل</a>
     <nav>
         <a href="index.html">الصفحة الرئيسية</a>
-        <a href="product-dam.html">دم الغزال</a>
-        <a href="product-sarab.html">سراب</a>
+        
+        <div class="dropdown" id="makhmariatToggle">
+            <a href="javascript:void(0)">مخمريات</a>
+            <div class="dropdown-content">
+                <a href="product-dam.html">دم الغزال</a>
+                <a href="product-sarab.html">سراب</a>
+            </div>
+        </div>
+
         <a href="contact.html">تواصل معنا</a>
     </nav>
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
             <div class="cart-count" id="cart-count">0</div>
         </a>
     </div>
@@ -130,7 +213,7 @@
 
         <span class="label">الحجم</span>
         <div class="size-selector">
-            <button class="size-btn active" data-price="25" data-old="30" onclick="selectSize(this, '3 جرام')">3 جرام</button>
+            <button class="size-btn active-size" data-price="25" data-old="30" onclick="selectSize(this, '3 جرام')">3 جرام</button>
             <button class="size-btn out-of-stock" data-price="50" data-old="50" onclick="selectSize(this, '5 جرام')">5 جرام</button>
             <button class="size-btn" data-price="60" data-old="70" onclick="selectSize(this, '10 جرام')">10 جرام</button>
         </div>
@@ -164,6 +247,17 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
+    // --- كود الشريط الجديد لفتح وقفل القائمة ---
+    const dropdown = document.getElementById('makhmariatToggle');
+    dropdown.addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+    });
+    document.addEventListener('click', function() {
+        dropdown.classList.remove('active');
+    });
+    // ------------------------------------------
+
     const swiper = new Swiper('.swiper', {
         loop: true,
         pagination: { el: '.swiper-pagination', clickable: true },
@@ -176,8 +270,8 @@
 
     function selectSize(btn, sizeName) {
         currentSelectedSize = sizeName;
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
+        btn.classList.add('active-size');
 
         currentUnitPrice = parseInt(btn.getAttribute('data-price'));
         currentOldPrice = parseInt(btn.getAttribute('data-old'));
@@ -237,7 +331,6 @@
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const itemKey = currentProductName + " - " + currentSelectedSize;
         
-        // التعديل الديناميكي لإرسال السعر والكمية كـ Object لصفحة السلة
         if (!cart[itemKey]) {
             cart[itemKey] = { qty: 0, price: currentUnitPrice };
         }
