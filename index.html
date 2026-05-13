@@ -41,12 +41,13 @@
             line-height: 1;
         }
 
+        /* توحيد المحاذاة والارتفاع */
         nav { 
             display: flex; 
-            gap: 25px; /* زيادة المسافة في الديسكتوب كمان للشياكة */
+            gap: 25px; 
             flex-grow: 1; 
             justify-content: center; 
-            align-items: center; 
+            align-items: center; /* سنترة رأسية */
         }
         
         nav a { 
@@ -55,20 +56,23 @@
             opacity: 0.8; 
             transition: 0.3s; 
             white-space: nowrap; 
-            color: white; 
+            color: white;
+            line-height: 1.2; /* ارتفاع ثابت عشان السهم ميسحبش الكلمة */
+            display: flex;
+            align-items: center;
         }
 
-        /* اللون يفضل أبيض في الـ Hover */
         nav a:hover, .dropdown:hover > a { 
             opacity: 1; 
             color: white !important; 
         }
 
-        /* تنسيق القائمة المنسدلة */
+        /* الـ Dropdown كـ Flex لضمان المحاذاة */
         .dropdown {
             position: relative;
             display: flex;
             align-items: center;
+            height: 100%;
         }
 
         .dropdown-content {
@@ -116,11 +120,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* السهم متسنتر بالملي */
         .dropdown > a::after {
             content: ' ▾';
             font-size: 10px;
-            vertical-align: middle;
+            margin-right: 4px;
+            display: inline-block;
             opacity: 0.5;
+            transition: 0.3s;
         }
 
         .header-icons { display: flex; align-items: center; }
@@ -132,6 +139,7 @@
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
+        /* قسم الهيرو */
         .hero {
             height: 80vh;
             background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), 
@@ -193,19 +201,8 @@
         
         .card-info { padding: 25px; text-align: center; }
         
-        .card-title { 
-            font-size: 24px; 
-            margin-bottom: 5px; 
-            color: white !important; 
-            font-weight: 700; 
-        }
-        
-        .card-desc { 
-            font-size: 14px; 
-            opacity: 0.7; 
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
+        .card-title { font-size: 24px; margin-bottom: 5px; color: white !important; font-weight: 700; }
+        .card-desc { font-size: 14px; opacity: 0.7; margin-bottom: 10px; line-height: 1.5; }
 
         .price-area { margin-bottom: 20px; }
         .price-label { font-size: 12px; opacity: 0.6; display: block; margin-bottom: 2px; }
@@ -217,10 +214,14 @@
         }
         .btn-view:hover { filter: brightness(1.2); }
 
-        /* تعديلات الموبايل - المسافة بقت 15 بيكسل */
+        /* تعديل الموبايل النهائي لضبط المسطرة */
         @media (max-width: 480px) {
             nav { gap: 15px; } 
-            nav a { font-size: 12px; } 
+            nav a { 
+                font-size: 12px;
+                display: flex;
+                align-items: center; /* يخلي الكلمة والسهم في نص الخط */
+            } 
             .logo { font-size: 18px; }
             header { padding: 10px 4%; }
         }
