@@ -86,13 +86,13 @@
         }
         .hero-btn:hover { background: white; color: black; }
 
-        /* تعديل الـ sub-title ليكون هو البداية */
+        /* تعديل العنوان ليكون "مخمريات" بحجم 28px */
         .sub-title { 
             text-align: center; 
-            padding-top: 60px; /* مسافة من فوق بدل العنوان اللي اتشال */
-            font-size: 20px; 
+            padding-top: 60px; 
+            font-size: 28px; /* نفس حجم كلمة منتجاتنا سابقاً */
             font-weight: 400; 
-            opacity: 0.8; 
+            opacity: 0.9; 
             margin-bottom: 40px; 
             display: flex; 
             flex-direction: column; 
@@ -101,7 +101,7 @@
         }
         .sub-title::before { 
             content: ""; 
-            width: 60px; 
+            width: 80px; /* طول الخط زاد شوية عشان يوازن الكلمة الكبيرة */
             height: 1px; 
             background: rgba(255, 255, 255, 0.2); 
             margin-bottom: 15px; 
@@ -173,7 +173,7 @@
     <a href="contact.html" class="hero-btn">تواصل معنا</a>
 </section>
 
-<div class="sub-title">مخمرية</div>
+<div class="sub-title">مخمريات</div>
 
 <div class="container">
     <div class="card">
