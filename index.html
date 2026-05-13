@@ -41,13 +41,12 @@
             line-height: 1;
         }
 
-        /* تعديل الـ Nav لضمان المحاذاة */
         nav { 
             display: flex; 
-            gap: 20px; 
+            gap: 25px; /* زيادة المسافة في الديسكتوب كمان للشياكة */
             flex-grow: 1; 
             justify-content: center; 
-            align-items: center; /* بيخلي الكلام كله على خط واحد بالظبط */
+            align-items: center; 
         }
         
         nav a { 
@@ -59,13 +58,13 @@
             color: white; 
         }
 
-        /* تعديل عشان اللون يفضل أبيض في الـ Hover */
+        /* اللون يفضل أبيض في الـ Hover */
         nav a:hover, .dropdown:hover > a { 
             opacity: 1; 
             color: white !important; 
         }
 
-        /* --- تنسيق القائمة المنسدلة --- */
+        /* تنسيق القائمة المنسدلة */
         .dropdown {
             position: relative;
             display: flex;
@@ -218,12 +217,12 @@
         }
         .btn-view:hover { filter: brightness(1.2); }
 
-        /* تعديلات الموبايل لضمان بقاء اللينكات في سطر واحد */
+        /* تعديلات الموبايل - المسافة بقت 15 بيكسل */
         @media (max-width: 480px) {
-            nav { gap: 8px; } /* تقليل المسافة بين اللينكات */
-            nav a { font-size: 12px; } /* تصغير الخط سيكا عشان يلم */
+            nav { gap: 15px; } 
+            nav a { font-size: 12px; } 
             .logo { font-size: 18px; }
-            header { padding: 10px 3%; }
+            header { padding: 10px 4%; }
         }
     </style>
 </head>
