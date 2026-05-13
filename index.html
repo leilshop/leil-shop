@@ -86,24 +86,25 @@
         }
         .hero-btn:hover { background: white; color: black; }
 
-        /* تعديل العنوان والخط الرفيع */
-        .section-title { text-align: center; padding: 60px 0 0 0; font-size: 28px; letter-spacing: 2px; }
+        /* تعديل الـ sub-title ليكون هو البداية */
         .sub-title { 
             text-align: center; 
-            font-size: 18px; 
+            padding-top: 60px; /* مسافة من فوق بدل العنوان اللي اتشال */
+            font-size: 20px; 
             font-weight: 400; 
             opacity: 0.8; 
             margin-bottom: 40px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
+            letter-spacing: 2px;
         }
         .sub-title::before { 
             content: ""; 
             width: 60px; 
             height: 1px; 
             background: rgba(255, 255, 255, 0.2); 
-            margin: 15px 0; 
+            margin-bottom: 15px; 
         }
 
         .container {
@@ -172,7 +173,6 @@
     <a href="contact.html" class="hero-btn">تواصل معنا</a>
 </section>
 
-<h2 class="section-title">منتجاتنا</h2>
 <div class="sub-title">مخمرية</div>
 
 <div class="container">
