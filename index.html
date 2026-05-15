@@ -107,27 +107,27 @@
 
 <header>
     <a href="index.html" class="logo">ليل</a>
-<nav>
-    <a href="index.html">الرئيسية</a>
-    
-    <div class="dropdown" id="splashToggle">
-        <a href="javascript:void(0)">بادي سبلاش</a>
-        <div class="dropdown-content">
-            <a href="splash-d.html">دم الغزال</a>
-            <a href="splash-s.html">سراب</a>
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        
+        <div class="dropdown" id="splashToggle">
+            <a href="javascript:void(0)">بادي سبلاش</a>
+            <div class="dropdown-content">
+                <a href="splash-d.html">دم الغزال</a>
+                <a href="splash-s.html">سراب</a>
+            </div>
         </div>
-    </div>
 
-    <div class="dropdown" id="makhmariatToggle">
-        <a href="javascript:void(0)">مخمريات</a>
-        <div class="dropdown-content">
-            <a href="product-dam.html">دم الغزال</a>
-            <a href="product-sarab.html">سراب</a>
+        <div class="dropdown" id="makhmariatToggle">
+            <a href="javascript:void(0)">مخمريات</a>
+            <div class="dropdown-content">
+                <a href="product-dam.html">دم الغزال</a>
+                <a href="product-sarab.html">سراب</a>
+            </div>
         </div>
-    </div>
 
-    <a href="contact.html">تواصل معنا</a>
-</nav>
+        <a href="contact.html">تواصل معنا</a>
+    </nav>
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
@@ -146,7 +146,7 @@
 
 <div class="container">
     <div class="card">
-        <img src="SPLASH_9703.webp" class="card-img" alt="دم الغزال">
+        <img src="SPLASH_9706.webp" class="card-img" alt="دم الغزال">
         <div class="card-info">
             <h3 class="card-title">دم الغزال</h3>
             <p class="card-desc">عطر من الخيال</p>
@@ -159,7 +159,7 @@
     </div>
 
     <div class="card">
-        <img src="SPLASH_9704.webp" class="card-img" alt="سراب">
+        <img src="SPLASH_9705.webp" class="card-img" alt="سراب">
         <div class="card-info">
             <h3 class="card-title">سراب</h3>
             <p class="card-desc">أثر لا يغيب</p>
@@ -204,41 +204,39 @@
 </div>
 
 <script>
+    // 1. تحديث عدد السلة
     function updateCartCount() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let total = Object.values(cart).reduce((a, b) => {
             const q = typeof b === 'object' ? b.qty : b;
             return a + q;
         }, 0);
-        document.getElementById('cart-count').innerText = total;
+        const countEl = document.getElementById('cart-count');
+        if(countEl) countEl.innerText = total;
     }
 
-// 1. دالة ذكية لتشغيل أي قائمة منسدلة بمجرد إعطائها الـ ID
-function setupDropdown(id) {
-    const el = document.getElementById(id);
-    if (el) {
-        el.addEventListener('click', function(e) {
-            e.stopPropagation(); // يمنع قفل القائمة فور فتحها
-            
-            // قفل أي قائمة تانية مفتوحة قبل ما نفتح القائمة اللي دوسنا عليها
-            document.querySelectorAll('.dropdown').forEach(d => {
-                if(d !== el) d.classList.remove('active');
+    // 2. دالة تشغيل القوائم المنسدلة
+    function setupDropdown(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.dropdown').forEach(d => {
+                    if(d !== el) d.classList.remove('active');
+                });
+                this.classList.toggle('active');
             });
-
-            // فتح أو قفل القائمة الحالية
-            this.classList.toggle('active');
-        });
+        }
     }
-}
 
-// 2. تشغيل القوائم اللي عندنا في الشريط
-setupDropdown('makhmariatToggle'); // تشغيل قائمة مخمريات
-setupDropdown('splashToggle');     // تشغيل قائمة بادي سبلاش
+    // تشغيل القوائم
+    setupDropdown('makhmariatToggle');
+    setupDropdown('splashToggle');
 
-// 3. قفل كل القوائم لو المستخدم داس في أي حتة فاضية في الصفحة
-document.addEventListener('click', function() {
-    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
-});
+    // قفل القوائم عند الضغط خارجها
+    document.addEventListener('click', function() {
+        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+    });
 
     window.onload = updateCartCount;
 </script>
