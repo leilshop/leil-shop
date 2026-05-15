@@ -213,21 +213,32 @@
         document.getElementById('cart-count').innerText = total;
     }
 
-    function setupDropdown(id) {
-        const el = document.getElementById(id);
+// 1. دالة ذكية لتشغيل أي قائمة منسدلة بمجرد إعطائها الـ ID
+function setupDropdown(id) {
+    const el = document.getElementById(id);
+    if (el) {
         el.addEventListener('click', function(e) {
-            e.stopPropagation();
-            document.querySelectorAll('.dropdown').forEach(d => { if(d !== el) d.classList.remove('active'); });
+            e.stopPropagation(); // يمنع قفل القائمة فور فتحها
+            
+            // قفل أي قائمة تانية مفتوحة قبل ما نفتح القائمة اللي دوسنا عليها
+            document.querySelectorAll('.dropdown').forEach(d => {
+                if(d !== el) d.classList.remove('active');
+            });
+
+            // فتح أو قفل القائمة الحالية
             this.classList.toggle('active');
         });
     }
+}
 
-    setupDropdown('makhmariatToggle');
-    setupDropdown('splashToggle');
+// 2. تشغيل القوائم اللي عندنا في الشريط
+setupDropdown('makhmariatToggle'); // تشغيل قائمة مخمريات
+setupDropdown('splashToggle');     // تشغيل قائمة بادي سبلاش
 
-    document.addEventListener('click', function() {
-        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
-    });
+// 3. قفل كل القوائم لو المستخدم داس في أي حتة فاضية في الصفحة
+document.addEventListener('click', function() {
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+});
 
     window.onload = updateCartCount;
 </script>
