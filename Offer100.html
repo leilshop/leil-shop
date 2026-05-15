@@ -70,11 +70,11 @@
         <span class="slogan">(بادي سبلاش + مخمرية)</span>
         <span class="label">اختر نوع العرض</span>
         <div class="size-selector">
-            <button class="size-btn active-size" data-price="100" data-old="120" onclick="selectOffer(this, 'عرض دم الغزال', 0)">دم الغزال</button>
-            <button class="size-btn" data-price="100" data-old="120" onclick="selectOffer(this, 'عرض سراب', 1)">سراب</button>
+            <button class="size-btn active-size" data-price="100" data-old="110" onclick="selectOffer(this, 'عرض دم الغزال', 0)">دم الغزال</button>
+            <button class="size-btn" data-price="100" data-old="110" onclick="selectOffer(this, 'عرض سراب', 1)">سراب</button>
         </div>
         <span class="label">السعر الحالي (لفترة محدودة)</span>
-        <div class="price-container"><span class="price-tag" id="main-price">100 ج.م</span><span class="old-price-tag" id="old-price">120 ج.م</span></div>
+        <div class="price-container"><span class="price-tag" id="main-price">100 ج.م</span><span class="old-price-tag" id="old-price">110 ج.م</span></div>
         <div class="cart-controls"><button class="add-to-cart-btn" id="add-btn" onclick="initAdd()">أضف إلى السلة</button><div class="quantity-btn-group" id="qty-group"><button class="q-btn" onclick="changeQty(1)">+</button><div class="q-val" id="current-qty">1</div><button class="q-btn" onclick="changeQty(-1)">-</button></div></div>
         <div class="product-desc"><h3>محتويات العرض:</h3><p>1. بادي سبلاش (15 ملي) لرائحة منعشة تدوم.
 2. مخمرية (10 جرام) لنعومة حريرية وثبات فائق.</p></div>
@@ -86,7 +86,7 @@
     setupDropdown('makhmariatToggle'); setupDropdown('splashToggle');
     document.addEventListener('click', function() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); });
     const swiper = new Swiper('.swiper', { loop: false, speed: 400, pagination: { el: '.swiper-pagination', clickable: true }, });
-    let currentProductName = "عرض التوفير 2"; let currentSelectedSize = "عرض دم الغزال"; let currentUnitPrice = 100; let currentOldPrice = 120;
+    let currentProductName = "عرض التوفير 2"; let currentSelectedSize = "عرض دم الغزال"; let currentUnitPrice = 100; let currentOldPrice = 110;
 
     function updateDisplayPrice(price, oldPrice) {
         document.getElementById('main-price').innerText = price + " ج.م";
