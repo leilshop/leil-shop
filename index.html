@@ -141,12 +141,43 @@
     <a href="contact.html" class="hero-btn">تواصل معنا</a>
 </section>
 
+<div class="sub-title">عروض التوفير</div>
+<div class="line-divider"></div>
+
+<div class="container">
+    <div class="card">
+        <img src="Offer50-IMG1.webp" class="card-img" alt="عرض التوفير 1">
+        <div class="card-info">
+            <h3 class="card-title">عرض التوفير 1</h3>
+            <p class="card-desc">( سبلاش + مخمرية )</p>
+            <div style="margin-bottom: 20px;">
+                <span style="font-size: 12px; opacity: 0.6; display: block;">سعر العرض</span>
+                <span class="price-value">50 ج.م</span>
+            </div>
+            <a href="offer.html" class="btn-view">عرض التفاصيل</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="Offer100-IMG1.webp" class="card-img" alt="عرض التوفير 2">
+        <div class="card-info">
+            <h3 class="card-title">عرض التوفير 2</h3>
+            <p class="card-desc">( سبلاش + مخمرية )</p>
+            <div style="margin-bottom: 20px;">
+                <span style="font-size: 12px; opacity: 0.6; display: block;">سعر العرض</span>
+                <span class="price-value">100 ج.م</span>
+            </div>
+            <a href="offer2.html" class="btn-view">عرض التفاصيل</a>
+        </div>
+    </div>
+</div>
+
 <div class="sub-title">بادي سبلاش</div>
 <div class="line-divider"></div>
 
 <div class="container">
     <div class="card">
-        <img src="SPLASH_9703.webp" class="card-img" alt="دم الغزال">
+        <img src="SPLASH_9706.webp" class="card-img" alt="دم الغزال">
         <div class="card-info">
             <h3 class="card-title">دم الغزال</h3>
             <p class="card-desc">عطر من الخيال</p>
@@ -159,7 +190,7 @@
     </div>
 
     <div class="card">
-        <img src="SPLASH_9704.webp" class="card-img" alt="سراب">
+        <img src="SPLASH_9705.webp" class="card-img" alt="سراب">
         <div class="card-info">
             <h3 class="card-title">سراب</h3>
             <p class="card-desc">أثر لا يغيب</p>
@@ -204,7 +235,6 @@
 </div>
 
 <script>
-    // 1. تحديث عدد السلة
     function updateCartCount() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let total = Object.values(cart).reduce((a, b) => {
@@ -215,7 +245,6 @@
         if(countEl) countEl.innerText = total;
     }
 
-    // 2. دالة تشغيل القوائم المنسدلة
     function setupDropdown(id) {
         const el = document.getElementById(id);
         if (el) {
@@ -229,11 +258,9 @@
         }
     }
 
-    // تشغيل القوائم
     setupDropdown('makhmariatToggle');
     setupDropdown('splashToggle');
 
-    // قفل القوائم عند الضغط خارجها
     document.addEventListener('click', function() {
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
     });
