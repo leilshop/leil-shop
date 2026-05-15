@@ -59,17 +59,9 @@
             align-items: center;
         }
 
-        nav a:hover, .dropdown.active > a { 
-            opacity: 1; 
-            color: white !important; 
-        }
+        nav a:hover, .dropdown.active > a { opacity: 1; color: white !important; }
 
-        .dropdown {
-            position: relative;
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
+        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
 
         .dropdown-content {
             display: none;
@@ -279,7 +271,8 @@
         pagination: { el: '.swiper-pagination', clickable: true },
     });
 
-    let currentProductName = "مخمرية سراب";
+    // تم تعديل الاسم هنا ليظهر بكلمة "مخمرية" في السلة
+    let currentProductName = "مخمرية سراب"; 
     let currentSelectedSize = "3 جرام";
     let currentUnitPrice = 25;
     let currentOldPrice = 30;
