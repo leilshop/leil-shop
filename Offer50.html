@@ -80,7 +80,7 @@
         .active-size { background: white !important; color: black !important; border-color: white !important; }
 
         .price-container { margin-bottom: 30px; display: flex; align-items: baseline; gap: 15px; }
-        .price-tag { font-size: 35px; font-weight: 700; display: block; color: #25D366; } /* تم تمييز لون السعر للعرض */
+        .price-tag { font-size: 35px; font-weight: 700; display: block; color: white; } /* تم تعديل اللون للأبيض */
         .old-price-tag { font-size: 20px; text-decoration: line-through; opacity: 0.5; font-weight: 400; }
 
         .cart-controls { margin-bottom: 40px; }
@@ -170,9 +170,8 @@
         <div class="product-desc">
             <h3>تفاصيل العرض:</h3>
             <p>احصل على التوليفة المثالية من ليل:
-1. بادي سبلاش (الحجم الوسط) لرائحة منعشة تدوم.
-2. مخمرية (الحجم الوسط) لنعومة حريرية وثبات فائق.
-باقة واحدة تمنحك الأنوثة والنظافة المتكاملة بسعر خاص جداً.</p>
+1. بادي سبلاش (10 ملي) لرائحة منعشة تدوم.
+2. مخمرية (3 جرام) لنعومة حريرية وثبات فائق.</p>
         </div>
     </div>
 </div>
@@ -211,7 +210,6 @@
         document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
         btn.classList.add('active-size');
 
-        // تغيير الصورة
         swiper.slideTo(imgIndex, 400, true);
         
         checkCartState();
