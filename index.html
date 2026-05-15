@@ -218,9 +218,9 @@
 
 <div class="container">
     <div class="card">
-        <img src="SPLASH_9706.html" class="card-img" alt="سبلاش دم الغزال">
+        <img src="SPLASH_9706.jpg" class="card-img" alt="بادي سبلاش دم الغزال">
         <div class="card-info">
-            <h3 class="card-title">دم الغزال</h3>
+            <h3 class="card-title">بادي سبلاش دم الغزال</h3>
             <p class="card-desc">عطر من الخيال</p>
             <div class="price-area">
                 <span class="price-label">يبدأ من</span>
@@ -231,9 +231,9 @@
     </div>
 
     <div class="card">
-        <img src="SPLASH_9705.html" class="card-img" alt="سبلاش سراب">
+        <img src="SPLASH_9705.jpg" class="card-img" alt="بادي سبلاش سراب">
         <div class="card-info">
-            <h3 class="card-title">سراب</h3>
+            <h3 class="card-title">بادي سبلاش سراب</h3>
             <p class="card-desc">أثر لا يغيب</p>
             <div class="price-area">
                 <span class="price-label">يبدأ من</span>
@@ -276,7 +276,6 @@
 </div>
 
 <script>
-    // تحديث عدد السلة (تم تعديله ليتناسب مع تخزين الكائنات)
     function updateCartCount() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let total = Object.values(cart).reduce((a, b) => {
@@ -286,12 +285,10 @@
         document.getElementById('cart-count').innerText = total;
     }
 
-    // كود فتح وقفل القوائم المنسدلة
     function setupDropdown(id) {
         const el = document.getElementById(id);
         el.addEventListener('click', function(e) {
             e.stopPropagation();
-            // قفل أي قائمة تانية مفتوحة قبل فتح دي
             document.querySelectorAll('.dropdown').forEach(d => {
                 if(d !== el) d.classList.remove('active');
             });
