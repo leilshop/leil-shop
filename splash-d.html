@@ -224,6 +224,7 @@
             <button class="size-btn active-size" data-price="25" data-old="35" onclick="selectSize(this, '5 مل', 0)">5 مل</button>
             <button class="size-btn" data-price="35" data-old="45" onclick="selectSize(this, '10 مل', 1)">10 مل</button>
             <button class="size-btn" data-price="50" data-old="60" onclick="selectSize(this, '15 مل', 2)">15 مل</button>
+            <button class="size-btn" data-price="200" data-old="250" onclick="selectSize(this, '150 مل', -1)">150 مل</button>
         </div>
 
         <span class="label">السعر الحالي</span>
@@ -291,7 +292,10 @@
         document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
         btn.classList.add('active-size');
 
-        swiper.slideTo(imgIndex, 400, true);
+        // لو الاندكس مش -1، يغير الصورة.. لو -1، يفضل على نفس الصورة
+        if (imgIndex !== -1) {
+            swiper.slideTo(imgIndex, 400, true);
+        }
 
         currentUnitPrice = parseInt(btn.getAttribute('data-price'));
         currentOldPrice = parseInt(btn.getAttribute('data-old'));
@@ -367,5 +371,6 @@
 
     window.onload = checkCartState;
 </script>
+
 </body>
 </html>
