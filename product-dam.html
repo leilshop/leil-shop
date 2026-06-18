@@ -56,6 +56,16 @@
 <body>
 
 <div id="header-container"></div>
+<script>
+    fetch('header.html')
+        .then(r => r.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+            // تحديث عدد السلة بعد جلب الهيدر
+            let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+            document.getElementById('cart-count').innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
+        });
+</script>
 
 <div class="product-wrapper">
     <div class="image-section">
