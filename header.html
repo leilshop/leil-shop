@@ -1,55 +1,19 @@
 <style>
-    /* التنسيق الموحد الذي يضمن الشكل في الصورة */
-    .leil-header {
-        background: #3d0000 !important;
-        padding: 10px 4% !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        width: 100% !important;
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 9999 !important;
-    }
-    .leil-logo {
-        font-family: 'Noto Nastaliq Urdu', serif !important;
-        font-size: 20px !important;
-        color: white !important;
-        text-decoration: none !important;
-    }
-    .leil-nav {
-        display: flex !important;
-        gap: 15px !important;
-        align-items: center !important;
-        flex-direction: row-reverse !important; /* لترتيب الروابط كما في الصورة */
-    }
-    .leil-nav a {
-        color: white !important;
-        text-decoration: none !important;
-        font-size: 13px !important;
-        white-space: nowrap !important;
-    }
-    .leil-cart {
-        position: relative !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-    .leil-cart-count {
-        position: absolute !important;
-        top: -5px !important;
-        left: -5px !important;
-        background: #600a1c !important;
-        width: 15px !important;
-        height: 15px !important;
-        border-radius: 50% !important;
-        font-size: 10px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        color: white !important;
-    }
-    /* إخفاء القوائم المنسدلة الافتراضية في الصورة */
-    .leil-dropdown-content { display: none !important; }
+    /* تنسيق الهيدر الموحد */
+    .leil-header { background: #3d0000 !important; padding: 10px 4% !important; display: flex !important; justify-content: space-between !important; align-items: center !important; position: sticky !important; top: 0 !important; z-index: 9999 !important; width: 100% !important; }
+    .leil-logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 20px !important; color: white !important; text-decoration: none !important; }
+    .leil-nav { display: flex !important; gap: 15px !important; align-items: center !important; flex-direction: row-reverse !important; }
+    .leil-nav > a, .leil-dropdown > a { color: white !important; text-decoration: none !important; font-size: 13px !important; cursor: pointer !important; }
+    
+    /* تنسيق القوائم المنسدلة */
+    .leil-dropdown { position: relative !important; }
+    .leil-dropdown-content { display: none !important; position: absolute !important; background: #3d0000 !important; min-width: 140px; top: 100% !important; right: 0 !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 4px !important; }
+    .leil-dropdown:hover .leil-dropdown-content { display: block !important; }
+    .leil-dropdown-content a { padding: 10px !important; display: block !important; color: white !important; text-decoration: none !important; font-size: 12px !important; text-align: right !important; }
+    .leil-dropdown-content a:hover { background: #600a1c !important; }
+    
+    .leil-cart { position: relative; display: flex; align-items: center; }
+    .leil-cart-count { position: absolute; top: -5px; left: -5px; background: #600a1c; width: 15px; height: 15px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; }
 </style>
 
 <header class="leil-header">
@@ -59,9 +23,29 @@
     </a>
     
     <nav class="leil-nav">
-        <a href="lip-balm.html">زبدة كاكاو</a>
-        <a href="makhmariat.html">مخمريات</a>
-        <a href="splash.html">بادي سبلاش</a>
+        <div class="leil-dropdown">
+            <a>زبدة كاكاو ▾</a>
+            <div class="leil-dropdown-content">
+                <a href="Lip-Balm-1.html">فانيليا</a>
+                <a href="Lip-Balm-2.html">فراولة</a>
+            </div>
+        </div>
+        <div class="leil-dropdown">
+            <a>مخمريات ▾</a>
+            <div class="leil-dropdown-content">
+                <a href="product-dam.html">دم الغزال</a>
+                <a href="product-sarab.html">سراب</a>
+            </div>
+        </div>
+        <div class="leil-dropdown">
+            <a>بادي سبلاش ▾</a>
+            <div class="leil-dropdown-content">
+                <a href="splash-d.html">دم الغزال</a>
+                <a href="splash-s.html">سراب</a>
+                <a href="splash-a.html">أثر</a>
+                <a href="splash-h.html">حلم</a>
+            </div>
+        </div>
         <a href="index.html">الرئيسية</a>
     </nav>
     
