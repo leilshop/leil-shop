@@ -4,18 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مخمرية دم الغزال | ليل</title>
+
     <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
     <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
     <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
         :root { --main: #600a1c; --bg: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
-        html, body { overflow-x: hidden !important; width: 100%; margin: 0; padding: 0; background: var(--bg); }
+        html, body { overflow-x: hidden !important; max-width: 100vw; width: 100%; background: var(--bg); }
 
-        header { background: var(--bg); padding: 15px 4%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
+        header {
+            background: var(--bg); 
+            padding: 15px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
         .logo { display: block; font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; line-height: 1; }
         nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
         nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; color: white; display: inline-flex; align-items: center; }
@@ -23,31 +37,25 @@
 
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
         .dropdown-content { display: none; position: absolute; background-color: var(--bg); min-width: 160px; box-shadow: 0px 10px 20px rgba(0,0,0,0.6); z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.1); top: 100%; right: 0; border-radius: 4px; overflow: hidden; backdrop-filter: blur(15px); }
-        .dropdown.active .dropdown-content { display: block; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; }
-        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; opacity: 0.5; }
+        .dropdown.active .dropdown-content { display: block; animation: fadeInSlide 0.3s ease forwards; }
+        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; transition: 0.3s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; opacity: 1; }
+        @keyframes fadeInSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; display: inline-block; opacity: 0.5; }
 
         .header-icons { display: flex; align-items: center; }
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
         .cart-count { position: absolute; top: -8px; left: -10px; background: var(--main); width: 18px; height: 18px; border-radius: 50%; font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
 
         .product-wrapper { max-width: 1200px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 40px; padding: 20px; }
-        .image-section { flex: 1; min-width: 300px; max-width: 550px; width: 100%; }
-        .swiper { width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); }
-        .swiper-slide img { width: 100%; height: auto; display: block; }
-
         .product-details { flex: 1; min-width: 300px; text-align: right; }
         .product-details h1 { font-size: 28px; margin-bottom: 5px; font-weight: 700; }
-        .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
-        .size-btn, .pinky-btn { padding: 12px 20px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; font-size: 14px; color: white; }
-        .active-size { background: white !important; color: black !important; }
-        .add-to-cart-btn { width: 100%; padding: 16px; background: var(--main); border: none; color: white; font-weight: 700; font-size: 18px; cursor: pointer; }
+        .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; margin-top: 20px; }
 
         @media (max-width: 600px) {
-            nav { gap: 10px; }
-            nav a { font-size: 11px; }
-            .dropdown-content { left: 0 !important; right: auto !important; }
+            nav { gap: 5px !important; }
+            nav a { font-size: 10px !important; padding: 0 2px !important; }
+            .dropdown-content { min-width: 120px !important; right: auto !important; left: 0 !important; }
         }
     </style>
 </head>
@@ -90,34 +98,22 @@
 </header>
 
 <div class="product-wrapper">
-    <div class="image-section">
-        <div class="swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="FIMG9622WEB.webp" alt="دم الغزال 1"></div>
-                <div class="swiper-slide"><img src="Productdam.webp" alt="دم الغزال 2"></div>
-                <div class="swiper-slide"><img src="FIMG9626WEB.webp" alt="دم الغزال 3"></div>
-                <div class="swiper-slide"><img src="FIMG9629WEB.webp" alt="دم الغزال 4"></div>
-                <div class="swiper-slide"><img src="FIMG9693WEB.webp" alt="دم الغزال 5"></div>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
     <div class="product-details">
         <h1>مخمرية دم الغزال</h1>
-        <p>مزيج ساحر يجمع بين طهارة المسك الأبيض وعبير الفراولة المخملي.</p>
+        <div class="product-desc">
+            <p>مزيج ساحر يجمع بين طهارة المسك الأبيض وعبير الفراولة المخملي.</p>
         </div>
+    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     function setupDropdown(id) {
-        document.getElementById(id).addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('active'); });
+        document.getElementById(id).addEventListener('click', function(e) { e.stopPropagation(); document.querySelectorAll('.dropdown').forEach(d => { if(d !== this) d.classList.remove('active'); }); this.classList.toggle('active'); });
     }
     setupDropdown('makhmariatToggle');
     setupDropdown('splashToggle');
     setupDropdown('lipBalmToggle');
-    
-    // تأكد من ربط وظائف المنتج (selectSize, initAdd, etc) من ملفك الأصلي هنا
+    document.addEventListener('click', function() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); });
 </script>
 </body>
 </html>
