@@ -124,7 +124,9 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     function setupDropdown(id) { const el = document.getElementById(id); if (el) { el.addEventListener('click', function(e) { e.stopPropagation(); document.querySelectorAll('.dropdown').forEach(d => { if(d !== el) d.classList.remove('active'); }); this.classList.toggle('active'); }); } }
-    setupDropdown('makhmariatToggle'); setupDropdown('splashToggle');
+    setupDropdown('makhmariatToggle');
+    setupDropdown('splashToggle');
+    setupDropdown('lipBalmToggle');
     document.addEventListener('click', function() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); });
     const swiper = new Swiper('.swiper', { loop: false, speed: 400, pagination: { el: '.swiper-pagination', clickable: true }, });
     let currentProductName = "عرض التوفير 2"; let currentSelectedSize = "عرض دم الغزال"; let currentUnitPrice = 100; let currentOldPrice = 110;
