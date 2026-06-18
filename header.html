@@ -11,11 +11,25 @@
         z-index: 9999 !important; 
     }
     .leil-logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 20px !important; color: white !important; text-decoration: none !important; }
+    
     .leil-nav { display: flex !important; gap: 15px !important; align-items: center !important; }
-    .leil-nav > div > a { color: white !important; text-decoration: none !important; font-size: 13px !important; cursor: pointer !important; }
+    .leil-nav a { color: white !important; text-decoration: none !important; font-size: 13px !important; cursor: pointer !important; }
     
     .leil-dropdown { position: relative !important; padding: 10px 0 !important; }
-    .leil-dropdown-content { display: none !important; position: absolute !important; background: #3d0000 !important; min-width: 140px; top: 100% !important; right: 0 !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 4px !important; }
+    
+    /* التعديل الجوهري هنا: القائمة تفتح لليمين */
+    .leil-dropdown-content { 
+        display: none !important; 
+        position: absolute !important; 
+        background: #3d0000 !important; 
+        min-width: 140px; 
+        top: 100% !important; 
+        left: 0 !important; /* تثبيت القائمة من اليسار لتفتح لليمين */
+        right: auto !important; 
+        border: 1px solid rgba(255,255,255,0.1) !important; 
+        border-radius: 4px !important; 
+    }
+    
     .leil-dropdown:hover .leil-dropdown-content { display: block !important; }
     .leil-dropdown-content a { padding: 10px !important; display: block !important; color: white !important; text-decoration: none !important; font-size: 12px !important; text-align: right !important; }
     .leil-dropdown-content a:hover { background: #600a1c !important; }
@@ -28,7 +42,7 @@
     <a href="index.html" class="leil-logo">ليل</a>
     
     <nav class="leil-nav">
-        <a href="index.html" style="color: white !important; text-decoration: none; font-size: 13px;">الرئيسية</a>
+        <a href="index.html">الرئيسية</a>
         
         <div class="leil-dropdown">
             <a>بادي سبلاش ▾</a>
@@ -49,7 +63,7 @@
         </div>
         
         <div class="leil-dropdown">
-            <a>زبدة كاكاو ▾</a>
+            <a href="javascript:void(0)">زبدة كاكاو ▾</a>
             <div class="leil-dropdown-content">
                 <a href="Lip-Balm-1.html">فانيليا</a>
                 <a href="Lip-Balm-2.html">فراولة</a>
