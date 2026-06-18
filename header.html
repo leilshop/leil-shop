@@ -11,7 +11,9 @@
         z-index: 9999 !important; 
     }
     .leil-logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 20px !important; color: white !important; text-decoration: none !important; }
-    .leil-nav { display: flex !important; gap: 15px !important; align-items: center !important; }
+    
+    /* ترتيب الروابط في المنتصف */
+    .leil-nav { display: flex !important; gap: 15px !important; align-items: center !important; flex-grow: 1; justify-content: center; }
     .leil-nav a { color: white !important; text-decoration: none !important; font-size: 13px !important; cursor: pointer !important; }
     
     .leil-dropdown { position: relative !important; }
@@ -20,22 +22,25 @@
     .leil-dropdown-content a { padding: 10px !important; display: block !important; color: white !important; text-decoration: none !important; font-size: 12px !important; text-align: right !important; }
     .leil-dropdown-content a:hover { background: #600a1c !important; }
     
-    .leil-cart { position: relative; display: flex; align-items: center; }
-    .leil-cart-count { position: absolute; top: -5px; left: -5px; background: #600a1c !important; width: 15px !important; height: 15px !important; border-radius: 50% !important; font-size: 10px !important; display: flex; align-items: center; justify-content: center; color: white !important; font-weight: 700; }
+    .leil-cart { position: relative; display: flex !important; align-items: center !important; }
+    .leil-cart-count { position: absolute; top: -5px; left: -5px; background: #600a1c !important; width: 15px !important; height: 15px !important; border-radius: 50% !important; font-size: 10px !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-weight: 700; }
+    
+    @media (max-width: 600px) {
+        .leil-nav { gap: 8px !important; }
+        .leil-nav a { font-size: 11px !important; }
+        .leil-logo { font-size: 16px !important; }
+    }
 </style>
 
 <header class="leil-header">
     <a href="index.html" class="leil-logo">ليل</a>
     
     <nav class="leil-nav">
-        <a href="index.html">الرئيسية</a>
         <div class="leil-dropdown">
-            <a>بادي سبلاش ▾</a>
+            <a>زبدة كاكاو ▾</a>
             <div class="leil-dropdown-content">
-                <a href="splash-d.html">دم الغزال</a>
-                <a href="splash-s.html">سراب</a>
-                <a href="splash-a.html">أثر</a>
-                <a href="splash-h.html">حلم</a>
+                <a href="Lip-Balm-1.html">فانيليا</a>
+                <a href="Lip-Balm-2.html">فراولة</a>
             </div>
         </div>
         <div class="leil-dropdown">
@@ -46,12 +51,15 @@
             </div>
         </div>
         <div class="leil-dropdown">
-            <a>زبدة كاكاو ▾</a>
+            <a>بادي سبلاش ▾</a>
             <div class="leil-dropdown-content">
-                <a href="Lip-Balm-1.html">فانيليا</a>
-                <a href="Lip-Balm-2.html">فراولة</a>
+                <a href="splash-d.html">دم الغزال</a>
+                <a href="splash-s.html">سراب</a>
+                <a href="splash-a.html">أثر</a>
+                <a href="splash-h.html">حلم</a>
             </div>
         </div>
+        <a href="index.html">الرئيسية</a>
     </nav>
     
     <a href="cart.html" class="leil-cart">
