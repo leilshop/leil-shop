@@ -10,7 +10,6 @@
     <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
@@ -58,7 +57,6 @@
         nav a:hover, .dropdown.active > a { opacity: 1; color: white !important; }
 
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-
         .dropdown-content {
             display: none;
             position: absolute;
@@ -73,7 +71,6 @@
             overflow: hidden;
             backdrop-filter: blur(15px);
         }
-
         .dropdown.active .dropdown-content { display: block; animation: fadeInSlide 0.3s ease forwards; }
         .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; transition: 0.3s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .dropdown-content a:last-child { border-bottom: none; }
@@ -124,24 +121,21 @@
 
         @media (max-width: 480px) { 
             header { padding: 10px 4%; }
-            nav { gap: 15px; }
-            nav a { font-size: 12px; display: flex; align-items: center; }
+            nav { gap: 12px; }
+            nav a { font-size: 12px; display: inline-flex; align-items: center; }
             .logo { font-size: 18px; }
             .product-wrapper { flex-direction: column; }
-            /* تم مسح السطر المريب اللي كان بيصغر الخط */
+        }
+
+        @media (max-width: 600px) {
+            .logo { font-size: 16px !important; }
+            nav { gap: 5px !important; font-size: 10px !important; }
+            nav a { font-size: 10px !important; padding: 0 2px !important; }
+            .dropdown-content { min-width: 120px !important; right: auto !important; left: 0 !important; }
+            .header-icons svg { width: 18px; height: 18px; }
+            #lipBalmToggle .dropdown-content { right: auto !important; left: 0 !important; min-width: 120px !important; }
         }
     </style>
-
-    <script>
-    !function (w, d, t) {
-      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-
-      ttq.load('D84AVL3C77UDS4G4KIN0');
-      ttq.page();
-    }(window, document, 'ttq');
-    </script>
 </head>
 <body>
 
@@ -149,6 +143,7 @@
     <a href="index.html" class="logo">ليل</a>
     <nav>
         <a href="index.html">الرئيسية</a>
+        
         <div class="dropdown" id="splashToggle">
             <a href="javascript:void(0)">بادي سبلاش</a>
             <div class="dropdown-content">
@@ -158,6 +153,7 @@
                 <a href="splash-h.html">حلم</a> 
             </div>
         </div>
+
         <div class="dropdown" id="makhmariatToggle">
             <a href="javascript:void(0)">مخمريات</a>
             <div class="dropdown-content">
@@ -165,6 +161,7 @@
                 <a href="product-sarab.html">سراب</a>
             </div>
         </div>
+
         <div class="dropdown" id="lipBalmToggle">
             <a href="javascript:void(0)">زبدة كاكاو</a>
             <div class="dropdown-content">
