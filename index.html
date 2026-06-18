@@ -13,6 +13,9 @@
     <style>
         :root { --main: #600a1c; --bg-site: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
+        
+        /* منع تحرك الموقع يمين وشمال نهائياً */
+        html, body { overflow-x: hidden; width: 100%; }
         body { background: var(--bg-site); }
 
         header {
@@ -105,10 +108,12 @@
         .btn-view { display: block; width: 100%; padding: 14px; background: var(--main); text-decoration: none; font-weight: 700; text-align: center; }
 
         @media (max-width: 480px) {
-            nav { gap: 15px; } nav a { font-size: 12px; }
+            nav { gap: 12px; } nav a { font-size: 12px; }
             .logo { font-size: 18px; } header { padding: 10px 4%; }
             .card-img { height: 320px; }
             .container { grid-template-columns: 1fr; }
+            /* تعديل قايمة زبدة كاكاو عشان تفتح لجوه ومتبوظش الشاشة */
+            #lipBalmToggle .dropdown-content { right: auto; left: -10px; min-width: 130px; }
         }
     </style>
 </head>
