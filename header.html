@@ -1,56 +1,113 @@
 <style>
-    /* تنسيق الهيدر الموحد - يوضع داخل header.html */
-    .header-main { 
-        background: #3d0000; padding: 15px 4%; display: flex; justify-content: space-between; 
-        align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
-        position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); width: 100%;
+    /* تنسيق الهيدر الموحد - ثابت في كل الصفحات */
+    #leil-header {
+        background: #3d0000 !important;
+        padding: 15px 4% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 9999 !important;
+        backdrop-filter: blur(10px) !important;
+        width: 100% !important;
+        height: auto !important;
     }
-    .logo { font-family: 'Noto Nastaliq Urdu', serif; font-size: 22px; text-decoration: none; color: white; }
-    .nav-links { display: flex; gap: 20px; align-items: center; list-style: none; margin: 0; padding: 0; }
-    .nav-links a { text-decoration: none; font-size: 14px; opacity: 0.8; color: white; }
-    .dropdown { position: relative; cursor: pointer; }
-    .dropdown-content { 
-        display: none; position: absolute; background-color: #3d0000; 
-        min-width: 140px; top: 100%; right: 0; border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 4px; z-index: 1000;
+    .leil-logo { 
+        font-family: 'Noto Nastaliq Urdu', serif !important; 
+        font-size: 22px !important; 
+        text-decoration: none !important; 
+        color: white !important; 
+        margin: 0 !important;
     }
-    .dropdown:hover .dropdown-content { display: block; } /* التفعيل بالماوس أضمن */
-    .dropdown-content a { padding: 10px; display: block; color: white; text-decoration: none; font-size: 13px; }
-    .dropdown-content a:hover { background: #600a1c; }
-    .cart-icon { position: relative; display: flex; align-items: center; }
+    .leil-nav { 
+        display: flex !important; 
+        gap: 20px !important; 
+        align-items: center !important; 
+        margin: 0 !important;
+    }
+    .leil-nav a { 
+        text-decoration: none !important; 
+        font-size: 14px !important; 
+        color: white !important; 
+        opacity: 0.8 !important; 
+        white-space: nowrap !important;
+    }
+    .leil-nav a:hover { opacity: 1 !important; }
+    
+    .leil-dropdown { position: relative !important; cursor: pointer !important; }
+    .leil-dropdown-content { 
+        display: none !important; 
+        position: absolute !important; 
+        background-color: #3d0000 !important; 
+        min-width: 150px !important; 
+        top: 100% !important; 
+        right: 0 !important; 
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 4px !important;
+        z-index: 1000 !important;
+    }
+    .leil-dropdown.active .leil-dropdown-content { display: block !important; }
+    .leil-dropdown-content a { 
+        padding: 12px !important; 
+        display: block !important; 
+        color: white !important; 
+        text-decoration: none !important; 
+        font-size: 13px !important; 
+        text-align: right !important;
+    }
+    .leil-dropdown-content a:hover { background: #600a1c !important; }
+
+    .leil-cart { position: relative !important; display: flex !important; align-items: center !important; }
+    .leil-cart-count { 
+        position: absolute !important; top: -8px !important; left: -10px !important; 
+        background: #600a1c !important; width: 18px !important; height: 18px !important; 
+        border-radius: 50% !important; font-size: 11px !important; 
+        display: flex !important; align-items: center !important; justify-content: center !important; 
+        font-weight: 700 !important; color: white !important;
+    }
+
+    @media (max-width: 600px) {
+        .leil-nav { gap: 10px !important; }
+        .leil-nav a { font-size: 11px !important; }
+        .leil-logo { font-size: 16px !important; }
+    }
 </style>
 
-<header class="header-main">
-    <a href="index.html" class="logo">ليل</a>
-    <nav>
-        <ul class="nav-links">
-            <li><a href="index.html">الرئيسية</a></li>
-            <li class="dropdown">
-                <a href="#">بادي سبلاش ▾</a>
-                <div class="dropdown-content">
-                    <a href="splash-d.html">دم الغزال</a>
-                    <a href="splash-s.html">سراب</a>
-                    <a href="splash-a.html">أثر</a>
-                    <a href="splash-h.html">حلم</a>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="#">مخمريات ▾</a>
-                <div class="dropdown-content">
-                    <a href="product-dam.html">دم الغزال</a>
-                    <a href="product-sarab.html">سراب</a>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="#">زبدة كاكاو ▾</a>
-                <div class="dropdown-content">
-                    <a href="Lip-Balm-1.html">فانيليا</a>
-                    <a href="Lip-Balm-2.html">فراولة</a>
-                </div>
-            </li>
-        </ul>
+<header id="leil-header">
+    <a href="index.html" class="leil-logo">ليل</a>
+    <nav class="leil-nav">
+        <a href="index.html">الرئيسية</a>
+        
+        <div class="leil-dropdown" id="splashToggle">
+            <a href="javascript:void(0)">بادي سبلاش ▾</a>
+            <div class="leil-dropdown-content">
+                <a href="splash-d.html">دم الغزال</a>
+                <a href="splash-s.html">سراب</a>
+                <a href="splash-a.html">أثر</a>
+                <a href="splash-h.html">حلم</a>
+            </div>
+        </div>
+
+        <div class="leil-dropdown" id="makhmariatToggle">
+            <a href="javascript:void(0)">مخمريات ▾</a>
+            <div class="leil-dropdown-content">
+                <a href="product-dam.html">دم الغزال</a>
+                <a href="product-sarab.html">سراب</a>
+            </div>
+        </div>
+
+        <div class="leil-dropdown" id="lipBalmToggle">
+            <a href="javascript:void(0)">زبدة كاكاو ▾</a>
+            <div class="leil-dropdown-content">
+                <a href="Lip-Balm-1.html">فانيليا</a>
+                <a href="Lip-Balm-2.html">فراولة</a>
+            </div>
+        </div>
     </nav>
-    <a href="cart.html" class="cart-icon">
+    <a href="cart.html" class="leil-cart">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        <div class="leil-cart-count" id="cart-count">0</div>
     </a>
 </header>
