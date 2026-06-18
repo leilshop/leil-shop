@@ -265,7 +265,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-    // --- دالة تشغيل القوائم المنسدلة ---
     function setupDropdown(id) {
         const el = document.getElementById(id);
         if (el) {
@@ -278,107 +277,18 @@
             });
         }
     }
-    setupDropdown('makhmariatToggle');
+    
+    // تشغيل القوائم التلاتة
     setupDropdown('splashToggle');
-    setupDropdown('lipBalmToggle');
+    setupDropdown('makhmariatToggle');
+    setupDropdown('lipBalmToggle'); // <-- اهو السطر اللي هيشغل زبدة الكاكاو
+
+    // عشان لما تدوس في أي حتة فاضية القائمة تقفل
     document.addEventListener('click', function() {
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
     });
 
-    const swiper = new Swiper('.swiper', {
-        loop: false, 
-        speed: 400, 
-        pagination: { el: '.swiper-pagination', clickable: true },
-    });
-
-    let currentProductName = "سبلاش سراب";
-    let currentSelectedSize = "5 مل";
-    let currentUnitPrice = 25;
-    let currentOldPrice = 35;
-
-    function selectSize(btn, sizeName, imgIndex) {
-        currentSelectedSize = sizeName;
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
-        btn.classList.add('active-size');
-
-        // لو الاندكس مش -1، يغير الصورة.. لو -1، يفضل على نفس الصورة
-        if (imgIndex !== -1) {
-            swiper.slideTo(imgIndex, 400, true);
-        }
-
-        currentUnitPrice = parseInt(btn.getAttribute('data-price'));
-        currentOldPrice = parseInt(btn.getAttribute('data-old'));
-        
-        checkCartState();
-    }
-
-    function updateDisplayPrice(price, oldPrice) {
-        document.getElementById('main-price').innerText = price + " ج.م";
-        const oldPriceEl = document.getElementById('old-price');
-        if (price < oldPrice) {
-            oldPriceEl.style.display = "block";
-            oldPriceEl.innerText = oldPrice + " ج.م";
-        } else {
-            oldPriceEl.style.display = "none";
-        }
-    }
-
-    function checkCartState() {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const itemKey = currentProductName + " - " + currentSelectedSize;
-        const addBtn = document.getElementById('add-btn');
-        const qtyGroup = document.getElementById('qty-group');
-        const currentQtyDisplay = document.getElementById('current-qty');
-
-        if (cart[itemKey] && (cart[itemKey].qty || cart[itemKey]) > 0) {
-            const itemData = cart[itemKey];
-            const qty = typeof itemData === 'object' ? itemData.qty : itemData;
-            addBtn.style.display = "none";
-            qtyGroup.style.display = "grid";
-            currentQtyDisplay.innerText = qty;
-            updateDisplayPrice(currentUnitPrice * qty, currentOldPrice * qty);
-        } else {
-            addBtn.style.display = "block";
-            qtyGroup.style.display = "none";
-            updateDisplayPrice(currentUnitPrice, currentOldPrice);
-        }
-        updateHeaderCart();
-    }
-
-    function initAdd() { changeQty(1); }
-
-    function changeQty(amount) {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const itemKey = currentProductName + " - " + currentSelectedSize;
-        
-        if (!cart[itemKey]) {
-            cart[itemKey] = { qty: 0, price: currentUnitPrice };
-        }
-        
-        if (typeof cart[itemKey] !== 'object') {
-            cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice };
-        }
-
-        cart[itemKey].qty += amount;
-        cart[itemKey].price = currentUnitPrice; 
-
-        if (cart[itemKey].qty <= 0) delete cart[itemKey];
-        
-        localStorage.setItem('leilCart', JSON.stringify(cart));
-        checkCartState();
-    }
-
-    function updateHeaderCart() {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        let total = Object.values(cart).reduce((a, b) => {
-            const q = typeof b === 'object' ? b.qty : b;
-            return a + q;
-        }, 0);
-        const countEl = document.getElementById('cart-count');
-        if(countEl) countEl.innerText = total;
-    }
-
-    window.onload = checkCartState;
+    // سيب كود السوايبر (Swiper) والسلة (Cart) اللي تحت ده زي ما هو عندك متغيروش
 </script>
 
 </body>
