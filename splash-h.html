@@ -126,7 +126,7 @@
         .swiper-pagination-bullet-active { background: var(--main) !important; }
 
         .product-details { flex: 1; min-width: 300px; text-align: right; }
-        .product-details h1 { font-size: 24px; margin-bottom: 5px; font-weight: 700; }
+        .product-details h1 { font-size: 28px; margin-bottom: 5px; font-weight: 700; }
         .slogan { font-size: 18px; opacity: 0.7; margin-bottom: 30px; display: block; }
         .label { font-size: 13px; opacity: 0.6; margin-bottom: 10px; display: block; }
 
@@ -155,21 +155,45 @@
             nav a { font-size: 12px; display: flex; align-items: center; }
             .logo { font-size: 18px; }
             .product-wrapper { flex-direction: column; }
-            .product-details h1 { font-size: 20px; }
+            .product-details h1 { font-size: 22px; }
+            @media (max-width: 600px) {
+    /* تصغير اللوجو عشان ياخد مساحة أقل */
+    .logo { font-size: 16px !important; }
+
+    /* جعل الـ nav تاخد مساحة بالعرض وتصغير الخط */
+    nav { 
+        gap: 5px !important; 
+        font-size: 10px !important; 
+    }
+    nav a { 
+        font-size: 10px !important; 
+        padding: 0 2px !important; 
+    }
+
+    /* عشان الـ Dropdown مينزلش يغطي على باقي الحاجات */
+    .dropdown-content {
+        min-width: 120px !important;
+        right: auto !important;
+        left: 0 !important;
+    }
+    
+    /* تصغير أيقونة السلة */
+    .header-icons svg { width: 18px; height: 18px; }
+}
         }
     </style>
 
     <script>
     !function (w, d, t) {
       w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-      var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-      ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
       ttq.load('D84AVL3C77UDS4G4KIN0');
       ttq.page();
     }(window, document, 'ttq');
     </script>
-</head>
+    </head>
 <body>
 
 <header>
@@ -196,14 +220,13 @@
         </div>
 
         <div class="dropdown" id="lipBalmToggle">
-            <a href="javascript:void(0)">زبدة الكاكاو</a>
+            <a href="javascript:void(0)">زبدة كاكاو</a>
             <div class="dropdown-content">
                 <a href="Lip-Balm-1.html">فانيليا</a>
                 <a href="Lip-Balm-2.html">فراولة</a>
             </div>
         </div>
 
-        <a href="contact.html">تواصل معنا</a>
     </nav>
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
@@ -212,6 +235,7 @@
         </a>
     </div>
 </header>
+
 <div class="product-wrapper">
     <div class="image-section">
         <div class="swiper">
@@ -280,6 +304,8 @@
     }
     setupDropdown('makhmariatToggle');
     setupDropdown('splashToggle');
+    setupDropdown('lipBalmToggle');
+
     document.addEventListener('click', function() {
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
     });
