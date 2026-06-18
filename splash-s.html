@@ -129,30 +129,34 @@
         .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
 
-        @media (max-width: 480px) { 
-            header { padding: 10px 4%; }
+@media (max-width: 480px) { 
             .product-wrapper { flex-direction: column; }
+            .product-details h1 { font-size: 20px; }
         }
 
-        /* إعدادات الموبايل الخاصة بالهيدر ومنع تحرك الصفحة */
         @media (max-width: 600px) {
-            .logo { font-size: 16px !important; }
-            nav { gap: 5px !important; font-size: 10px !important; }
-            nav a { font-size: 10px !important; padding: 0 2px !important; }
-            .header-icons svg { width: 18px; height: 18px; }
+            /* تقسيم الهيدر لسطرين في الموبايل */
+            header { flex-wrap: wrap; padding: 12px 4%; }
+            
+            /* السطر الأول: اللوجو يمين والسلة شمال */
+            .logo { font-size: 22px !important; order: 1; }
+            .header-icons { order: 2; }
+            
+            /* السطر التاني: الأقسام تاخد راحتها وتكبر */
+            nav { order: 3; width: 100%; margin-top: 15px; gap: 5px !important; justify-content: space-between !important; }
+            nav a { font-size: 13px !important; padding: 5px 2px !important; }
 
-            /* ضبط القوائم العادية لتفتح بشكل متناسق */
-            .dropdown-content {
-                right: 0 !important;
-                left: auto !important;
-                min-width: 120px !important;
-            }
+            /* تظبيط القوائم عشان تفتح لتحت مظبوط ومتبوظش الشاشة */
+            .dropdown-content { min-width: 110px !important; top: 100%; transform: none !important; }
 
-            /* الحل الجذري لقائمة زبدة كاكاو لمنع تمدد الشاشة لليسار */
-            #lipBalmToggle .dropdown-content {
-                right: auto !important;
-                left: 0 !important; /* تجبر محتوى القائمة يفتح للداخل باتجاه اليمين ويظل بداخل حدود الشاشة */
-            }
+            /* زبدة كاكاو تفتح لجوه عشان متخرجش بره الشاشة */
+            #lipBalmToggle .dropdown-content { right: auto !important; left: 0 !important; }
+
+            /* باقي القوائم تفتح عادي */
+            #splashToggle .dropdown-content, #makhmariatToggle .dropdown-content { right: 0 !important; left: auto !important; }
+            
+            /* حجم السلة */
+            .header-icons svg { width: 20px; height: 20px; }
         }
     </style>
 
