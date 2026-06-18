@@ -134,7 +134,13 @@
                 <a href="product-sarab.html">سراب</a>
             </div>
         </div>
-        <a href="contact.html">تواصل معنا</a>
+        <div class="dropdown" id="lipBalmToggle">
+            <a href="javascript:void(0)">زبدة كاكاو</a>
+            <div class="dropdown-content">
+                <a href="Lip-Balm-1.html">فانيليا</a>
+                <a href="Lip-Balm-2.html">فراولة</a>
+            </div>
+        </div>
     </nav>
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
@@ -313,6 +319,7 @@
 
     setupDropdown('makhmariatToggle');
     setupDropdown('splashToggle');
+    setupDropdown('lipBalmToggle');
 
     document.addEventListener('click', function() {
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
