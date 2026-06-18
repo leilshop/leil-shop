@@ -109,6 +109,12 @@
             .logo { font-size: 18px; } header { padding: 10px 4%; }
             .card-img { height: 320px; }
             .container { grid-template-columns: 1fr; }
+            @media (max-width: 768px) {
+    .menu-toggle { display: block !important; cursor: pointer; font-size: 28px; }
+    nav { display: none; flex-direction: column; position: absolute; top: 60px; right: 0; width: 100%; background: var(--bg-site); padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    nav.active { display: flex; }
+    .dropdown { width: 100%; height: auto; flex-direction: column; align-items: flex-start; }
+    .dropdown-content { position: static; width: 100%; box-shadow: none; }
         }
     </style>
 </head>
@@ -116,6 +122,8 @@
 
 <header>
     <a href="index.html" class="logo">ليل</a>
+    <div class="menu-toggle" style="display: none;" onclick="document.querySelector('nav').classList.toggle('active')">☰</div>
+    
     <nav>
         <a href="index.html">الرئيسية</a>
         <div class="dropdown" id="splashToggle">
@@ -132,6 +140,13 @@
             <div class="dropdown-content">
                 <a href="product-dam.html">دم الغزال</a>
                 <a href="product-sarab.html">سراب</a>
+            </div>
+        </div>
+        <div class="dropdown" id="lipBalmToggle">
+            <a href="javascript:void(0)">زبدة كاكاو</a>
+            <div class="dropdown-content">
+                <a href="Lip-Balm-1.html">فانيليا</a>
+                <a href="Lip-Balm-2.html">فراولة</a>
             </div>
         </div>
         <a href="contact.html">تواصل معنا</a>
