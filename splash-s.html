@@ -17,7 +17,8 @@
         :root { --main: #600a1c; --bg: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         
-        html, body { overflow-x: hidden; width: 100%; }
+        /* كود الحماية الذهبي */
+        html, body { overflow-x: hidden !important; max-width: 100vw; width: 100%; }
         body { background: var(--bg); }
 
         header {
@@ -43,8 +44,18 @@
         }
 
         nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
-        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; color: white; display: inline-flex; align-items: center; }
-        nav a:hover, .dropdown.active > a { opacity: 1; }
+        nav a { 
+            text-decoration: none; 
+            font-size: 14px; 
+            opacity: 0.8; 
+            transition: 0.3s; 
+            white-space: nowrap; 
+            color: white;
+            line-height: 1.2;
+            display: inline-flex; 
+            align-items: center;
+        }
+        nav a:hover, .dropdown.active > a { opacity: 1; color: white !important; }
 
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
 
@@ -62,13 +73,13 @@
             overflow: hidden;
             backdrop-filter: blur(15px);
         }
-
         .dropdown.active .dropdown-content { display: block; animation: fadeInSlide 0.3s ease forwards; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; }
+        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; transition: 0.3s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; opacity: 1; }
 
         @keyframes fadeInSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; opacity: 0.5; }
+        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; display: inline-block; opacity: 0.5; }
 
         .header-icons { display: flex; align-items: center; }
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
@@ -108,13 +119,13 @@
         .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
 
-        /* هنا المقاسات بقت متطابقة بالملي مع الصفحة الرئيسية */
         @media (max-width: 480px) { 
-            nav { gap: 12px; } nav a { font-size: 12px; }
-            .logo { font-size: 18px; } header { padding: 10px 4%; }
+            header { padding: 10px 4%; }
+            nav { gap: 12px; }
+            nav a { font-size: 12px; display: inline-flex; align-items: center; }
+            .logo { font-size: 18px; }
             .product-wrapper { flex-direction: column; }
-            .product-details h1 { font-size: 22px; }
-            #lipBalmToggle .dropdown-content { right: auto; left: -10px; min-width: 130px; }
+            .product-details h1 { font-size: 20px; }
         }
     </style>
 
@@ -169,175 +180,3 @@
         </a>
     </div>
 </header>
-
-<div class="product-wrapper">
-    <div class="image-section">
-        <div class="swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="SPLASH_9704.webp" alt="سبلاش 5 مل"></div>
-                <div class="swiper-slide"><img src="SPLASH_9705.webp" alt="سبلاش 10 مل"></div>
-                <div class="swiper-slide"><img src="SPLASH_9702.webp" alt="سبلاش 20 مل"></div>
-                <div class="swiper-slide"><img src="SPLASH_9708.webp" alt="سبلاش 100 مل"></div>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
-
-    <div class="product-details">
-        <h1>بادي سبلاش سراب</h1>
-        <span class="slogan">أثر لا يغيب</span>
-
-        <span class="label">الحجم</span>
-        <div class="size-selector">
-            <button class="size-btn active-size" data-price="25" data-old="35" onclick="selectSize(this, '5 مل', 0)">5 مل</button>
-            <button class="size-btn" data-price="35" data-old="45" onclick="selectSize(this, '10 مل', 1)">10 مل</button>
-            <button class="size-btn" data-price="50" data-old="60" onclick="selectSize(this, '20 مل', 2)">20 مل</button>
-            <button class="size-btn" data-price="125" data-old="150" onclick="selectSize(this, '100 مل', 3)">100 مل</button>
-        </div>
-
-        <span class="label">السعر الحالي</span>
-        <div class="price-container">
-            <span class="price-tag" id="main-price">25 ج.م</span>
-            <span class="old-price-tag" id="old-price">35 ج.م</span>
-        </div>
-
-        <div class="cart-controls">
-            <button class="add-to-cart-btn" id="add-btn" onclick="initAdd()">أضف إلى السلة</button>
-            <div class="quantity-btn-group" id="qty-group">
-                <button class="q-btn" onclick="changeQty(1)">+</button>
-                <div class="q-val" id="current-qty">1</div>
-                <button class="q-btn" onclick="changeQty(-1)">-</button>
-            </div>
-        </div>
-
-        <div class="product-desc">
-            <h3>وصف المنتج:</h3>
-            <p>يمزج هذه البادي سبلاش بين فخامة اللافندر وجاذبية الحمضيات مع لمسة دافئة من الفانيليا.
-عطر قوي، غامض، ويليق بالأشخاص الواثقة التي تترك أثراً في كل مكان تمر به.
-الإحساس: فخامة، غموض، وجاذبية ليلية ساحرة.
-الثبات: فائق (مثالية للمناسبات والسهرات الخاصة).
-لماذا تفضلونه؟ لأنه يمنحكم رائحة العطور الفرنسية الراقية مع ترطيب عميق.</p>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<script>
-    function setupDropdown(id) {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.querySelectorAll('.dropdown').forEach(d => {
-                    if(d !== el) d.classList.remove('active');
-                });
-                this.classList.toggle('active');
-            });
-        }
-    }
-    setupDropdown('makhmariatToggle');
-    setupDropdown('splashToggle');
-    setupDropdown('lipBalmToggle');
-    
-    document.addEventListener('click', function() {
-        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
-    });
-
-    const swiper = new Swiper('.swiper', {
-        loop: false, 
-        speed: 400, 
-        pagination: { el: '.swiper-pagination', clickable: true },
-    });
-
-    let currentProductName = "سبلاش سراب";
-    let currentSelectedSize = "5 مل";
-    let currentUnitPrice = 25;
-    let currentOldPrice = 35;
-
-    function selectSize(btn, sizeName, imgIndex) {
-        currentSelectedSize = sizeName;
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
-        btn.classList.add('active-size');
-
-        if (imgIndex !== -1) {
-            swiper.slideTo(imgIndex, 400, true);
-        }
-
-        currentUnitPrice = parseInt(btn.getAttribute('data-price'));
-        currentOldPrice = parseInt(btn.getAttribute('data-old'));
-        
-        checkCartState();
-    }
-
-    function updateDisplayPrice(price, oldPrice) {
-        document.getElementById('main-price').innerText = price + " ج.م";
-        const oldPriceEl = document.getElementById('old-price');
-        if (price < oldPrice) {
-            oldPriceEl.style.display = "block";
-            oldPriceEl.innerText = oldPrice + " ج.م";
-        } else {
-            oldPriceEl.style.display = "none";
-        }
-    }
-
-    function checkCartState() {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const itemKey = currentProductName + " - " + currentSelectedSize;
-        const addBtn = document.getElementById('add-btn');
-        const qtyGroup = document.getElementById('qty-group');
-        const currentQtyDisplay = document.getElementById('current-qty');
-
-        if (cart[itemKey] && (cart[itemKey].qty || cart[itemKey]) > 0) {
-            const itemData = cart[itemKey];
-            const qty = typeof itemData === 'object' ? itemData.qty : itemData;
-            addBtn.style.display = "none";
-            qtyGroup.style.display = "grid";
-            currentQtyDisplay.innerText = qty;
-            updateDisplayPrice(currentUnitPrice * qty, currentOldPrice * qty);
-        } else {
-            addBtn.style.display = "block";
-            qtyGroup.style.display = "none";
-            updateDisplayPrice(currentUnitPrice, currentOldPrice);
-        }
-        updateHeaderCart();
-    }
-
-    function initAdd() { changeQty(1); }
-
-    function changeQty(amount) {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const itemKey = currentProductName + " - " + currentSelectedSize;
-        
-        if (!cart[itemKey]) {
-            cart[itemKey] = { qty: 0, price: currentUnitPrice };
-        }
-        
-        if (typeof cart[itemKey] !== 'object') {
-            cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice };
-        }
-
-        cart[itemKey].qty += amount;
-        cart[itemKey].price = currentUnitPrice; 
-
-        if (cart[itemKey].qty <= 0) delete cart[itemKey];
-        
-        localStorage.setItem('leilCart', JSON.stringify(cart));
-        checkCartState();
-    }
-
-    function updateHeaderCart() {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        let total = Object.values(cart).reduce((a, b) => {
-            const q = typeof b === 'object' ? b.qty : b;
-            return a + q;
-        }, 0);
-        const countEl = document.getElementById('cart-count');
-        if(countEl) countEl.innerText = total;
-    }
-
-    window.onload = checkCartState;
-</script>
-
-</body>
-</html>
