@@ -85,7 +85,16 @@
 
         .sub-title { text-align: center; padding-top: 60px; font-size: 28px; font-weight: 700; margin-bottom: 15px; }
         .line-divider { width: 60px; height: 1px; background: rgba(255, 255, 255, 0.2); margin: 0 auto 15px auto; display: block; }
-        .container { max-width: 1100px; margin: auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        /* تعديل الـ Grid لعرض منتجين فقط في الصف بالتساوي */
+        .container { 
+            max-width: 1100px; 
+            margin: auto; 
+            padding: 20px; 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 30px; 
+        }
 
         .card { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
         .card:hover { transform: translateY(-5px); border-color: var(--main); }
@@ -100,6 +109,7 @@
             nav { gap: 15px; } nav a { font-size: 12px; }
             .logo { font-size: 18px; } header { padding: 10px 4%; }
             .card-img { height: 320px; }
+            .container { grid-template-columns: 1fr; } /* كارت واحد في الصف على الموبايل لشياكة العرض وضمان عدم انضغاط الصور */
         }
     </style>
 
@@ -216,7 +226,7 @@
     </div>
 
     <div class="card">
-        <img src="ATHER_5ml.webp" class="card-img" alt="أثر">
+        <img src="ATHER_100ml.webp" class="card-img" alt="أثر">
         <div class="card-info">
             <h3 class="card-title">أثر</h3>
             <p class="card-desc">أثراً لا ينسى</p>
@@ -229,7 +239,7 @@
     </div>
 
     <div class="card">
-        <img src="HELM_5ml.webp" class="card-img" alt="حلم">
+        <img src="HELM_100ml.webp" class="card-img" alt="حلم">
         <div class="card-info">
             <h3 class="card-title">حلم</h3>
             <p class="card-desc">عالم من الخيال</p>
