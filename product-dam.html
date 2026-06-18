@@ -13,43 +13,23 @@
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         body { background: var(--bg); overflow-x: hidden; }
 
-        /* تنسيقات الهيدر الموحد */
-        header { background: var(--bg); padding: 15px 4%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
-        .logo { display: block; font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; line-height: 1; }
-        nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
-        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; color: white; display: inline-flex; align-items: center; }
-        nav a:hover, .dropdown.active > a { opacity: 1; color: white !important; }
-        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-        .dropdown-content { display: none; position: absolute; background-color: var(--bg); min-width: 160px; box-shadow: 0px 10px 20px rgba(0,0,0,0.6); z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.1); top: 100%; right: 0; border-radius: 4px; overflow: hidden; backdrop-filter: blur(15px); }
-        .dropdown.active .dropdown-content { display: block; animation: fadeInSlide 0.3s ease forwards; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; transition: 0.3s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .dropdown-content a:last-child { border-bottom: none; }
-        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; opacity: 1; }
-        @keyframes fadeInSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; display: inline-block; opacity: 0.5; }
-        .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
-        .cart-count { position: absolute; top: -8px; left: -10px; background: var(--main); width: 18px; height: 18px; border-radius: 50%; font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
-
-        /* تنسيقات صفحة المنتج */
+        /* تنسيقات صفحة المنتج فقط (بدون أي تنسيق للهيدر) */
         .product-wrapper { max-width: 1200px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 40px; padding: 20px; }
         .image-section { flex: 1; min-width: 300px; max-width: 550px; width: 100%; }
         .swiper { width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); }
         .swiper-slide img { width: 100%; height: auto; display: block; }
         .product-details { flex: 1; min-width: 300px; text-align: right; }
-        .size-btn, .pinky-btn { padding: 12px 20px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; color: white; }
+        .size-btn, .pinky-btn { padding: 12px 20px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; color: white; margin-top: 10px; }
         .pinky-btn { border-radius: 50px; padding: 12px 25px; }
         .active-size { background: white !important; color: black !important; border-color: white !important; }
         .out-of-stock { opacity: 0.4; border-style: dashed; cursor: not-allowed; text-decoration: line-through; }
-        .add-to-cart-btn { width: 100%; padding: 16px; background: var(--main); border: none; color: white; font-weight: 700; cursor: pointer; }
-        .quantity-btn-group { display: none; grid-template-columns: 1fr 2fr 1fr; width: 100%; gap: 10px; }
+        .add-to-cart-btn { width: 100%; padding: 16px; background: var(--main); border: none; color: white; font-weight: 700; cursor: pointer; margin-top: 20px; }
+        .quantity-btn-group { display: none; grid-template-columns: 1fr 2fr 1fr; width: 100%; gap: 10px; margin-top: 20px; }
         .q-btn { background: #fff; color: #000; border: none; font-size: 24px; font-weight: bold; cursor: pointer; height: 55px; }
         .q-val { background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; }
-        .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin-top: 30px; }
 
-        @media (max-width: 600px) {
-            .product-wrapper { flex-direction: column; }
-            #lipBalmToggle .dropdown-content { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; }
-        }
+        @media (max-width: 600px) { .product-wrapper { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -72,7 +52,8 @@
 
     <div class="product-details">
         <h1>مخمرية دم الغزال</h1>
-        <span class="slogan">عطر من الخيال</span>
+        <span style="display:block; margin-bottom: 20px; opacity: 0.7;">عطر من الخيال</span>
+        
         <span class="label">الحجم</span>
         <div class="size-selector">
             <button class="size-btn active-size" data-price="25" data-old="30" onclick="selectSize(this, '3 جرام')">3 جرام</button>
@@ -81,11 +62,13 @@
             <button class="pinky-btn" data-price="70" data-old="80" onclick="selectSize(this, '10 جرام Pinky Edition')">10 جرام Pinky Edition</button>
             <button class="size-btn" data-price="125" data-old="175" onclick="selectSize(this, '35 جرام')">35 جرام</button>
         </div>
+
         <span class="label">السعر الحالي</span>
-        <div class="price-container">
-            <span class="price-tag" id="main-price">25 ج.م</span>
-            <span class="old-price-tag" id="old-price">30 ج.م</span>
+        <div class="price-container" style="margin-top:10px; margin-bottom: 30px;">
+            <span style="font-size: 35px; font-weight: 700;" id="main-price">25 ج.م</span>
+            <span style="font-size: 20px; text-decoration: line-through; opacity: 0.5; margin-right: 10px;" id="old-price">30 ج.م</span>
         </div>
+
         <div class="cart-controls">
             <button class="add-to-cart-btn" id="add-btn" onclick="initAdd()">أضف إلى السلة</button>
             <div class="quantity-btn-group" id="qty-group">
@@ -94,6 +77,16 @@
                 <button class="q-btn" onclick="changeQty(-1)">-</button>
             </div>
         </div>
+        
+        <div class="product-desc">
+            <h3>وصف المنتج:</h3>
+            <p>مزيج ساحر يجمع بين طهارة المسك الأبيض وعبير الفراولة المخملي.
+            صُممت هذه المخمرية لنظافة وانتعاش يدوم طويلاً.
+            ريحة "بناتى" رقيقة، مبهجة، وتخطف القلب من أول لمسة.
+            الإحساس: نظافة، أنوثة طاغية، وحيوية.
+            الثبات: عالٍ جداً (الجسم و الشعر).
+            لماذا ليل؟ تترك جسمك ناعماً كالحرير برائحة منعشة.</p>
+        </div>
     </div>
 </div>
 
@@ -101,19 +94,16 @@
 <script>
     fetch('header.html').then(r => r.text()).then(data => {
         document.getElementById('header-container').innerHTML = data;
-        function setupDropdown(id) {
-            const el = document.getElementById(id);
-            if (el) {
-                el.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    document.querySelectorAll('.dropdown').forEach(d => { if(d !== el) d.classList.remove('active'); });
-                    this.classList.toggle('active');
-                });
-            }
-        }
-        setupDropdown('makhmariatToggle'); setupDropdown('splashToggle'); setupDropdown('lipBalmToggle');
+        document.querySelectorAll('.dropdown').forEach(d => {
+            d.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.dropdown').forEach(x => { if(x !== d) x.classList.remove('active'); });
+                d.classList.toggle('active');
+            });
+        });
         updateHeaderCart();
     });
+
     document.addEventListener('click', () => document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')));
 
     const swiper = new Swiper('.swiper', { loop: true, pagination: { el: '.swiper-pagination', clickable: true } });
@@ -142,10 +132,9 @@
         const itemKey = currentProductName + " - " + currentSelectedSize;
         const addBtn = document.getElementById('add-btn');
         const qtyGroup = document.getElementById('qty-group');
-        const currentQtyDisplay = document.getElementById('current-qty');
         const q = cart[itemKey] ? (typeof cart[itemKey] === 'object' ? cart[itemKey].qty : cart[itemKey]) : 0;
         
-        if (q > 0) { addBtn.style.display = "none"; qtyGroup.style.display = "grid"; currentQtyDisplay.innerText = q; }
+        if (q > 0) { addBtn.style.display = "none"; qtyGroup.style.display = "grid"; document.getElementById('current-qty').innerText = q; }
         else { addBtn.style.display = "block"; qtyGroup.style.display = "none"; }
         
         document.getElementById('main-price').innerText = (currentUnitPrice * (q || 1)) + " ج.م";
@@ -165,10 +154,10 @@
     }
 
     function updateHeaderCart() {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const countEl = document.getElementById('cart-count');
-        if(countEl) countEl.innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
+        if(countEl) countEl.innerText = Object.values(JSON.parse(localStorage.getItem('leilCart') || '{}')).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
     }
+    window.onload = checkCartState;
 </script>
 </body>
 </html>
