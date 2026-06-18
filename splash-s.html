@@ -132,6 +132,7 @@
 
         .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
         .size-btn { padding: 12px 20px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; transition: 0.3s; font-size: 14px; color: white; }
+        .size-btn:hover { background: rgba(255, 255, 255, 0.1); }
         .active-size { background: white !important; color: black !important; border-color: white !important; }
 
         .price-container { margin-bottom: 30px; display: flex; align-items: baseline; gap: 15px; }
@@ -156,30 +157,25 @@
             .logo { font-size: 18px; }
             .product-wrapper { flex-direction: column; }
             .product-details h1 { font-size: 22px; }
-            @media (max-width: 600px) {
-    /* تصغير اللوجو عشان ياخد مساحة أقل */
-    .logo { font-size: 16px !important; }
+        }
 
-    /* جعل الـ nav تاخد مساحة بالعرض وتصغير الخط */
-    nav { 
-        gap: 5px !important; 
-        font-size: 10px !important; 
-    }
-    nav a { 
-        font-size: 10px !important; 
-        padding: 0 2px !important; 
-    }
-
-    /* عشان الـ Dropdown مينزلش يغطي على باقي الحاجات */
-    .dropdown-content {
-        min-width: 120px !important;
-        right: auto !important;
-        left: 0 !important;
-    }
-    
-    /* تصغير أيقونة السلة */
-    .header-icons svg { width: 18px; height: 18px; }
-}
+        @media (max-width: 600px) {
+            .logo { font-size: 16px !important; }
+            nav { 
+                gap: 5px !important; 
+                font-size: 10px !important; 
+            }
+            nav a { 
+                font-size: 10px !important; 
+                padding: 0 2px !important; 
+            }
+            .dropdown-content {
+                min-width: 120px !important;
+                right: auto !important;
+                left: 0 !important;
+            }
+            .header-icons svg { width: 18px; height: 18px; }
+            #lipBalmToggle .dropdown-content { right: auto; left: -10px; min-width: 130px; }
         }
     </style>
 
@@ -193,7 +189,7 @@
       ttq.page();
     }(window, document, 'ttq');
     </script>
-    </head>
+</head>
 <body>
 
 <header>
@@ -220,14 +216,12 @@
         </div>
 
         <div class="dropdown" id="lipBalmToggle">
-            <a href="javascript:void(0)">زبدة الكاكاو</a>
+            <a href="javascript:void(0)">زبدة كاكاو</a>
             <div class="dropdown-content">
                 <a href="Lip-Balm-1.html">فانيليا</a>
                 <a href="Lip-Balm-2.html">فراولة</a>
             </div>
         </div>
-
-        <a href="contact.html">تواصل معنا</a>
     </nav>
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
@@ -306,6 +300,8 @@
     }
     setupDropdown('makhmariatToggle');
     setupDropdown('splashToggle');
+    setupDropdown('lipBalmToggle');
+    
     document.addEventListener('click', function() {
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
     });
@@ -326,7 +322,6 @@
         document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
         btn.classList.add('active-size');
 
-        // لو الاندكس مش -1، يغير الصورة.. لو -1، يفضل على نفس الصورة
         if (imgIndex !== -1) {
             swiper.slideTo(imgIndex, 400, true);
         }
