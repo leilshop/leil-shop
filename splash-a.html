@@ -14,9 +14,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
-        :root { --main: #600a1c; --bg: #3d0000; } /* تم استعادة الألوان الأصلية الفخمة لبراند ليل */
+:root { --main: #600a1c; --bg: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
-        body { background: var(--bg); overflow-x: hidden; }
+        
+        /* كود الحماية الذهبي لمنع حركة الموقع يمين وشمال نهائياً */
+        html, body { 
+            overflow-x: hidden !important; 
+            max-width: 100vw !important; 
+            width: 100% !important; 
+            margin: 0 !important; 
+            padding: 0 !important; 
+            position: relative; 
+        }
+        body { background: var(--bg); }
 
         header {
             background: var(--bg); 
@@ -40,14 +50,7 @@
             line-height: 1;
         }
 
-        nav { 
-            display: flex; 
-            gap: 25px; 
-            flex-grow: 1; 
-            justify-content: center; 
-            align-items: center; 
-        }
-        
+        nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
         nav a { 
             text-decoration: none; 
             font-size: 14px; 
@@ -56,7 +59,7 @@
             white-space: nowrap; 
             color: white;
             line-height: 1.2;
-            display: flex;
+            display: inline-flex; 
             align-items: center;
         }
 
@@ -151,11 +154,23 @@
 
         @media (max-width: 480px) { 
             header { padding: 10px 4%; }
-            nav { gap: 15px; }
-            nav a { font-size: 12px; display: flex; align-items: center; }
-            .logo { font-size: 18px; }
             .product-wrapper { flex-direction: column; }
             .product-details h1 { font-size: 20px; }
+        }
+
+        @media (max-width: 600px) {
+            .logo { font-size: 16px !important; }
+            nav { gap: 5px !important; font-size: 10px !important; }
+            nav a { font-size: 10px !important; padding: 0 2px !important; }
+            .header-icons svg { width: 18px; height: 18px; }
+
+            /* ترويض القوائم المنسدلة عشان متزقش الشاشة في الموبايل */
+            .dropdown-content {
+                right: auto !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                min-width: 130px !important;
+            }
         }
     </style>
 
