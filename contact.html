@@ -13,15 +13,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        :root { --main: #600a1c; --bg: #3d0000; }
+        :root { --main: #600a1c; --bg-site: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         
-        /* كود الحماية الذهبي لمنع حركة الموقع يمين وشمال */
-        html, body { overflow-x: hidden !important; max-width: 100vw; width: 100%; }
-        body { background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; }
+        html, body { overflow-x: hidden; width: 100%; }
+        body { background: var(--bg-site); }
 
         header {
-            background: var(--bg); 
+            background: var(--bg-site);
             padding: 15px 4%;
             display: flex;
             justify-content: space-between;
@@ -33,51 +32,42 @@
             backdrop-filter: blur(10px);
         }
 
-        .logo { 
-            display: block; 
-            font-family: 'Noto Nastaliq Urdu', serif !important; 
-            font-size: 22px; 
-            text-decoration: none; 
+        .logo {
+            display: block;
+            font-family: 'Noto Nastaliq Urdu', serif !important;
+            font-size: 22px;
+            text-decoration: none;
             color: white;
             line-height: 1;
         }
 
+        /* تم إضافة align-items: center هنا لضبط "الرئيسية" مسطرة مع الباقي عمودياً */
         nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
-        nav a { 
-            text-decoration: none; 
-            font-size: 14px; 
-            opacity: 0.8; 
-            transition: 0.3s; 
-            white-space: nowrap; 
-            color: white;
-            line-height: 1.2;
-            display: inline-flex; 
-            align-items: center;
-        }
-        nav a:hover, .dropdown.active > a { opacity: 1; color: white !important; }
+        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; color: white; display: inline-flex; align-items: center; }
+        nav a:hover, .dropdown.active > a { opacity: 1; }
 
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: var(--bg);
+            background-color: var(--bg-site);
             min-width: 160px;
             box-shadow: 0px 10px 20px rgba(0,0,0,0.6);
             z-index: 1000;
             border: 1px solid rgba(255, 255, 255, 0.1);
             top: 100%;
-            right: 0; 
+            right: 0;
             border-radius: 4px;
             overflow: hidden;
             backdrop-filter: blur(15px);
         }
+
         .dropdown.active .dropdown-content { display: block; animation: fadeInSlide 0.3s ease forwards; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; transition: 0.3s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .dropdown-content a:last-child { border-bottom: none; }
-        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; opacity: 1; }
+        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; }
 
         @keyframes fadeInSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; display: inline-block; opacity: 0.5; }
+        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; opacity: 0.5; }
 
         .header-icons { display: flex; align-items: center; }
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
@@ -87,43 +77,44 @@
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
-        .contact-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            text-align: center;
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), url('./LogoonIMG.webp');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
         }
 
-        .contact-container h1 { font-size: 35px; margin-bottom: 40px; font-weight: 700; }
-        .social-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 800px; }
-        .social-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 15px; text-decoration: none; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .social-card:hover { background: var(--main); transform: translateY(-5px); border-color: var(--main); }
-        .social-card i { font-size: 40px; }
-        .social-card span { font-size: 18px; font-weight: 700; }
+        .hero h1 { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: clamp(70px, 18vw, 130px); text-shadow: 0px 4px 20px rgba(0,0,0,0.4); }
+        .hero-btn { padding: 8px 20px; border: 1px solid white; background: none; color: white; text-decoration: none; font-weight: 700; border-radius: 2px; margin-top: 20px; }
+        .hero-btn:hover { background: white; color: black; }
 
-        .whatsapp { color: #25D366; }
-        .instagram { color: #E4405F; }
-        .facebook { color: #1877F2; }
-        .social-card:hover i, .social-card:hover span { color: white; }
+        .sub-title { text-align: center; padding-top: 60px; font-size: 28px; font-weight: 700; margin-bottom: 15px; }
+        .line-divider { width: 60px; height: 1px; background: rgba(255, 255, 255, 0.2); margin: 0 auto 15px auto; display: block; }
+        
+        .container { 
+            max-width: 1100px; 
+            margin: auto; 
+            padding: 20px; 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 30px; 
+        }
+
+        .card { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
+        .card:hover { transform: translateY(-5px); border-color: var(--main); }
+        .card-img { width: 100%; height: 380px; object-fit: cover; background: #222; }
+        .card-info { padding: 25px; text-align: center; }
+        .card-title { font-size: 24px; margin-bottom: 5px; font-weight: 700; }
+        .card-desc { font-size: 14px; opacity: 0.7; margin-bottom: 10px; }
+        .price-value { font-size: 24px; font-weight: 700; }
+        .btn-view { display: block; width: 100%; padding: 14px; background: var(--main); text-decoration: none; font-weight: 700; text-align: center; }
 
         @media (max-width: 480px) {
-            header { padding: 10px 4%; }
-            nav { gap: 12px; } 
-            nav a { font-size: 12px; display: inline-flex; align-items: center; }
-            .logo { font-size: 18px; }
-            .contact-container h1 { font-size: 28px; }
-        }
-
-        @media (max-width: 600px) {
-            .logo { font-size: 16px !important; }
-            nav { gap: 5px !important; font-size: 10px !important; }
-            nav a { font-size: 10px !important; padding: 0 2px !important; }
-            .dropdown-content { min-width: 120px !important; right: auto !important; left: 0 !important; }
-            .header-icons svg { width: 18px; height: 18px; }
-            #lipBalmToggle .dropdown-content { right: auto !important; left: 0 !important; min-width: 120px !important; }
+            nav { gap: 12px; } nav a { font-size: 12px; }
+            .logo { font-size: 18px; } header { padding: 10px 4%; }
+            .card-img { height: 320px; }
+            .container { grid-template-columns: 1fr; }
+            #lipBalmToggle .dropdown-content { right: auto; left: -10px; min-width: 130px; }
         }
     </style>
 </head>
