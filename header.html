@@ -1,28 +1,59 @@
+<style>
+    /* تنسيق الهيدر الموحد - سطر واحد */
+    header { 
+        background: #3d0000; 
+        padding: 15px 4%; 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+        position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); 
+    }
+    .logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; }
+    nav { display: flex; gap: 20px; align-items: center; }
+    nav a { text-decoration: none; font-size: 14px; opacity: 0.8; color: white; display: flex; align-items: center; }
+    
+    .dropdown { position: relative; cursor: pointer; }
+    .dropdown-content { 
+        display: none; position: absolute; background-color: #3d0000; 
+        min-width: 140px; top: 100%; right: 0; border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 4px; z-index: 1000;
+    }
+    .dropdown.active .dropdown-content { display: block; }
+    .dropdown-content a { padding: 10px; display: block; color: white; text-decoration: none; font-size: 13px; }
+    .dropdown-content a:hover { background: #600a1c; }
+    
+    .header-icons { display: flex; align-items: center; }
+    .cart-trigger { position: relative; cursor: pointer; }
+    .cart-count { 
+        position: absolute; top: -8px; left: -10px; background: #600a1c; 
+        width: 18px; height: 18px; border-radius: 50%; font-size: 11px; 
+        display: flex; align-items: center; justify-content: center; font-weight: 700;
+    }
+</style>
+
 <header>
     <a href="index.html" class="logo">ليل</a>
     <nav>
         <a href="index.html">الرئيسية</a>
-        
         <div class="dropdown" id="splashToggle">
-            <a href="javascript:void(0)">بادي سبلاش</a>
+            <a href="javascript:void(0)">بادي سبلاش ▾</a>
             <div class="dropdown-content">
                 <a href="splash-d.html">دم الغزال</a>
                 <a href="splash-s.html">سراب</a>
-                <a href="splash-a.html">أثر</a> 
-                <a href="splash-h.html">حلم</a> 
+                <a href="splash-a.html">أثر</a>
+                <a href="splash-h.html">حلم</a>
             </div>
         </div>
-
         <div class="dropdown" id="makhmariatToggle">
-            <a href="javascript:void(0)">مخمريات</a>
+            <a href="javascript:void(0)">مخمريات ▾</a>
             <div class="dropdown-content">
                 <a href="product-dam.html">دم الغزال</a>
                 <a href="product-sarab.html">سراب</a>
             </div>
         </div>
-
         <div class="dropdown" id="lipBalmToggle">
-            <a href="javascript:void(0)">زبدة كاكاو</a>
+            <a href="javascript:void(0)">زبدة كاكاو ▾</a>
             <div class="dropdown-content">
                 <a href="Lip-Balm-1.html">فانيليا</a>
                 <a href="Lip-Balm-2.html">فراولة</a>
