@@ -14,21 +14,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
-:root { --main: #600a1c; --bg: #3d0000; }
+        :root { --main: #600a1c; --bg: #3d0000; } /* تم استعادة الألوان الأصلية الفخمة لبراند ليل */
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
-        
-        /* كود الحماية الموحد المقفل تماماً لمنع أي حركة يمين أو شمال */
-        html, body { 
-            overflow-x: hidden !important; 
-            max-width: 100vw !important; 
-            width: 100% !important; 
-            margin: 0 !important; 
-            padding: 0 !important; 
-            position: relative; 
-        }
-        body { background: var(--bg); }
+        body { background: var(--bg); overflow-x: hidden; }
 
-        /* تنسيق الهيدر الثابت */
         header {
             background: var(--bg); 
             padding: 15px 4%;
@@ -51,7 +40,14 @@
             line-height: 1;
         }
 
-        nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
+        nav { 
+            display: flex; 
+            gap: 25px; 
+            flex-grow: 1; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
         nav a { 
             text-decoration: none; 
             font-size: 14px; 
@@ -60,13 +56,14 @@
             white-space: nowrap; 
             color: white;
             line-height: 1.2;
-            display: inline-flex; 
+            display: flex;
             align-items: center;
         }
+
         nav a:hover, .dropdown.active > a { opacity: 1; color: white !important; }
 
-        /* تنسيق القوائم المنسدلة */
         .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -81,15 +78,39 @@
             overflow: hidden;
             backdrop-filter: blur(15px);
         }
-        .dropdown.active .dropdown-content { display: block; animation: fadeInSlide 0.3s ease forwards; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; transition: 0.3s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+            animation: fadeInSlide 0.3s ease forwards;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            text-align: right;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
         .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; opacity: 1; }
 
-        @keyframes fadeInSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; display: inline-block; opacity: 0.5; }
+        @keyframes fadeInSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* أيقونة السلة */
+        .dropdown > a::after {
+            content: ' ▾';
+            font-size: 10px;
+            margin-right: 4px;
+            display: inline-block;
+            opacity: 0.5;
+        }
+
         .header-icons { display: flex; align-items: center; }
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
         .cart-count {
@@ -98,7 +119,6 @@
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
-        /* تنسيق محتوى صفحة المنتج */
         .product-wrapper { max-width: 1200px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 40px; padding: 20px; }
         .image-section { flex: 1; min-width: 300px; max-width: 550px; width: 100%; }
         .swiper { width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); }
@@ -131,28 +151,11 @@
 
         @media (max-width: 480px) { 
             header { padding: 10px 4%; }
+            nav { gap: 15px; }
+            nav a { font-size: 12px; display: flex; align-items: center; }
+            .logo { font-size: 18px; }
             .product-wrapper { flex-direction: column; }
-        }
-
-        /* إعدادات الموبايل الخاصة بالهيدر ومنع تحرك الصفحة */
-        @media (max-width: 600px) {
-            .logo { font-size: 16px !important; }
-            nav { gap: 5px !important; font-size: 10px !important; }
-            nav a { font-size: 10px !important; padding: 0 2px !important; }
-            .header-icons svg { width: 18px; height: 18px; }
-
-            /* ضبط القوائم العادية لتفتح بشكل متناسق */
-            .dropdown-content {
-                right: 0 !important;
-                left: auto !important;
-                min-width: 120px !important;
-            }
-
-            /* الحل الجذري لقائمة زبدة كاكاو لمنع تمدد الشاشة لليسار */
-            #lipBalmToggle .dropdown-content {
-                right: auto !important;
-                left: 0 !important; /* تجبر محتوى القائمة يفتح للداخل باتجاه اليمين ويظل بداخل حدود الشاشة */
-            }
+            .product-details h1 { font-size: 20px; }
         }
     </style>
 
@@ -274,18 +277,105 @@
             });
         }
     }
-    
-    // تشغيل القوائم التلاتة
-    setupDropdown('splashToggle');
     setupDropdown('makhmariatToggle');
-    setupDropdown('lipBalmToggle'); // <-- اهو السطر اللي هيشغل زبدة الكاكاو
-
-    // عشان لما تدوس في أي حتة فاضية القائمة تقفل
+    setupDropdown('splashToggle');
     document.addEventListener('click', function() {
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
     });
 
-    // سيب كود السوايبر (Swiper) والسلة (Cart) اللي تحت ده زي ما هو عندك متغيروش
+    const swiper = new Swiper('.swiper', {
+        loop: false, 
+        speed: 400, 
+        pagination: { el: '.swiper-pagination', clickable: true },
+    });
+
+    let currentProductName = "بادي سبلاش أثر";
+    let currentSelectedSize = "5 مل";
+    let currentUnitPrice = 25;
+    let currentOldPrice = 35;
+
+    function selectSize(btn, sizeName, imgIndex) {
+        currentSelectedSize = sizeName;
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
+        btn.classList.add('active-size');
+
+        if (imgIndex !== -1) {
+            swiper.slideTo(imgIndex, 400, true);
+        }
+
+        currentUnitPrice = parseInt(btn.getAttribute('data-price'));
+        currentOldPrice = parseInt(btn.getAttribute('data-old'));
+        
+        checkCartState();
+    }
+
+    function updateDisplayPrice(price, oldPrice) {
+        document.getElementById('main-price').innerText = price + " ج.م";
+        const oldPriceEl = document.getElementById('old-price');
+        if (price < oldPrice) {
+            oldPriceEl.style.display = "block";
+            oldPriceEl.innerText = oldPrice + " ج.م";
+        } else {
+            oldPriceEl.style.display = "none";
+        }
+    }
+
+    function checkCartState() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        const itemKey = currentProductName + " - " + currentSelectedSize;
+        const addBtn = document.getElementById('add-btn');
+        const qtyGroup = document.getElementById('qty-group');
+        const currentQtyDisplay = document.getElementById('current-qty');
+
+        if (cart[itemKey] && (cart[itemKey].qty || cart[itemKey]) > 0) {
+            const itemData = cart[itemKey];
+            const qty = typeof itemData === 'object' ? itemData.qty : itemData;
+            addBtn.style.display = "none";
+            qtyGroup.style.display = "grid";
+            currentQtyDisplay.innerText = qty;
+            updateDisplayPrice(currentUnitPrice * qty, currentOldPrice * qty);
+        } else {
+            addBtn.style.display = "block";
+            qtyGroup.style.display = "none";
+            updateDisplayPrice(currentUnitPrice, currentOldPrice);
+        }
+        updateHeaderCart();
+    }
+
+    function initAdd() { changeQty(1); }
+
+    function changeQty(amount) {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        const itemKey = currentProductName + " - " + currentSelectedSize;
+        
+        if (!cart[itemKey]) {
+            cart[itemKey] = { qty: 0, price: currentUnitPrice };
+        }
+        
+        if (typeof cart[itemKey] !== 'object') {
+            cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice };
+        }
+
+        cart[itemKey].qty += amount;
+        cart[itemKey].price = currentUnitPrice; 
+
+        if (cart[itemKey].qty <= 0) delete cart[itemKey];
+        
+        localStorage.setItem('leilCart', JSON.stringify(cart));
+        checkCartState();
+    }
+
+    function updateHeaderCart() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        let total = Object.values(cart).reduce((a, b) => {
+            const q = typeof b === 'object' ? b.qty : b;
+            return a + q;
+        }, 0);
+        const countEl = document.getElementById('cart-count');
+        if(countEl) countEl.innerText = total;
+    }
+
+    window.onload = checkCartState;
 </script>
 
 </body>
