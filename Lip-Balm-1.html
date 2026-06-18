@@ -177,44 +177,17 @@
     </head>
 <body>
 
-<header>
-    <a href="index.html" class="logo">ليل</a>
-    <nav>
-        <a href="index.html">الرئيسية</a>
-        
-        <div class="dropdown" id="splashToggle">
-            <a href="javascript:void(0)">بادي سبلاش</a>
-            <div class="dropdown-content">
-                <a href="splash-d.html">دم الغزال</a>
-                <a href="splash-s.html">سراب</a>
-                <a href="splash-a.html">أثر</a> 
-                <a href="splash-h.html">حلم</a> 
-            </div>
-        </div>
-
-        <div class="dropdown" id="makhmariatToggle">
-            <a href="javascript:void(0)">مخمريات</a>
-            <div class="dropdown-content">
-                <a href="product-dam.html">دم الغزال</a>
-                <a href="product-sarab.html">سراب</a>
-            </div>
-        </div>
-
-        <div class="dropdown" id="lipBalmToggle">
-            <a href="javascript:void(0)">زبدة كاكاو</a>
-            <div class="dropdown-content">
-                <a href="Lip-Balm-1.html">فانيليا</a>
-                <a href="Lip-Balm-2.html">فراولة</a>
-            </div>
-        </div>
-    </nav>
-    <div class="header-icons">
-        <a href="cart.html" class="cart-trigger">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            <div class="cart-count" id="cart-count">0</div>
-        </a>
-    </div>
-</header>
+<div id="header-container"></div>
+<script>
+    fetch('header.html')
+        .then(r => r.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+            // تحديث عدد السلة بعد جلب الهيدر
+            let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+            document.getElementById('cart-count').innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
+        });
+</script>
 
 <div class="product-wrapper">
     <div class="image-section">
