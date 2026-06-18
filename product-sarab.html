@@ -15,7 +15,10 @@
     <style>
         :root { --main: #600a1c; --bg: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
-        body { background: var(--bg); overflow-x: hidden; }
+        
+        /* كود الحماية الذهبي */
+        html, body { overflow-x: hidden !important; max-width: 100vw; width: 100%; }
+        body { background: var(--bg); }
 
         header {
             background: var(--bg); 
@@ -55,7 +58,7 @@
             white-space: nowrap; 
             color: white;
             line-height: 1.2;
-            display: flex;
+            display: inline-flex;
             align-items: center;
         }
 
@@ -151,10 +154,20 @@
 
         @media (max-width: 480px) { 
             header { padding: 10px 4%; }
-            nav { gap: 15px; }
-            nav a { font-size: 12px; display: flex; align-items: center; }
+            nav { gap: 12px; }
+            nav a { font-size: 12px; display: inline-flex; align-items: center; }
             .logo { font-size: 18px; }
-            .product-wrapper { flex-direction: column; } 
+            .product-wrapper { flex-direction: column; }
+            .product-details h1 { font-size: 20px; }
+        }
+
+        @media (max-width: 600px) {
+            .logo { font-size: 16px !important; }
+            nav { gap: 5px !important; font-size: 10px !important; }
+            nav a { font-size: 10px !important; padding: 0 2px !important; }
+            .dropdown-content { min-width: 120px !important; right: auto !important; left: 0 !important; }
+            .header-icons svg { width: 18px; height: 18px; }
+            #lipBalmToggle .dropdown-content { right: auto !important; left: 0 !important; min-width: 120px !important; }
         }
     </style>
 
@@ -195,14 +208,12 @@
         </div>
 
         <div class="dropdown" id="lipBalmToggle">
-            <a href="javascript:void(0)">زبدة الكاكاو</a>
+            <a href="javascript:void(0)">زبدة كاكاو</a>
             <div class="dropdown-content">
                 <a href="Lip-Balm-1.html">فانيليا</a>
                 <a href="Lip-Balm-2.html">فراولة</a>
             </div>
         </div>
-
-        <a href="contact.html">تواصل معنا</a>
     </nav>
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
@@ -266,7 +277,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-    // --- كود الشريط الجديد الموحد ---
     function setupDropdown(id) {
         const el = document.getElementById(id);
         if (el) {
@@ -279,21 +289,19 @@
             });
         }
     }
-
     setupDropdown('makhmariatToggle');
     setupDropdown('splashToggle');
+    setupDropdown('lipBalmToggle');
 
     document.addEventListener('click', function() {
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
     });
-    // ---------------------------------
 
     const swiper = new Swiper('.swiper', {
         loop: true,
         pagination: { el: '.swiper-pagination', clickable: true },
     });
 
-    // تم تعديل الاسم هنا ليظهر بكلمة "مخمرية" في السلة
     let currentProductName = "مخمرية سراب"; 
     let currentSelectedSize = "3 جرام";
     let currentUnitPrice = 25;
@@ -391,5 +399,6 @@
 
     window.onload = checkCartState;
 </script>
+
 </body>
 </html>
