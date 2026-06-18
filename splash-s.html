@@ -87,9 +87,8 @@
         .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; opacity: 1; }
 
         @keyframes fadeInSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; display: inline-block; opacity: 0.5; }
+        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; opacity: 0.5; }
 
-        /* أيقونة السلة */
         .header-icons { display: flex; align-items: center; }
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
         .cart-count {
@@ -98,61 +97,44 @@
             display: flex; align-items: center; justify-content: center; font-weight: 700;
         }
 
-        /* تنسيق محتوى صفحة المنتج */
-        .product-wrapper { max-width: 1200px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 40px; padding: 20px; }
-        .image-section { flex: 1; min-width: 300px; max-width: 550px; width: 100%; }
-        .swiper { width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); }
-        .swiper-slide img { width: 100%; height: auto; display: block; }
-        .swiper-pagination-bullet-active { background: var(--main) !important; }
-
-        .product-details { flex: 1; min-width: 300px; text-align: right; }
-        .product-details h1 { font-size: 24px; margin-bottom: 5px; font-weight: 700; }
-        .slogan { font-size: 18px; opacity: 0.7; margin-bottom: 30px; display: block; }
-        .label { font-size: 13px; opacity: 0.6; margin-bottom: 10px; display: block; }
-
-        .size-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
-        .size-btn { padding: 12px 20px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; transition: 0.3s; font-size: 14px; color: white; }
-        .active-size { background: white !important; color: black !important; border-color: white !important; }
-
-        .price-container { margin-bottom: 30px; display: flex; align-items: baseline; gap: 15px; }
-        .price-tag { font-size: 35px; font-weight: 700; display: block; }
-        .old-price-tag { font-size: 20px; text-decoration: line-through; opacity: 0.5; font-weight: 400; }
-
-        .cart-controls { margin-bottom: 40px; }
-        .add-to-cart-btn { width: 100%; padding: 16px; background: var(--main); border: none; color: white; font-weight: 700; font-size: 18px; cursor: pointer; transition: 0.3s; }
-        .add-to-cart-btn:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
-
-        .quantity-btn-group { display: none; grid-template-columns: 1fr 2fr 1fr; width: 100%; gap: 10px; }
-        .q-btn { background: #fff; color: #000; border: none; font-size: 24px; font-weight: bold; cursor: pointer; height: 55px; display: flex; align-items: center; justify-content: center; }
-        .q-val { background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; }
-
-        .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
-        .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
-
-   @media (max-width: 480px) { 
-            header { padding: 10px 4%; }
-            .product-wrapper { flex-direction: column; }
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), url('./LogoonIMG.webp');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
         }
 
-        /* إعدادات الموبايل الخاصة بالهيدر ومنع تحرك الصفحة */
-        @media (max-width: 600px) {
-            .logo { font-size: 16px !important; }
-            nav { gap: 5px !important; font-size: 10px !important; }
-            nav a { font-size: 10px !important; padding: 0 2px !important; }
-            .header-icons svg { width: 18px; height: 18px; }
+        .hero h1 { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: clamp(70px, 18vw, 130px); text-shadow: 0px 4px 20px rgba(0,0,0,0.4); }
+        .hero-btn { padding: 8px 20px; border: 1px solid white; background: none; color: white; text-decoration: none; font-weight: 700; border-radius: 2px; margin-top: 20px; }
+        .hero-btn:hover { background: white; color: black; }
 
-            /* ضبط القوائم العادية لتفتح بشكل متناسق */
-            .dropdown-content {
-                right: 0 !important;
-                left: auto !important;
-                min-width: 120px !important;
-            }
+        .sub-title { text-align: center; padding-top: 60px; font-size: 28px; font-weight: 700; margin-bottom: 15px; }
+        .line-divider { width: 60px; height: 1px; background: rgba(255, 255, 255, 0.2); margin: 0 auto 15px auto; display: block; }
+        
+        .container { 
+            max-width: 1100px; 
+            margin: auto; 
+            padding: 20px; 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 30px; 
+        }
 
-            /* الحل الجذري لقائمة زبدة كاكاو لمنع تمدد الشاشة لليسار */
-            #lipBalmToggle .dropdown-content {
-                right: auto !important;
-                left: 0 !important; /* تجبر محتوى القائمة يفتح للداخل باتجاه اليمين ويظل بداخل حدود الشاشة */
-            }
+        .card { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
+        .card:hover { transform: translateY(-5px); border-color: var(--main); }
+        .card-img { width: 100%; height: 380px; object-fit: cover; background: #222; }
+        .card-info { padding: 25px; text-align: center; }
+        .card-title { font-size: 24px; margin-bottom: 5px; font-weight: 700; }
+        .card-desc { font-size: 14px; opacity: 0.7; margin-bottom: 10px; }
+        .price-value { font-size: 24px; font-weight: 700; }
+        .btn-view { display: block; width: 100%; padding: 14px; background: var(--main); text-decoration: none; font-weight: 700; text-align: center; }
+
+        @media (max-width: 480px) {
+            nav { gap: 12px; } nav a { font-size: 12px; }
+            .logo { font-size: 18px; } header { padding: 10px 4%; }
+            .card-img { height: 320px; }
+            .container { grid-template-columns: 1fr; }
+            #lipBalmToggle .dropdown-content { right: auto; left: -10px; min-width: 130px; }
         }
     </style>
     
@@ -262,6 +244,16 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        let total = Object.values(cart).reduce((a, b) => {
+            const q = typeof b === 'object' ? b.qty : b;
+            return a + q;
+        }, 0);
+        const countEl = document.getElementById('cart-count');
+        if(countEl) countEl.innerText = total;
+    }
+
     function setupDropdown(id) {
         const el = document.getElementById(id);
         if (el) {
@@ -274,18 +266,16 @@
             });
         }
     }
-    
-    // تشغيل القوائم التلاتة
-    setupDropdown('splashToggle');
-    setupDropdown('makhmariatToggle');
-    setupDropdown('lipBalmToggle'); // <-- اهو السطر اللي هيشغل زبدة الكاكاو
 
-    // عشان لما تدوس في أي حتة فاضية القائمة تقفل
+    setupDropdown('makhmariatToggle');
+    setupDropdown('splashToggle');
+    setupDropdown('lipBalmToggle');
+
     document.addEventListener('click', function() {
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
     });
 
-    // سيب كود السوايبر (Swiper) والسلة (Cart) اللي تحت ده زي ما هو عندك متغيروش
+    window.onload = updateCartCount;
 </script>
 
 </body>
