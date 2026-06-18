@@ -1,23 +1,38 @@
 <style>
-    /* تنسيقات الهيدر الموحدة - ستطبق على أي صفحة تستدعي هذا الملف */
-    .leil-header { background: #3d0000; padding: 15px 4%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); width: 100%; }
-    .leil-logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; }
-    .leil-nav { display: flex; gap: 25px; align-items: center; }
-    .leil-nav a { text-decoration: none; font-size: 14px; opacity: 0.8; color: white; display: flex; align-items: center; }
+    /* تنسيقات الهيدر الموحدة والمصغرة */
+    .leil-header { 
+        background: #3d0000; padding: 10px 4%; display: flex; justify-content: space-between; 
+        align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+        position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); width: 100%;
+    }
+    .leil-logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 18px !important; text-decoration: none; color: white; }
+    .leil-nav { display: flex; gap: 15px !important; align-items: center; }
+    .leil-nav a { text-decoration: none; font-size: 12px !important; opacity: 0.8; color: white; display: flex; align-items: center; }
     .leil-nav a:hover { opacity: 1; }
+    
     .leil-dropdown { position: relative; cursor: pointer; }
-    .leil-dropdown-content { display: none; position: absolute; background-color: #3d0000; min-width: 160px; top: 100%; right: 0; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px; overflow: hidden; z-index: 1000; }
+    .leil-dropdown-content { 
+        display: none; position: absolute; background-color: #3d0000; 
+        min-width: 120px; top: 100%; right: 0; border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 4px; z-index: 1000;
+    }
     .leil-dropdown:hover .leil-dropdown-content { display: block; }
-    .leil-dropdown-content a { padding: 12px; display: block; color: white; text-decoration: none; font-size: 13px; text-align: right; }
+    .leil-dropdown-content a { padding: 8px !important; display: block; color: white; text-decoration: none; font-size: 12px !important; text-align: right; }
     .leil-dropdown-content a:hover { background: #600a1c; }
+    
     .leil-cart { position: relative; display: flex; align-items: center; }
-    .leil-cart-count { position: absolute; top: -8px; left: -10px; background: #600a1c; width: 18px; height: 18px; border-radius: 50%; font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; }
+    .leil-cart-count { 
+        position: absolute; top: -8px; left: -10px; background: #600a1c; 
+        width: 16px !important; height: 16px !important; border-radius: 50%; font-size: 10px !important; 
+        display: flex; align-items: center; justify-content: center; font-weight: 700; color: white;
+    }
 </style>
 
 <header class="leil-header">
     <a href="index.html" class="leil-logo">ليل</a>
     <nav class="leil-nav">
         <a href="index.html">الرئيسية</a>
+        
         <div class="leil-dropdown">
             <a>بادي سبلاش ▾</a>
             <div class="leil-dropdown-content">
@@ -27,6 +42,7 @@
                 <a href="splash-h.html">حلم</a>
             </div>
         </div>
+
         <div class="leil-dropdown">
             <a>مخمريات ▾</a>
             <div class="leil-dropdown-content">
@@ -34,6 +50,7 @@
                 <a href="product-sarab.html">سراب</a>
             </div>
         </div>
+
         <div class="leil-dropdown">
             <a>زبدة كاكاو ▾</a>
             <div class="leil-dropdown-content">
@@ -43,7 +60,7 @@
         </div>
     </nav>
     <a href="cart.html" class="leil-cart">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
         <div class="leil-cart-count" id="cart-count">0</div>
     </a>
 </header>
