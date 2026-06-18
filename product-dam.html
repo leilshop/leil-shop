@@ -104,25 +104,23 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    fetch('header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-container').innerHTML = data;
-            function setupDropdown(id) {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        document.querySelectorAll('.dropdown').forEach(d => { if(d !== el) d.classList.remove('active'); });
-                        this.classList.toggle('active');
-                    });
-                }
+    fetch('header.html').then(r => r.text()).then(data => {
+        document.getElementById('header-container').innerHTML = data;
+        function setupDropdown(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.querySelectorAll('.dropdown').forEach(d => { if(d !== el) d.classList.remove('active'); });
+                    this.classList.toggle('active');
+                });
             }
-            setupDropdown('makhmariatToggle'); setupDropdown('splashToggle'); setupDropdown('lipBalmToggle');
-            checkCartState();
-        });
+        }
+        setupDropdown('makhmariatToggle'); setupDropdown('splashToggle'); setupDropdown('lipBalmToggle');
+        updateHeaderCart();
+    });
 
-    document.addEventListener('click', function() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); });
+    document.addEventListener('click', () => document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')));
 
     const swiper = new Swiper('.swiper', { loop: true, pagination: { el: '.swiper-pagination', clickable: true } });
 
@@ -140,7 +138,7 @@
         currentOldPrice = parseInt(btn.getAttribute('data-old'));
         
         const addBtn = document.getElementById('add-btn');
-        if (sizeName === "5 جرام") { addBtn.innerText = "غير متاح"; addBtn.disabled = true; } 
+        if (sizeName === "5 جرام") { addBtn.innerText = "المنتج غير متاح"; addBtn.disabled = true; } 
         else { addBtn.innerText = "أضف إلى السلة"; addBtn.disabled = false; }
         checkCartState();
     }
@@ -157,7 +155,7 @@
         else { addBtn.style.display = "block"; qtyGroup.style.display = "none"; }
         
         document.getElementById('main-price').innerText = (currentUnitPrice * (q || 1)) + " ج.م";
-        updateCartCount();
+        updateHeaderCart();
     }
 
     function initAdd() { changeQty(1); }
@@ -172,11 +170,12 @@
         checkCartState();
     }
 
-    function updateCartCount() {
+    function updateHeaderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const countEl = document.getElementById('cart-count');
         if(countEl) countEl.innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
     }
+    window.onload = checkCartState;
 </script>
 </body>
 </html>
