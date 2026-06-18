@@ -156,30 +156,6 @@
             .logo { font-size: 18px; }
             .product-wrapper { flex-direction: column; }
             .product-details h1 { font-size: 22px; }
-            @media (max-width: 600px) {
-    /* تصغير اللوجو عشان ياخد مساحة أقل */
-    .logo { font-size: 16px !important; }
-
-    /* جعل الـ nav تاخد مساحة بالعرض وتصغير الخط */
-    nav { 
-        gap: 5px !important; 
-        font-size: 10px !important; 
-    }
-    nav a { 
-        font-size: 10px !important; 
-        padding: 0 2px !important; 
-    }
-
-    /* عشان الـ Dropdown مينزلش يغطي على باقي الحاجات */
-    .dropdown-content {
-        min-width: 120px !important;
-        right: auto !important;
-        left: 0 !important;
-    }
-    
-    /* تصغير أيقونة السلة */
-    .header-icons svg { width: 18px; height: 18px; }
-}
         }
     </style>
 
@@ -200,15 +176,15 @@
     <a href="index.html" class="logo">ليل</a>
     <nav>
         <a href="index.html">الرئيسية</a>
+        
         <div class="dropdown" id="splashToggle">
             <a href="javascript:void(0)">بادي سبلاش</a>
             <div class="dropdown-content">
                 <a href="splash-d.html">دم الغزال</a>
                 <a href="splash-s.html">سراب</a>
-                <a href="splash-a.html">أثر</a> 
-                <a href="splash-h.html">حلم</a> 
             </div>
         </div>
+
         <div class="dropdown" id="makhmariatToggle">
             <a href="javascript:void(0)">مخمريات</a>
             <div class="dropdown-content">
@@ -216,13 +192,8 @@
                 <a href="product-sarab.html">سراب</a>
             </div>
         </div>
-        <div class="dropdown" id="lipBalmToggle">
-            <a href="javascript:void(0)">زبدة كاكاو</a>
-            <div class="dropdown-content">
-                <a href="Lip-Balm-1.html">فانيليا</a>
-                <a href="Lip-Balm-2.html">فراولة</a>
-            </div>
-        </div>
+
+        <a href="contact.html">تواصل معنا</a>
     </nav>
     <div class="header-icons">
         <a href="cart.html" class="cart-trigger">
