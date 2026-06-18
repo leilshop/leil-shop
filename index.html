@@ -17,6 +17,64 @@
         html, body { overflow-x: hidden; width: 100%; }
         body { background: var(--bg-site); }
 
+        header {
+            background: var(--bg-site);
+            padding: 15px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: block;
+            font-family: 'Noto Nastaliq Urdu', serif !important;
+            font-size: 22px;
+            text-decoration: none;
+            color: white;
+            line-height: 1;
+        }
+
+        /* تم إضافة align-items: center هنا لضبط "الرئيسية" مسطرة مع الباقي عمودياً */
+        nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
+        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; color: white; display: inline-flex; align-items: center; }
+        nav a:hover, .dropdown.active > a { opacity: 1; }
+
+        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--bg-site);
+            min-width: 160px;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.6);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            top: 100%;
+            right: 0;
+            border-radius: 4px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+
+        .dropdown.active .dropdown-content { display: block; animation: fadeInSlide 0.3s ease forwards; }
+        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; }
+
+        @keyframes fadeInSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; opacity: 0.5; }
+
+        .header-icons { display: flex; align-items: center; }
+        .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
+        .cart-count {
+            position: absolute; top: -8px; left: -10px; background: var(--main);
+            width: 18px; height: 18px; border-radius: 50%; font-size: 11px;
+            display: flex; align-items: center; justify-content: center; font-weight: 700;
+        }
+
         .hero {
             height: 80vh;
             background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), url('./LogoonIMG.webp');
@@ -50,14 +108,51 @@
         .btn-view { display: block; width: 100%; padding: 14px; background: var(--main); text-decoration: none; font-weight: 700; text-align: center; }
 
         @media (max-width: 480px) {
+            nav { gap: 12px; } nav a { font-size: 12px; }
+            .logo { font-size: 18px; } header { padding: 10px 4%; }
             .card-img { height: 320px; }
             .container { grid-template-columns: 1fr; }
+            #lipBalmToggle .dropdown-content { right: auto; left: -10px; min-width: 130px; }
         }
     </style>
 </head>
 <body>
 
-<div id="header-container"></div>
+<header>
+    <a href="index.html" class="logo">ليل</a>
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        <div class="dropdown" id="splashToggle">
+            <a href="javascript:void(0)">بادي سبلاش</a>
+            <div class="dropdown-content">
+                <a href="splash-d.html">دم الغزال</a>
+                <a href="splash-s.html">سراب</a>
+                <a href="splash-a.html">أثر</a> 
+                <a href="splash-h.html">حلم</a> 
+            </div>
+        </div>
+        <div class="dropdown" id="makhmariatToggle">
+            <a href="javascript:void(0)">مخمريات</a>
+            <div class="dropdown-content">
+                <a href="product-dam.html">دم الغزال</a>
+                <a href="product-sarab.html">سراب</a>
+            </div>
+        </div>
+        <div class="dropdown" id="lipBalmToggle">
+            <a href="javascript:void(0)">زبدة كاكاو</a>
+            <div class="dropdown-content">
+                <a href="Lip-Balm-1.html">فانيليا</a>
+                <a href="Lip-Balm-2.html">فراولة</a>
+            </div>
+        </div>
+    </nav>
+    <div class="header-icons">
+        <a href="cart.html" class="cart-trigger">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            <div class="cart-count" id="cart-count">0</div>
+        </a>
+    </div>
+</header>
 
 <section class="hero">
     <h1>ليـل</h1>
@@ -203,31 +298,38 @@
 </div>
 
 <script>
-    fetch('header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-container').innerHTML = data;
-            
-            function setupDropdown(id) {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        document.querySelectorAll('.dropdown').forEach(d => {
-                            if(d !== el) d.classList.remove('active');
-                        });
-                        this.classList.toggle('active');
-                    });
-                }
-            }
-            setupDropdown('makhmariatToggle');
-            setupDropdown('splashToggle');
-            setupDropdown('lipBalmToggle');
-        });
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        let total = Object.values(cart).reduce((a, b) => {
+            const q = typeof b === 'object' ? b.qty : b;
+            return a + q;
+        }, 0);
+        const countEl = document.getElementById('cart-count');
+        if(countEl) countEl.innerText = total;
+    }
+
+    function setupDropdown(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.dropdown').forEach(d => {
+                    if(d !== el) d.classList.remove('active');
+                });
+                this.classList.toggle('active');
+            });
+        }
+    }
+
+    setupDropdown('makhmariatToggle');
+    setupDropdown('splashToggle');
+    setupDropdown('lipBalmToggle');
 
     document.addEventListener('click', function() {
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
     });
+
+    window.onload = updateCartCount;
 </script>
 
 </body>
