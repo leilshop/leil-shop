@@ -25,7 +25,6 @@
         header {
             background: #3d0000;
             color: white;
-            text-align: center;
             padding: 15px;
             font-size: 18px;
             font-weight: bold;
@@ -33,6 +32,21 @@
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container {
@@ -128,10 +142,6 @@
             z-index: 10;
         }
 
-        .minus-btn:active {
-            background: #d0d0d0;
-        }
-
         .footer-panel {
             position: fixed;
             bottom: 0;
@@ -147,7 +157,7 @@
             margin: 0 auto;
             border-top-left-radius: 16px;
             border-top-right-radius: 16px;
-            z-index: 1000;
+            z-index: 100;
         }
 
         .total-box {
@@ -168,13 +178,13 @@
 
         .actions-box {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn {
-            padding: 10px 15px;
+            padding: 10px 12px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             border: none;
             cursor: pointer;
@@ -186,14 +196,112 @@
             border: 1px solid #ddd;
         }
 
-        .btn-reset:active {
-            background: #e0e0e0;
+        .btn-save {
+            background: #600a1c;
+            color: white;
+        }
+
+        /* نافذة السجل المنبثقة */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #d9534f;
+        }
+
+        .history-card {
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .history-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .history-date {
+            font-weight: bold;
+            color: #3d0000;
+            font-size: 14px;
+        }
+
+        .delete-day-btn {
+            background: #ffe5e5;
+            color: #d9534f;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .history-items {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .history-total {
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 5px;
+            border-top: 1px dashed #ccc;
+            padding-top: 5px;
         }
     </style>
 </head>
 <body>
 
-<header>✨ حسابات مركز الشباب اليومية</header>
+<header>
+    <span>حسابات مركز الشباب اليومية</span>
+    <button class="header-btn" onclick="openHistory()" title="سجل المبيعات">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+    </button>
+</header>
 
 <div class="container">
     
@@ -382,11 +490,22 @@
     </div>
     <div class="actions-box">
         <button class="btn btn-reset" onclick="resetAll()">تصفير 🔄</button>
+        <button class="btn btn-save" onclick="saveDay()">حفظ اليوم 💾</button>
+    </div>
+</div>
+
+<div class="modal" id="historyModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>سجل المبيعات السابقة</h3>
+            <button class="close-btn" onclick="closeHistory()">✖</button>
+        </div>
+        <div id="historyContent">
+            </div>
     </div>
 </div>
 
 <script>
-    // تخزين العدادات
     const salesData = {
         splash_3_dam: 0, splash_3_sarab: 0, splash_3_athar: 0, splash_3_holam: 0,
         splash_5_dam: 0, splash_5_sarab: 0, splash_5_athar: 0, splash_5_holam: 0,
@@ -399,7 +518,6 @@
         balm_vanilla: 0, balm_straw: 0
     };
 
-    // الأسعار
     const prices = {
         splash_3_dam: 15, splash_3_sarab: 15, splash_3_athar: 15, splash_3_holam: 15,
         splash_5_dam: 25, splash_5_sarab: 25, splash_5_athar: 25, splash_5_holam: 25,
@@ -412,22 +530,30 @@
         balm_vanilla: 25, balm_straw: 30
     };
 
+    const productNames = {
+        splash_3_dam: "سبلاش 3مل (دم الغزال)", splash_3_sarab: "سبلاش 3مل (سراب)", splash_3_athar: "سبلاش 3مل (أثر)", splash_3_holam: "سبلاش 3مل (حلم)",
+        splash_5_dam: "سبلاش 5مل (دم الغزال)", splash_5_sarab: "سبلاش 5مل (سراب)", splash_5_athar: "سبلاش 5مل (أثر)", splash_5_holam: "سبلاش 5مل (حلم)",
+        splash_10_dam: "سبلاش 10مل (دم الغزال)", splash_10_sarab: "سبلاش 10مل (سراب)", splash_10_athar: "سبلاش 10مل (أثر)", splash_10_holam: "سبلاش 10مل (حلم)",
+        splash_20_dam: "سبلاش 20مل (دم الغزال)", splash_20_sarab: "سبلاش 20مل (سراب)", splash_20_athar: "سبلاش 20مل (أثر)", splash_20_holam: "سبلاش 20مل (حلم)",
+        splash_100_dam: "سبلاش 100مل (دم الغزال)", splash_100_sarab: "سبلاش 100مل (سراب)", splash_100_athar: "سبلاش 100مل (أثر)", splash_100_holam: "سبلاش 100مل (حلم)",
+        makh_3_dam: "مخمرية 3جم (دم الغزال)", makh_3_sarab: "مخمرية 3جم (سراب)",
+        makh_10_dam: "مخمرية 10جم (دم الغزال)", makh_10_sarab: "مخمرية 10جم (سراب)",
+        makh_35_dam: "مخمرية 35جم (دم الغزال)", makh_35_sarab: "مخمرية 35جم (سراب)",
+        balm_vanilla: "زبدة كاكاو (فانيليا)", balm_straw: "زبدة كاكاو (فراولة)"
+    };
+
     function changeQty(productId, amount, event) {
         if (event) {
             event.stopPropagation();
         }
-
         salesData[productId] = Math.max(0, salesData[productId] + amount);
-        
         const badge = document.getElementById('count_' + productId);
         badge.innerText = salesData[productId];
-        
         if (salesData[productId] > 0) {
             badge.classList.add('active');
         } else {
             badge.classList.remove('active');
         }
-
         calculateTotal();
     }
 
@@ -437,10 +563,39 @@
             total += salesData[key] * prices[key];
         }
         document.getElementById('totalPrice').innerText = total + " ج.م";
+        return total;
     }
 
-    function resetAll() {
-        if (confirm("هتصفر حساب اليوم بالكامل لبدء جرد جديد؟")) {
+    function saveDay() {
+        let total = calculateTotal();
+        if (total === 0) {
+            alert("مفيش مبيعات لسه عشان تحفظها!");
+            return;
+        }
+
+        if(confirm("متأكد إنك خلصت شغل وهتحفظ مبيعات اليوم وتصفر العدادات؟")) {
+            let dayDetails = [];
+            for(let key in salesData) {
+                if(salesData[key] > 0) {
+                    dayDetails.push(`${productNames[key]}: ${salesData[key]} قطع`);
+                }
+            }
+
+            let today = new Date().toLocaleString('ar-EG', { dateStyle: 'full', timeStyle: 'short' });
+            
+            let record = {
+                date: today,
+                items: dayDetails,
+                total: total
+            };
+
+            let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
+            history.unshift(record);
+            
+            localStorage.setItem('leilSalesHistory', JSON.stringify(history));
+
+            alert("تم حفظ اليوم بنجاح!");
+            
             for (const key in salesData) {
                 salesData[key] = 0;
                 const badge = document.getElementById('count_' + key);
@@ -448,6 +603,55 @@
                 badge.classList.remove('active');
             }
             calculateTotal();
+        }
+    }
+
+    function resetAll() {
+        if (confirm("هتصفر العدادات من غير ما تحفظ؟")) {
+            for (const key in salesData) {
+                salesData[key] = 0;
+                const badge = document.getElementById('count_' + key);
+                badge.innerText = 0;
+                badge.classList.remove('active');
+            }
+            calculateTotal();
+        }
+    }
+
+    function openHistory() {
+        const modal = document.getElementById('historyModal');
+        const content = document.getElementById('historyContent');
+        let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
+        
+        if (history.length === 0) {
+            content.innerHTML = '<p style="text-align:center; color:#666; margin-top:20px;">مفيش أيام محفوظة لسه.</p>';
+        } else {
+            content.innerHTML = history.map((record, index) => `
+                <div class="history-card">
+                    <div class="history-card-header">
+                        <div class="history-date">${record.date}</div>
+                        <button class="delete-day-btn" onclick="deleteDay(${index})">مسح اليوم</button>
+                    </div>
+                    <div class="history-items">
+                        ${record.items.map(item => `<div>- ${item}</div>`).join('')}
+                    </div>
+                    <div class="history-total">الإجمالي: ${record.total} ج.م</div>
+                </div>
+            `).join('');
+        }
+        modal.classList.add('active');
+    }
+
+    function closeHistory() {
+        document.getElementById('historyModal').classList.remove('active');
+    }
+
+    function deleteDay(index) {
+        if(confirm("متأكد إنك عايز تمسح سجل اليوم ده بالذات؟")) {
+            let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
+            history.splice(index, 1); // بيمسح اليوم من القائمة
+            localStorage.setItem('leilSalesHistory', JSON.stringify(history));
+            openHistory(); // بيعمل تحديث للقائمة عشان اليوم يختفي قدامك
         }
     }
 </script>
