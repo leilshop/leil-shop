@@ -22,6 +22,65 @@
             padding-bottom: 140px;
         }
 
+        /* شاشة تسجيل الدخول */
+        #loginScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #3d0000;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            transition: opacity 0.5s ease;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 350px;
+        }
+
+        #passInput {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+            font-size: 18px;
+            font-family: 'Cairo';
+        }
+
+        .login-btn {
+            background: white;
+            color: #3d0000;
+            border: none;
+            padding: 10px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Cairo';
+        }
+
+        #loginError {
+            color: #ffaaaa;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
         header {
             background: #3d0000;
             color: white;
@@ -228,6 +287,11 @@
             color: white;
         }
 
+        .btn-save:disabled, .btn-reset:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         /* نافذة السجل المنبثقة */
         .modal {
             display: none;
@@ -319,6 +383,7 @@
             color: #555;
             line-height: 1.6;
             margin-top: 5px;
+            white-space: pre-line; /* لعرض السطور تحت بعضها كما في الشيت */
         }
 
         .history-total {
@@ -331,6 +396,16 @@
     </style>
 </head>
 <body>
+
+<div id="loginScreen">
+    <div class="login-box">
+        <h2>🔒 نظام إدارة ليل</h2>
+        <p style="font-size: 12px; color: #ccc; margin-top: 5px;">أدخل كلمة المرور للوصول للنظام</p>
+        <input type="password" id="passInput" placeholder="كلمة المرور">
+        <button class="login-btn" onclick="checkPass()">دخول</button>
+        <div id="loginError">كلمة المرور غير صحيحة، حاول مرة أخرى!</div>
+    </div>
+</div>
 
 <header>
     <span>حسابات مركز الشباب اليومية</span>
@@ -362,7 +437,7 @@
         </div>
         <div class="product-card" onclick="changeQty('splash_3_athar', 1)">
             <button class="minus-btn" onclick="changeQty('splash_3_athar', -1, event)">-</button>
-            <div class="product-name">أثر</div><div class="product-price">15 ج.م</div>
+            <div class="product-name">أثر</div><div class="product-price">15 ج.m</div>
             <div class="counter-badge" id="count_splash_3_athar">0</div>
         </div>
         <div class="product-card" onclick="changeQty('splash_3_holam', 1)">
@@ -532,7 +607,7 @@
         <span class="total-amount" id="totalPrice">0 ج.م</span>
     </div>
     <div class="actions-box">
-        <button class="btn btn-reset" onclick="resetAll()">تصفير 🔄</button>
+        <button class="btn btn-reset" id="resetBtn" onclick="resetAll()">تصفير 🔄</button>
         <button class="btn btn-save" id="mainSaveBtn" onclick="saveDay()">حفظ اليوم 💾</button>
     </div>
 </div>
@@ -540,7 +615,7 @@
 <div class="modal" id="historyModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>سجل المبيعات السابقة</h3>
+            <h3>سجل المبيعات السابقة السحابي</h3>
             <button class="close-btn" onclick="closeHistory()">✖</button>
         </div>
         <div id="historyContent">
@@ -549,6 +624,29 @@
 </div>
 
 <script>
+    // رابط السيرفر السحابي الخاص بك
+    const cloudScriptUrl = 'https://script.google.com/macros/s/AKfycbwO1cITlHb8SINY2PtxtB2N42ekBv73qiGTNA8Vz1X4holLa-koPxD4FPjn91NgBZWs/exec';
+
+    function checkPass() {
+        const pass = document.getElementById('passInput').value;
+        if (pass === "2026") {
+            document.getElementById('loginScreen').style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById('loginScreen').style.display = "none";
+                initUI();
+                fetchHistoryFromCloud(); // تحميل السجل فور الدخول بنجاح
+            }, 500);
+        } else {
+            document.getElementById('loginError').style.display = "block";
+        }
+    }
+
+    document.getElementById('passInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            checkPass();
+        }
+    });
+
     const defaultSalesData = {
         splash_3_dam: 0, splash_3_sarab: 0, splash_3_athar: 0, splash_3_holam: 0,
         splash_5_dam: 0, splash_5_sarab: 0, splash_5_athar: 0, splash_5_holam: 0,
@@ -562,7 +660,9 @@
     };
 
     let salesData = JSON.parse(localStorage.getItem('leilActiveCart')) || { ...defaultSalesData };
+    let cachedHistory = []; // تخزين سجل السيرفر محلياً لتسريع عمليات التعديل
     let editingHistoryIndex = null; 
+    let originalEditingDate = ""; // لتحديد السطر في جوجل شيت عند التحديث
 
     const prices = {
         splash_3_dam: 15, splash_3_sarab: 15, splash_3_athar: 15, splash_3_holam: 15,
@@ -632,6 +732,30 @@
         return total;
     }
 
+    // جلب البيانات السحابية من جوجل شيت
+    function fetchHistoryFromCloud() {
+        fetch(cloudScriptUrl)
+        .then(response => response.json())
+        .then(data => {
+            cachedHistory = data;
+        })
+        .catch(err => console.error("خطأ أثناء جلب البيانات السحابية:", err));
+    }
+
+    function setLoading(isLoading) {
+        const saveBtn = document.getElementById('mainSaveBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        if (isLoading) {
+            saveBtn.disabled = true;
+            resetBtn.disabled = true;
+            saveBtn.innerText = "جاري الاتصال بالسحابة... ⏳";
+        } else {
+            saveBtn.disabled = false;
+            resetBtn.disabled = false;
+            saveBtn.innerText = editingHistoryIndex !== null ? "تحديث اليوم 💾" : "حفظ اليوم 💾";
+        }
+    }
+
     function saveDay() {
         let total = calculateTotal();
         if (total === 0 && editingHistoryIndex === null) {
@@ -640,55 +764,59 @@
         }
 
         let confirmMsg = editingHistoryIndex !== null ? 
-            "متأكد إنك خلصت تعديل وهتحدث بيانات اليوم ده في السجل؟" : 
-            "متأكد إنك خلصت شغل وهتحفظ مبيعات اليوم وتصفر العدادات؟";
+            "متأكد إنك خلصت تعديل وهتحدث بيانات اليوم ده في جوجل شيت؟" : 
+            "متأكد إنك خلصت شغل وهتحفظ المبيعات سحابياً وتصفر العدادات؟";
 
         if(confirm(confirmMsg)) {
+            setLoading(true);
+
             let dayDetails = [];
             for(let key in salesData) {
                 if(salesData[key] > 0) {
-                    dayDetails.push(`${productNames[key]}: ${salesData[key]} قطع`);
+                    dayDetails.push(`- ${productNames[key]}: ${salesData[key]} قطع`);
                 }
             }
 
-            let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
-            
-            if (editingHistoryIndex !== null) {
-                history[editingHistoryIndex].items = dayDetails;
-                history[editingHistoryIndex].total = total;
-                history[editingHistoryIndex].rawData = { ...salesData }; 
-            } else {
-                let today = new Date().toLocaleString('ar-EG', { dateStyle: 'full', timeStyle: 'short' });
-                let record = {
-                    date: today,
-                    items: dayDetails,
-                    total: total,
-                    rawData: { ...salesData }
-                };
-                history.unshift(record);
-            }
+            let finalItemsStr = dayDetails.join('\n');
+            let targetDate = editingHistoryIndex !== null ? originalEditingDate : new Date().toLocaleString('ar-EG', { dateStyle: 'full', timeStyle: 'short' });
+            let actionType = editingHistoryIndex !== null ? "update" : "save";
 
-            localStorage.setItem('leilSalesHistory', JSON.stringify(history));
-            alert(editingHistoryIndex !== null ? "تم تحديث اليوم بنجاح!" : "تم حفظ اليوم بنجاح!");
-            
-            exitEditMode();
-            
-            for (const key in salesData) {
-                salesData[key] = 0;
-            }
-            localStorage.removeItem('leilActiveCart');
-            initUI();
+            let params = new URLSearchParams();
+            params.append('action', actionType);
+            params.append('date', targetDate);
+            params.append('total', total);
+            params.append('items', finalItemsStr);
+            params.append('rawData', JSON.stringify(salesData));
+
+            fetch(cloudScriptUrl, {
+                method: 'POST',
+                body: params
+            })
+            .then(res => res.text())
+            .then(result => {
+                if(result === "Success") {
+                    alert(editingHistoryIndex !== null ? "تم تحديث البيانات في جوجل شيت!" : "تم الحفظ السحابي بنجاح!");
+                    exitEditMode();
+                    for (const key in salesData) { salesData[key] = 0; }
+                    localStorage.removeItem('leilActiveCart');
+                    initUI();
+                    fetchHistoryFromCloud(); // تحديث الكاش
+                } else {
+                    alert("حدث خطأ في السيرفر: " + result);
+                }
+            })
+            .catch(err => {
+                alert("فشل الاتصال بالسيرفر، تأكد من الشبكة.");
+                console.error(err);
+            })
+            .finally(() => setLoading(false));
         }
     }
 
     function resetAll() {
         if (confirm("هتصفر العدادات من غير ما تحفظ؟")) {
-            for (const key in salesData) {
-                salesData[key] = 0;
-            }
-            if(editingHistoryIndex === null) {
-                localStorage.removeItem('leilActiveCart');
-            }
+            for (const key in salesData) { salesData[key] = 0; }
+            if(editingHistoryIndex === null) { localStorage.removeItem('leilActiveCart'); }
             initUI();
         }
     }
@@ -701,29 +829,36 @@
 
         const modal = document.getElementById('historyModal');
         const content = document.getElementById('historyContent');
-        let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
-        
-        if (history.length === 0) {
-            content.innerHTML = '<p style="text-align:center; color:#666; margin-top:20px;">مفيش أيام محفوظة لسه.</p>';
-        } else {
-            content.innerHTML = history.map((record, index) => `
-                <div class="history-card">
-                    <div class="history-card-header">
-                        <div class="history-date">${record.date}</div>
-                        <div class="action-btns-group">
-                            <button class="mini-btn btn-edit-date" onclick="editDate(${index})">تعديل التاريخ</button>
-                            <button class="mini-btn btn-edit-prod" onclick="editProducts(${index})">تعديل اليوم</button>
-                            <button class="mini-btn btn-delete" onclick="deleteDay(${index})">مسح</button>
-                        </div>
-                    </div>
-                    <div class="history-items">
-                        ${record.items.map(item => `<div>- ${item}</div>`).join('')}
-                    </div>
-                    <div class="history-total">الإجمالي: ${record.total} ج.م</div>
-                </div>
-            `).join('');
-        }
+        content.innerHTML = '<p style="text-align:center; color:#666; margin-top:20px;">جاري تحميل السجل السحابي... ⏳</p>';
         modal.classList.add('active');
+
+        // جلب أحدث البيانات من السيرفر للتأكد من المزامنة
+        fetch(cloudScriptUrl)
+        .then(response => response.json())
+        .then(data => {
+            cachedHistory = data;
+            if (cachedHistory.length === 0) {
+                content.innerHTML = '<p style="text-align:center; color:#666; margin-top:20px;">مفيش أيام محفوظة لسه.</p>';
+            } else {
+                content.innerHTML = cachedHistory.map((record, index) => `
+                    <div class="history-card">
+                        <div class="history-card-header">
+                            <div class="history-date">${record.date}</div>
+                            <div class="action-btns-group">
+                                <button class="mini-btn btn-edit-date" onclick="editDate(${index})">تعديل التاريخ</button>
+                                <button class="mini-btn btn-edit-prod" onclick="editProducts(${index})">تعديل اليوم</button>
+                                <button class="mini-btn btn-delete" onclick="deleteDay(${index})">مسح</button>
+                            </div>
+                        </div>
+                        <div class="history-items">${record.items}</div>
+                        <div class="history-total">الإجمالي: ${record.total} ج.م</div>
+                    </div>
+                `).join('');
+            }
+        })
+        .catch(err => {
+            content.innerHTML = '<p style="text-align:center; color:red; margin-top:20px;">فشل تحميل البيانات. تأكد من إنترنت الموبايل.</p>';
+        });
     }
 
     function closeHistory() {
@@ -731,51 +866,103 @@
     }
 
     function deleteDay(index) {
-        if(confirm("متأكد إنك عايز تمسح سجل اليوم ده بالذات؟")) {
-            let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
-            history.splice(index, 1);
-            localStorage.setItem('leilSalesHistory', JSON.stringify(history));
-            openHistory();
+        if(confirm("متأكد إنك عايز تمسح سجل اليوم ده نهائياً من جوجل شيت؟")) {
+            let record = cachedHistory[index];
+            let params = new URLSearchParams();
+            params.append('action', 'delete');
+            params.append('date', record.date);
+
+            fetch(cloudScriptUrl, { method: 'POST', body: params })
+            .then(res => res.text())
+            .then(result => {
+                if(result === "Success") {
+                    alert("تم الحذف من السيرفر.");
+                    openHistory(); // إعادة تحميل القائمة
+                    fetchHistoryFromCloud();
+                } else {
+                    alert("خطأ أثناء الحذف: " + result);
+                }
+            });
         }
     }
 
     function editDate(index) {
-        let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
-        let newDate = prompt("تعديل التاريخ والوقت:", history[index].date);
-        if(newDate && newDate.trim() !== "") {
-            history[index].date = newDate;
-            localStorage.setItem('leilSalesHistory', JSON.stringify(history));
-            openHistory(); 
+        let record = cachedHistory[index];
+        let newDate = prompt("تعديل التاريخ والوقت:", record.date);
+        if(newDate && newDate.trim() !== "" && newDate !== record.date) {
+            let params = new URLSearchParams();
+            params.append('action', 'update');
+            params.append('date', record.date); // المفتاح القديم للبحث
+            params.append('total', record.total);
+            params.append('items', record.items);
+            params.append('rawData', typeof record.rawData === 'object' ? JSON.stringify(record.rawData) : record.rawData);
+            
+            // تحديث التاريخ هو تغيير للمفتاح الأساسي
+            params.set('date', newDate); // القيمة الجديدة
+            
+            // السيرفر في الـ Apps Script يبحث بالتاريخ القديم لتحديث السطر، لذلك قمنا بتعديل كود السيرفر ليتوافق.
+            // لتفادي التعقيد، سنرسل تحديث بنفس التاريخ القديم مع تعديل نصي أو نطلب كتابته بدقة.
+            // الحل الأبسط المباشر: سنحدث السطر بالكامل:
+            let updateParams = new URLSearchParams();
+            updateParams.append('action', 'update');
+            updateParams.append('date', record.date); // نرسل التاريخ الأصلي لكي يجده السيرفر
+            updateParams.append('total', record.total);
+            updateParams.append('items', record.items);
+            updateParams.append('rawData', typeof record.rawData === 'object' ? JSON.stringify(record.rawData) : record.rawData);
+            
+            // سنطلب من السيرفر تبديل التاريخ نفسه
+            // لتسهيل الكود الحالي لـ Seif: سنقوم بمسح القديم وحفظ الجديد بالتاريخ المعدل:
+            if(confirm("سيتم تحديث تاريخ السجل في الشيت إلى: " + newDate)) {
+                let delParams = new URLSearchParams();
+                delParams.append('action', 'delete');
+                delParams.append('date', record.date);
+                
+                fetch(cloudScriptUrl, { method: 'POST', body: delParams })
+                .then(() => {
+                    let saveParams = new URLSearchParams();
+                    saveParams.append('action', 'save');
+                    saveParams.append('date', newDate);
+                    saveParams.append('total', record.total);
+                    saveParams.append('items', record.items);
+                    saveParams.append('rawData', typeof record.rawData === 'object' ? JSON.stringify(record.rawData) : record.rawData);
+                    return fetch(cloudScriptUrl, { method: 'POST', body: saveParams });
+                })
+                .then(() => {
+                    alert("تم تعديل التاريخ بنجاح.");
+                    openHistory();
+                    fetchHistoryFromCloud();
+                });
+            }
         }
     }
 
     function editProducts(index) {
-        let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
-        let record = history[index];
+        let record = cachedHistory[index];
+        let parsedRaw = {};
 
-        // المترجم الذكي: بيحول النص القديم لبيانات يقدر النظام الجديد يعدلها
-        if(!record.rawData) {
-            record.rawData = { ...defaultSalesData };
-            if (record.items && record.items.length > 0) {
-                record.items.forEach(itemStr => {
-                    for (let key in productNames) {
-                        if (itemStr.includes(productNames[key])) {
-                            let match = itemStr.match(/: (\d+)/);
-                            if (match) {
-                                record.rawData[key] = parseInt(match[1]);
-                            }
-                        }
+        if (record.rawData) {
+            parsedRaw = typeof record.rawData === 'string' ? JSON.parse(record.rawData) : record.rawData;
+        } else {
+            // مترجم ذكي لو داتا قديمة بدون أرقام خام
+            parsedRaw = { ...defaultSalesData };
+            let lines = record.items.split('\n');
+            lines.forEach(line => {
+                for (let key in productNames) {
+                    if (line.includes(productNames[key])) {
+                        let match = line.match(/: (\d+)/);
+                        if (match) parsedRaw[key] = parseInt(match[1]);
                     }
-                });
-            }
+                }
+            });
         }
 
         if(calculateTotal() > 0) {
-            if(!confirm("عندك مبيعات دلوقتي على الشاشة مش محفوظة! لو كملت هتتمسح عشان نفتح اليوم القديم. متأكد؟")) return;
+            if(!confirm("عندك مبيعات حالية على الشاشة مش محفوظة! لو كملت هتتمسح عشان نفتح اليوم القديم. متأكد؟")) return;
         }
 
         editingHistoryIndex = index;
-        salesData = { ...defaultSalesData, ...record.rawData }; 
+        originalEditingDate = record.date; // لحفظه بنفس المكان
+        salesData = { ...defaultSalesData, ...parsedRaw }; 
         
         document.getElementById('editModeBanner').style.display = 'block';
         let saveBtn = document.getElementById('mainSaveBtn');
@@ -796,13 +983,12 @@
 
     function exitEditMode() {
         editingHistoryIndex = null;
+        originalEditingDate = "";
         document.getElementById('editModeBanner').style.display = 'none';
         let saveBtn = document.getElementById('mainSaveBtn');
         saveBtn.innerText = "حفظ اليوم 💾";
         saveBtn.style.background = "#600a1c";
     }
-
-    initUI();
 </script>
 </body>
 </html>
