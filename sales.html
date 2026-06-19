@@ -562,7 +562,7 @@
     };
 
     let salesData = JSON.parse(localStorage.getItem('leilActiveCart')) || { ...defaultSalesData };
-    let editingHistoryIndex = null; // متغير تتبع لو إحنا في وضع التعديل ليوم قديم
+    let editingHistoryIndex = null; 
 
     const prices = {
         splash_3_dam: 15, splash_3_sarab: 15, splash_3_athar: 15, splash_3_holam: 15,
@@ -609,7 +609,6 @@
         }
         salesData[productId] = Math.max(0, salesData[productId] + amount);
         
-        // لا نحفظ التعديل في العربة المؤقتة إذا كنا نعدل يوماً قديماً
         if (editingHistoryIndex === null) {
             localStorage.setItem('leilActiveCart', JSON.stringify(salesData));
         }
@@ -655,18 +654,16 @@
             let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
             
             if (editingHistoryIndex !== null) {
-                // تحديث اليوم القديم
                 history[editingHistoryIndex].items = dayDetails;
                 history[editingHistoryIndex].total = total;
-                history[editingHistoryIndex].rawData = { ...salesData }; // حفظ التعديل
+                history[editingHistoryIndex].rawData = { ...salesData }; 
             } else {
-                // حفظ يوم جديد
                 let today = new Date().toLocaleString('ar-EG', { dateStyle: 'full', timeStyle: 'short' });
                 let record = {
                     date: today,
                     items: dayDetails,
                     total: total,
-                    rawData: { ...salesData } // تخزين البيانات الخام عشان نقدر نعدلها بعدين
+                    rawData: { ...salesData }
                 };
                 history.unshift(record);
             }
@@ -674,10 +671,8 @@
             localStorage.setItem('leilSalesHistory', JSON.stringify(history));
             alert(editingHistoryIndex !== null ? "تم تحديث اليوم بنجاح!" : "تم حفظ اليوم بنجاح!");
             
-            // الرجوع للوضع العادي
             exitEditMode();
             
-            // تصفير الواجهة
             for (const key in salesData) {
                 salesData[key] = 0;
             }
@@ -698,7 +693,6 @@
         }
     }
 
-    // دوال السجل والتعديل
     function openHistory() {
         if (editingHistoryIndex !== null) {
             alert("أنت حالياً في وضع تعديل يوم سابق. قم بإنهاء التعديل أولاً.");
@@ -718,7 +712,7 @@
                         <div class="history-date">${record.date}</div>
                         <div class="action-btns-group">
                             <button class="mini-btn btn-edit-date" onclick="editDate(${index})">تعديل التاريخ</button>
-                            <button class="mini-btn btn-edit-prod" onclick="editProducts(${index})">المنتجات</button>
+                            <button class="mini-btn btn-edit-prod" onclick="editProducts(${index})">تعديل اليوم</button>
                             <button class="mini-btn btn-delete" onclick="deleteDay(${index})">مسح</button>
                         </div>
                     </div>
@@ -751,7 +745,7 @@
         if(newDate && newDate.trim() !== "") {
             history[index].date = newDate;
             localStorage.setItem('leilSalesHistory', JSON.stringify(history));
-            openHistory(); // تحديث السجل بعد تعديل التاريخ
+            openHistory(); 
         }
     }
 
@@ -759,18 +753,29 @@
         let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
         let record = history[index];
 
+        // المترجم الذكي: بيحول النص القديم لبيانات يقدر النظام الجديد يعدلها
         if(!record.rawData) {
-            alert("هذا اليوم تم تسجيله بالنظام القديم ولا يمكن تعديل منتجاته، يمكنك فقط حذفه.");
-            return;
+            record.rawData = { ...defaultSalesData };
+            if (record.items && record.items.length > 0) {
+                record.items.forEach(itemStr => {
+                    for (let key in productNames) {
+                        if (itemStr.includes(productNames[key])) {
+                            let match = itemStr.match(/: (\d+)/);
+                            if (match) {
+                                record.rawData[key] = parseInt(match[1]);
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         if(calculateTotal() > 0) {
             if(!confirm("عندك مبيعات دلوقتي على الشاشة مش محفوظة! لو كملت هتتمسح عشان نفتح اليوم القديم. متأكد؟")) return;
         }
 
-        // تفعيل وضع التعديل
         editingHistoryIndex = index;
-        salesData = { ...defaultSalesData, ...record.rawData }; // تحميل منتجات اليوم القديم
+        salesData = { ...defaultSalesData, ...record.rawData }; 
         
         document.getElementById('editModeBanner').style.display = 'block';
         let saveBtn = document.getElementById('mainSaveBtn');
@@ -784,7 +789,6 @@
     function cancelEdit() {
         if(confirm("إلغاء التعديل والرجوع لليوم العادي؟")) {
             exitEditMode();
-            // استرجاع العربة الحالية لو كانت محفوظة
             salesData = JSON.parse(localStorage.getItem('leilActiveCart')) || { ...defaultSalesData };
             initUI();
         }
