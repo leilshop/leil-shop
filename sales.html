@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حسابات يومية</title>
+    <title>حسابات مركز الشباب اليومية</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         
@@ -47,6 +47,32 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        #editModeBanner {
+            display: none;
+            background: #ff9800;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            position: sticky;
+            top: 60px;
+            z-index: 99;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .cancel-edit-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-family: 'Cairo';
+            font-weight: bold;
         }
 
         .container {
@@ -188,6 +214,7 @@
             font-weight: bold;
             border: none;
             cursor: pointer;
+            transition: background 0.2s;
         }
 
         .btn-reset {
@@ -221,7 +248,7 @@
             background: white;
             width: 100%;
             max-width: 500px;
-            max-height: 80vh;
+            max-height: 85vh;
             border-radius: 12px;
             padding: 20px;
             overflow-y: auto;
@@ -257,29 +284,41 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .history-date {
             font-weight: bold;
             color: #3d0000;
             font-size: 14px;
+            width: 100%;
         }
 
-        .delete-day-btn {
-            background: #ffe5e5;
-            color: #d9534f;
+        .action-btns-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .mini-btn {
             border: none;
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 11px;
             font-weight: bold;
             cursor: pointer;
+            font-family: 'Cairo';
         }
+
+        .btn-edit-date { background: #e0f2f1; color: #00796b; }
+        .btn-edit-prod { background: #e3f2fd; color: #1976d2; }
+        .btn-delete { background: #ffe5e5; color: #d9534f; }
 
         .history-items {
             font-size: 13px;
             color: #555;
             line-height: 1.6;
+            margin-top: 5px;
         }
 
         .history-total {
@@ -303,8 +342,12 @@
     </button>
 </header>
 
+<div id="editModeBanner">
+    ⚠️ أنت الآن تعدل يوماً سابقاً 
+    <button class="cancel-edit-btn" onclick="cancelEdit()">إلغاء التعديل</button>
+</div>
+
 <div class="container">
-    
     <div class="category-title">بادي سبلاش (3 مل) - 15 ج.م</div>
     <div class="grid">
         <div class="product-card" onclick="changeQty('splash_3_dam', 1)">
@@ -490,7 +533,7 @@
     </div>
     <div class="actions-box">
         <button class="btn btn-reset" onclick="resetAll()">تصفير 🔄</button>
-        <button class="btn btn-save" onclick="saveDay()">حفظ اليوم 💾</button>
+        <button class="btn btn-save" id="mainSaveBtn" onclick="saveDay()">حفظ اليوم 💾</button>
     </div>
 </div>
 
@@ -506,7 +549,6 @@
 </div>
 
 <script>
-    // القالب الافتراضي لو مفيش بيانات محفوظة
     const defaultSalesData = {
         splash_3_dam: 0, splash_3_sarab: 0, splash_3_athar: 0, splash_3_holam: 0,
         splash_5_dam: 0, splash_5_sarab: 0, splash_5_athar: 0, splash_5_holam: 0,
@@ -519,8 +561,8 @@
         balm_vanilla: 0, balm_straw: 0
     };
 
-    // جلب البيانات النشطة المحفوظة (لو موجودة) أو استخدام القالب الافتراضي
     let salesData = JSON.parse(localStorage.getItem('leilActiveCart')) || { ...defaultSalesData };
+    let editingHistoryIndex = null; // متغير تتبع لو إحنا في وضع التعديل ليوم قديم
 
     const prices = {
         splash_3_dam: 15, splash_3_sarab: 15, splash_3_athar: 15, splash_3_holam: 15,
@@ -546,7 +588,6 @@
         balm_vanilla: "زبدة كاكاو (فانيليا)", balm_straw: "زبدة كاكاو (فراولة)"
     };
 
-    // تشغيل الصفحة أول مرة لتحميل الأرقام المحفوظة
     function initUI() {
         for (const key in salesData) {
             const badge = document.getElementById('count_' + key);
@@ -568,8 +609,10 @@
         }
         salesData[productId] = Math.max(0, salesData[productId] + amount);
         
-        // حفظ العربة الحالية فوراً
-        localStorage.setItem('leilActiveCart', JSON.stringify(salesData));
+        // لا نحفظ التعديل في العربة المؤقتة إذا كنا نعدل يوماً قديماً
+        if (editingHistoryIndex === null) {
+            localStorage.setItem('leilActiveCart', JSON.stringify(salesData));
+        }
         
         const badge = document.getElementById('count_' + productId);
         badge.innerText = salesData[productId];
@@ -592,12 +635,16 @@
 
     function saveDay() {
         let total = calculateTotal();
-        if (total === 0) {
+        if (total === 0 && editingHistoryIndex === null) {
             alert("مفيش مبيعات لسه عشان تحفظها!");
             return;
         }
 
-        if(confirm("متأكد إنك خلصت شغل وهتحفظ مبيعات اليوم وتصفر العدادات؟")) {
+        let confirmMsg = editingHistoryIndex !== null ? 
+            "متأكد إنك خلصت تعديل وهتحدث بيانات اليوم ده في السجل؟" : 
+            "متأكد إنك خلصت شغل وهتحفظ مبيعات اليوم وتصفر العدادات؟";
+
+        if(confirm(confirmMsg)) {
             let dayDetails = [];
             for(let key in salesData) {
                 if(salesData[key] > 0) {
@@ -605,30 +652,37 @@
                 }
             }
 
-            let today = new Date().toLocaleString('ar-EG', { dateStyle: 'full', timeStyle: 'short' });
-            
-            let record = {
-                date: today,
-                items: dayDetails,
-                total: total
-            };
-
             let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
-            history.unshift(record);
-            localStorage.setItem('leilSalesHistory', JSON.stringify(history));
-
-            alert("تم حفظ اليوم بنجاح!");
             
-            // تصفير العدادات الحالية
+            if (editingHistoryIndex !== null) {
+                // تحديث اليوم القديم
+                history[editingHistoryIndex].items = dayDetails;
+                history[editingHistoryIndex].total = total;
+                history[editingHistoryIndex].rawData = { ...salesData }; // حفظ التعديل
+            } else {
+                // حفظ يوم جديد
+                let today = new Date().toLocaleString('ar-EG', { dateStyle: 'full', timeStyle: 'short' });
+                let record = {
+                    date: today,
+                    items: dayDetails,
+                    total: total,
+                    rawData: { ...salesData } // تخزين البيانات الخام عشان نقدر نعدلها بعدين
+                };
+                history.unshift(record);
+            }
+
+            localStorage.setItem('leilSalesHistory', JSON.stringify(history));
+            alert(editingHistoryIndex !== null ? "تم تحديث اليوم بنجاح!" : "تم حفظ اليوم بنجاح!");
+            
+            // الرجوع للوضع العادي
+            exitEditMode();
+            
+            // تصفير الواجهة
             for (const key in salesData) {
                 salesData[key] = 0;
-                const badge = document.getElementById('count_' + key);
-                badge.innerText = 0;
-                badge.classList.remove('active');
             }
-            // مسح العربة المحفوظة عشان اليوم يبدأ نضيف
             localStorage.removeItem('leilActiveCart');
-            calculateTotal();
+            initUI();
         }
     }
 
@@ -636,17 +690,21 @@
         if (confirm("هتصفر العدادات من غير ما تحفظ؟")) {
             for (const key in salesData) {
                 salesData[key] = 0;
-                const badge = document.getElementById('count_' + key);
-                badge.innerText = 0;
-                badge.classList.remove('active');
             }
-            // مسح العربة المحفوظة
-            localStorage.removeItem('leilActiveCart');
-            calculateTotal();
+            if(editingHistoryIndex === null) {
+                localStorage.removeItem('leilActiveCart');
+            }
+            initUI();
         }
     }
 
+    // دوال السجل والتعديل
     function openHistory() {
+        if (editingHistoryIndex !== null) {
+            alert("أنت حالياً في وضع تعديل يوم سابق. قم بإنهاء التعديل أولاً.");
+            return;
+        }
+
         const modal = document.getElementById('historyModal');
         const content = document.getElementById('historyContent');
         let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
@@ -658,7 +716,11 @@
                 <div class="history-card">
                     <div class="history-card-header">
                         <div class="history-date">${record.date}</div>
-                        <button class="delete-day-btn" onclick="deleteDay(${index})">مسح اليوم</button>
+                        <div class="action-btns-group">
+                            <button class="mini-btn btn-edit-date" onclick="editDate(${index})">تعديل التاريخ</button>
+                            <button class="mini-btn btn-edit-prod" onclick="editProducts(${index})">المنتجات</button>
+                            <button class="mini-btn btn-delete" onclick="deleteDay(${index})">مسح</button>
+                        </div>
                     </div>
                     <div class="history-items">
                         ${record.items.map(item => `<div>- ${item}</div>`).join('')}
@@ -683,7 +745,59 @@
         }
     }
 
-    // استدعاء دالة التحميل أول ما الصفحة تفتح
+    function editDate(index) {
+        let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
+        let newDate = prompt("تعديل التاريخ والوقت:", history[index].date);
+        if(newDate && newDate.trim() !== "") {
+            history[index].date = newDate;
+            localStorage.setItem('leilSalesHistory', JSON.stringify(history));
+            openHistory(); // تحديث السجل بعد تعديل التاريخ
+        }
+    }
+
+    function editProducts(index) {
+        let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
+        let record = history[index];
+
+        if(!record.rawData) {
+            alert("هذا اليوم تم تسجيله بالنظام القديم ولا يمكن تعديل منتجاته، يمكنك فقط حذفه.");
+            return;
+        }
+
+        if(calculateTotal() > 0) {
+            if(!confirm("عندك مبيعات دلوقتي على الشاشة مش محفوظة! لو كملت هتتمسح عشان نفتح اليوم القديم. متأكد؟")) return;
+        }
+
+        // تفعيل وضع التعديل
+        editingHistoryIndex = index;
+        salesData = { ...defaultSalesData, ...record.rawData }; // تحميل منتجات اليوم القديم
+        
+        document.getElementById('editModeBanner').style.display = 'block';
+        let saveBtn = document.getElementById('mainSaveBtn');
+        saveBtn.innerText = "تحديث اليوم 💾";
+        saveBtn.style.background = "#ff9800";
+        
+        closeHistory();
+        initUI();
+    }
+
+    function cancelEdit() {
+        if(confirm("إلغاء التعديل والرجوع لليوم العادي؟")) {
+            exitEditMode();
+            // استرجاع العربة الحالية لو كانت محفوظة
+            salesData = JSON.parse(localStorage.getItem('leilActiveCart')) || { ...defaultSalesData };
+            initUI();
+        }
+    }
+
+    function exitEditMode() {
+        editingHistoryIndex = null;
+        document.getElementById('editModeBanner').style.display = 'none';
+        let saveBtn = document.getElementById('mainSaveBtn');
+        saveBtn.innerText = "حفظ اليوم 💾";
+        saveBtn.style.background = "#600a1c";
+    }
+
     initUI();
 </script>
 </body>
