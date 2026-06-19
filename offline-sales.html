@@ -506,7 +506,8 @@
 </div>
 
 <script>
-    const salesData = {
+    // القالب الافتراضي لو مفيش بيانات محفوظة
+    const defaultSalesData = {
         splash_3_dam: 0, splash_3_sarab: 0, splash_3_athar: 0, splash_3_holam: 0,
         splash_5_dam: 0, splash_5_sarab: 0, splash_5_athar: 0, splash_5_holam: 0,
         splash_10_dam: 0, splash_10_sarab: 0, splash_10_athar: 0, splash_10_holam: 0,
@@ -517,6 +518,9 @@
         makh_35_dam: 0, makh_35_sarab: 0,
         balm_vanilla: 0, balm_straw: 0
     };
+
+    // جلب البيانات النشطة المحفوظة (لو موجودة) أو استخدام القالب الافتراضي
+    let salesData = JSON.parse(localStorage.getItem('leilActiveCart')) || { ...defaultSalesData };
 
     const prices = {
         splash_3_dam: 15, splash_3_sarab: 15, splash_3_athar: 15, splash_3_holam: 15,
@@ -542,11 +546,31 @@
         balm_vanilla: "زبدة كاكاو (فانيليا)", balm_straw: "زبدة كاكاو (فراولة)"
     };
 
+    // تشغيل الصفحة أول مرة لتحميل الأرقام المحفوظة
+    function initUI() {
+        for (const key in salesData) {
+            const badge = document.getElementById('count_' + key);
+            if (badge) {
+                badge.innerText = salesData[key];
+                if (salesData[key] > 0) {
+                    badge.classList.add('active');
+                } else {
+                    badge.classList.remove('active');
+                }
+            }
+        }
+        calculateTotal();
+    }
+
     function changeQty(productId, amount, event) {
         if (event) {
             event.stopPropagation();
         }
         salesData[productId] = Math.max(0, salesData[productId] + amount);
+        
+        // حفظ العربة الحالية فوراً
+        localStorage.setItem('leilActiveCart', JSON.stringify(salesData));
+        
         const badge = document.getElementById('count_' + productId);
         badge.innerText = salesData[productId];
         if (salesData[productId] > 0) {
@@ -591,17 +615,19 @@
 
             let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
             history.unshift(record);
-            
             localStorage.setItem('leilSalesHistory', JSON.stringify(history));
 
             alert("تم حفظ اليوم بنجاح!");
             
+            // تصفير العدادات الحالية
             for (const key in salesData) {
                 salesData[key] = 0;
                 const badge = document.getElementById('count_' + key);
                 badge.innerText = 0;
                 badge.classList.remove('active');
             }
+            // مسح العربة المحفوظة عشان اليوم يبدأ نضيف
+            localStorage.removeItem('leilActiveCart');
             calculateTotal();
         }
     }
@@ -614,6 +640,8 @@
                 badge.innerText = 0;
                 badge.classList.remove('active');
             }
+            // مسح العربة المحفوظة
+            localStorage.removeItem('leilActiveCart');
             calculateTotal();
         }
     }
@@ -649,11 +677,14 @@
     function deleteDay(index) {
         if(confirm("متأكد إنك عايز تمسح سجل اليوم ده بالذات؟")) {
             let history = JSON.parse(localStorage.getItem('leilSalesHistory')) || [];
-            history.splice(index, 1); // بيمسح اليوم من القائمة
+            history.splice(index, 1);
             localStorage.setItem('leilSalesHistory', JSON.stringify(history));
-            openHistory(); // بيعمل تحديث للقائمة عشان اليوم يختفي قدامك
+            openHistory();
         }
     }
+
+    // استدعاء دالة التحميل أول ما الصفحة تفتح
+    initUI();
 </script>
 </body>
 </html>
