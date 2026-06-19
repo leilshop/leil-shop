@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المبيعات السريعة</title>
+    <style>
+        /* إعدادات الخطوط والألوان الأساسية للهوية */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent; /* إلغاء الوميض الأزرق في الموبايل */
+            user-select: none;
+        }
+
+        body {
+            background-color: #f7f5f5;
+            color: #333;
+            padding-bottom: 120px; /* مساحة عشان الشريط السفلي */
+        }
+
+        header {
+            background: #3d0000;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .category-title {
+            font-size: 16px;
+            color: #3d0000;
+            margin: 20px 0 10px 0;
+            border-right: 4px solid #600a1c;
+            padding-right: 8px;
+            font-weight: bold;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.1s ease;
+            cursor: pointer;
+        }
+
+        .product-card:active {
+            transform: scale(0.97);
+            background-color: #fff8f8;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        /* العداد الرقمي داخل الكارت */
+        .counter-badge {
+            background: #600a1c;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 auto;
+            opacity: 0; /* بيختفي لو صفر */
+            transition: opacity 0.2s;
+        }
+
+        .counter-badge.active {
+            opacity: 1;
+        }
+
+        /* زرار الناقص الصغير لتصحيح الأخطاء */
+        .minus-btn {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: #e0e0e0;
+            color: #333;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .minus-btn:active {
+            background: #d0d0d0;
+        }
+
+        /* شريط الحساب السفلي المثبت */
+        .footer-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            z-index: 1000;
+        }
+
+        .total-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .total-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .total-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3d0000;
+        }
+
+        .actions-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-reset {
+            background: #f5f5f5;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .btn-reset:active {
+            background: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+<header>📋 جرد المبيعات الفوري الكاش</header>
+
+<div class="container">
+    
+    <div class="category-title">بادي سبلاش (150 ج.م)</div>
+    <div class="grid">
+        <div class="product-card" onclick="changeQty('splash_dam', 1)" data-price="150">
+            <button class="minus-btn" onclick="changeQty('splash_dam', -1, event)">-</button>
+            <div class="product-name">دم الغزال</div>
+            <div class="product-price">150 ج.م</div>
+            <div class="counter-badge" id="count_splash_dam">0</div>
+        </div>
+        <div class="product-card" onclick="changeQty('splash_sarab', 1)" data-price="150">
+            <button class="minus-btn" onclick="changeQty('splash_sarab', -1, event)">-</button>
+            <div class="product-name">سراب</div>
+            <div class="product-price">150 ج.م</div>
+            <div class="counter-badge" id="count_splash_sarab">0</div>
+        </div>
+        <div class="product-card" onclick="changeQty('splash_athar', 1)" data-price="150">
+            <button class="minus-btn" onclick="changeQty('splash_athar', -1, event)">-</button>
+            <div class="product-name">أثر</div>
+            <div class="product-price">150 ج.م</div>
+            <div class="counter-badge" id="count_splash_athar">0</div>
+        </div>
+        <div class="product-card" onclick="changeQty('splash_holam', 1)" data-price="150">
+            <button class="minus-btn" onclick="changeQty('splash_holam', -1, event)">-</button>
+            <div class="product-name">حلم</div>
+            <div class="product-price">150 ج.م</div>
+            <div class="counter-badge" id="count_splash_holam">0</div>
+        </div>
+    </div>
+
+    <div class="category-title">مخمريات (120 ج.م)</div>
+    <div class="grid">
+        <div class="product-card" onclick="changeQty('makh_dam', 1)" data-price="120">
+            <button class="minus-btn" onclick="changeQty('makh_dam', -1, event)">-</button>
+            <div class="product-name">دم الغزال</div>
+            <div class="product-price">120 ج.م</div>
+            <div class="counter-badge" id="count_makh_dam">0</div>
+        </div>
+        <div class="product-card" onclick="changeQty('makh_sarab', 1)" data-price="120">
+            <button class="minus-btn" onclick="changeQty('makh_sarab', -1, event)">-</button>
+            <div class="product-name">سراب</div>
+            <div class="product-price">120 ج.م</div>
+            <div class="counter-badge" id="count_makh_sarab">0</div>
+        </div>
+    </div>
+
+    <div class="category-title">زبدة كاكاو (55 ج.م)</div>
+    <div class="grid">
+        <div class="product-card" onclick="changeQty('balm_vanilla', 1)" data-price="55">
+            <button class="minus-btn" onclick="changeQty('balm_vanilla', -1, event)">-</button>
+            <div class="product-name">فانيليا</div>
+            <div class="product-price">55 ج.م</div>
+            <div class="counter-badge" id="count_balm_vanilla">0</div>
+        </div>
+        <div class="product-card" onclick="changeQty('balm_straw', 1)" data-price="55">
+            <button class="minus-btn" onclick="changeQty('balm_straw', -1, event)">-</button>
+            <div class="product-name">فراولة</div>
+            <div class="product-price">55 ج.م</div>
+            <div class="counter-badge" id="count_balm_straw">0</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer-panel">
+    <div class="total-box">
+        <span class="total-label">إجمالي حساب اليوم</span>
+        <span class="total-amount" id="totalPrice">0 ج.م</span>
+    </div>
+    <div class="actions-box">
+        <button class="btn btn-reset" onclick="resetAll()">تصفير الحساب 🔄</button>
+    </div>
+</div>
+
+<script>
+    // تخزين الكميات الحالية لكل منتج
+    const salesData = {
+        splash_dam: 0, splash_sarab: 0, splash_athar: 0, splash_holam: 0,
+        makh_dam: 0, makh_sarab: 0,
+        balm_vanilla: 0, balm_straw: 0
+    };
+
+    // أسعار المنتجات (تقدر تعدلها من هنا في ثانية لو تغيرت)
+    const prices = {
+        splash_dam: 150, splash_sarab: 150, splash_athar: 150, splash_holam: 150,
+        makh_dam: 120, makh_sarab: 120,
+        balm_vanilla: 55, balm_straw: 55
+    };
+
+    // دالة تغيير الكمية (+ أو -)
+    function changeQty(productId, amount, event) {
+        if (event) {
+            event.stopPropagation(); // منع الكارت الأساسي من احتساب ضغطة زيادة عند الضغط على ناقص
+        }
+
+        // تحديث القيمة مع ضمان عدم النزول تحت الصفر
+        salesData[productId] = Math.max(0, salesData[productId] + amount);
+        
+        // تحديث واجهة المستخدم للعداد الصغير داخل الكارت
+        const badge = document.getElementById('count_' + productId);
+        badge.innerText = salesData[productId];
+        
+        if (salesData[productId] > 0) {
+            badge.classList.add('active');
+        } else {
+            badge.classList.remove('active');
+        }
+
+        calculateTotal();
+    }
+
+    // دالة حساب الإجمالي الكلي
+    function calculateTotal() {
+        let total = 0;
+        for (const key in salesData) {
+            total += salesData[key] * prices[key];
+        }
+        document.getElementById('totalPrice').innerText = total + " ج.م";
+    }
+
+    // دالة تصفير كافة الحسابات للبدء من جديد
+    function resetAll() {
+        if (confirm("هل أنت متأكد من تصفير جميع العدادات لليوم الجديد؟")) {
+            for (const key in salesData) {
+                salesData[key] = 0;
+                const badge = document.getElementById('count_' + key);
+                badge.innerText = 0;
+                badge.classList.remove('active');
+            }
+            calculateTotal();
+        }
+    }
+</script>
+</body>
+</html>
