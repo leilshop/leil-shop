@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة المبيعات السريعة</title>
+    <title>جرد ليل - المبيعات الفورية</title>
     <style>
-        /* إعدادات الخطوط والألوان الأساسية للهوية */
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         
         * {
@@ -13,14 +12,14 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            -webkit-tap-highlight-color: transparent; /* إلغاء الوميض الأزرق في الموبايل */
+            -webkit-tap-highlight-color: transparent;
             user-select: none;
         }
 
         body {
             background-color: #f7f5f5;
             color: #333;
-            padding-bottom: 120px; /* مساحة عشان الشريط السفلي */
+            padding-bottom: 120px;
         }
 
         header {
@@ -42,13 +41,17 @@
             margin: 0 auto;
         }
 
+        /* تنسيق عنوان الفئة شامل الحجم */
         .category-title {
             font-size: 16px;
             color: #3d0000;
-            margin: 20px 0 10px 0;
+            margin: 25px 0 10px 0;
             border-right: 4px solid #600a1c;
             padding-right: 8px;
             font-weight: bold;
+            background: #f0eaea;
+            padding: 5px 10px 5px 0;
+            border-radius: 4px;
         }
 
         .grid {
@@ -86,7 +89,6 @@
             margin-bottom: 10px;
         }
 
-        /* العداد الرقمي داخل الكارت */
         .counter-badge {
             background: #600a1c;
             color: white;
@@ -99,7 +101,7 @@
             font-weight: bold;
             font-size: 14px;
             margin: 0 auto;
-            opacity: 0; /* بيختفي لو صفر */
+            opacity: 0;
             transition: opacity 0.2s;
         }
 
@@ -107,7 +109,6 @@
             opacity: 1;
         }
 
-        /* زرار الناقص الصغير لتصحيح الأخطاء */
         .minus-btn {
             position: absolute;
             top: 8px;
@@ -131,7 +132,6 @@
             background: #d0d0d0;
         }
 
-        /* شريط الحساب السفلي المثبت */
         .footer-panel {
             position: fixed;
             bottom: 0;
@@ -193,67 +193,87 @@
 </head>
 <body>
 
-<header>📋 جرد المبيعات الفوري الكاش</header>
+<header>✨ جرد ليل الفوري</header>
 
 <div class="container">
     
-    <div class="category-title">بادي سبلاش (150 ج.م)</div>
+    <div class="category-title">بادي سبلاش (15 مل) - 150 ج.م</div>
     <div class="grid">
-        <div class="product-card" onclick="changeQty('splash_dam', 1)" data-price="150">
-            <button class="minus-btn" onclick="changeQty('splash_dam', -1, event)">-</button>
+        <div class="product-card" onclick="changeQty('splash_15_dam', 1)">
+            <button class="minus-btn" onclick="changeQty('splash_15_dam', -1, event)">-</button>
             <div class="product-name">دم الغزال</div>
-            <div class="product-price">150 ج.م</div>
-            <div class="counter-badge" id="count_splash_dam">0</div>
+            <div class="counter-badge" id="count_splash_15_dam">0</div>
         </div>
-        <div class="product-card" onclick="changeQty('splash_sarab', 1)" data-price="150">
-            <button class="minus-btn" onclick="changeQty('splash_sarab', -1, event)">-</button>
+        <div class="product-card" onclick="changeQty('splash_15_sarab', 1)">
+            <button class="minus-btn" onclick="changeQty('splash_15_sarab', -1, event)">-</button>
             <div class="product-name">سراب</div>
-            <div class="product-price">150 ج.م</div>
-            <div class="counter-badge" id="count_splash_sarab">0</div>
+            <div class="counter-badge" id="count_splash_15_sarab">0</div>
         </div>
-        <div class="product-card" onclick="changeQty('splash_athar', 1)" data-price="150">
-            <button class="minus-btn" onclick="changeQty('splash_athar', -1, event)">-</button>
+        <div class="product-card" onclick="changeQty('splash_15_athar', 1)">
+            <button class="minus-btn" onclick="changeQty('splash_15_athar', -1, event)">-</button>
             <div class="product-name">أثر</div>
-            <div class="product-price">150 ج.م</div>
-            <div class="counter-badge" id="count_splash_athar">0</div>
+            <div class="counter-badge" id="count_splash_15_athar">0</div>
         </div>
-        <div class="product-card" onclick="changeQty('splash_holam', 1)" data-price="150">
-            <button class="minus-btn" onclick="changeQty('splash_holam', -1, event)">-</button>
+        <div class="product-card" onclick="changeQty('splash_15_holam', 1)">
+            <button class="minus-btn" onclick="changeQty('splash_15_holam', -1, event)">-</button>
             <div class="product-name">حلم</div>
-            <div class="product-price">150 ج.م</div>
-            <div class="counter-badge" id="count_splash_holam">0</div>
+            <div class="counter-badge" id="count_splash_15_holam">0</div>
         </div>
     </div>
 
-    <div class="category-title">مخمريات (120 ج.م)</div>
+    <div class="category-title">بادي سبلاش (50 مل) - 250 ج.م</div>
     <div class="grid">
-        <div class="product-card" onclick="changeQty('makh_dam', 1)" data-price="120">
-            <button class="minus-btn" onclick="changeQty('makh_dam', -1, event)">-</button>
+        <div class="product-card" onclick="changeQty('splash_50_dam', 1)">
+            <button class="minus-btn" onclick="changeQty('splash_50_dam', -1, event)">-</button>
             <div class="product-name">دم الغزال</div>
-            <div class="product-price">120 ج.م</div>
-            <div class="counter-badge" id="count_makh_dam">0</div>
+            <div class="counter-badge" id="count_splash_50_dam">0</div>
         </div>
-        <div class="product-card" onclick="changeQty('makh_sarab', 1)" data-price="120">
-            <button class="minus-btn" onclick="changeQty('makh_sarab', -1, event)">-</button>
+        <div class="product-card" onclick="changeQty('splash_50_sarab', 1)">
+            <button class="minus-btn" onclick="changeQty('splash_50_sarab', -1, event)">-</button>
             <div class="product-name">سراب</div>
-            <div class="product-price">120 ج.م</div>
-            <div class="counter-badge" id="count_makh_sarab">0</div>
+            <div class="counter-badge" id="count_splash_50_sarab">0</div>
         </div>
     </div>
 
-    <div class="category-title">زبدة كاكاو (55 ج.م)</div>
+    <div class="category-title">مخمريات (10 جرام) - 120 ج.م</div>
     <div class="grid">
-        <div class="product-card" onclick="changeQty('balm_vanilla', 1)" data-price="55">
-            <button class="minus-btn" onclick="changeQty('balm_vanilla', -1, event)">-</button>
-            <div class="product-name">فانيليا</div>
-            <div class="product-price">55 ج.م</div>
-            <div class="counter-badge" id="count_balm_vanilla">0</div>
+        <div class="product-card" onclick="changeQty('makh_10_dam', 1)">
+            <button class="minus-btn" onclick="changeQty('makh_10_dam', -1, event)">-</button>
+            <div class="product-name">دم الغزال</div>
+            <div class="counter-badge" id="count_makh_10_dam">0</div>
         </div>
-        <div class="product-card" onclick="changeQty('balm_straw', 1)" data-price="55">
-            <button class="minus-btn" onclick="changeQty('balm_straw', -1, event)">-</button>
+        <div class="product-card" onclick="changeQty('makh_10_sarab', 1)">
+            <button class="minus-btn" onclick="changeQty('makh_10_sarab', -1, event)">-</button>
+            <div class="product-name">سراب</div>
+            <div class="counter-badge" id="count_makh_10_sarab">0</div>
+        </div>
+    </div>
+
+    <div class="category-title">مخمريات (30 جرام) - 200 ج.م</div>
+    <div class="grid">
+        <div class="product-card" onclick="changeQty('makh_30_dam', 1)">
+            <button class="minus-btn" onclick="changeQty('makh_30_dam', -1, event)">-</button>
+            <div class="product-name">دم الغزال</div>
+            <div class="counter-badge" id="count_makh_30_dam">0</div>
+        </div>
+        <div class="product-card" onclick="changeQty('makh_30_sarab', 1)">
+            <button class="minus-btn" onclick="changeQty('makh_30_sarab', -1, event)">-</button>
+            <div class="product-name">سراب</div>
+            <div class="counter-badge" id="count_makh_30_sarab">0</div>
+        </div>
+    </div>
+
+    <div class="category-title">زبدة كاكاو (5 جرام) - 55 ج.م</div>
+    <div class="grid">
+        <div class="product-card" onclick="changeQty('balm_5_vanilla', 1)">
+            <button class="minus-btn" onclick="changeQty('balm_5_vanilla', -1, event)">-</button>
+            <div class="product-name">فانيليا</div>
+            <div class="counter-badge" id="count_balm_5_vanilla">0</div>
+        </div>
+        <div class="product-card" onclick="changeQty('balm_5_straw', 1)">
+            <button class="minus-btn" onclick="changeQty('balm_5_straw', -1, event)">-</button>
             <div class="product-name">فراولة</div>
-            <div class="product-price">55 ج.م</div>
-            <div class="counter-badge" id="count_balm_straw">0</div>
+            <div class="counter-badge" id="count_balm_5_straw">0</div>
         </div>
     </div>
 
@@ -261,39 +281,40 @@
 
 <div class="footer-panel">
     <div class="total-box">
-        <span class="total-label">إجمالي حساب اليوم</span>
+        <span class="total-label">إجمالي الكاش اليوم</span>
         <span class="total-amount" id="totalPrice">0 ج.م</span>
     </div>
     <div class="actions-box">
-        <button class="btn btn-reset" onclick="resetAll()">تصفير الحساب 🔄</button>
+        <button class="btn btn-reset" onclick="resetAll()">تصفير 🔄</button>
     </div>
 </div>
 
 <script>
-    // تخزين الكميات الحالية لكل منتج
+    // قاعدة البيانات اللي بتخزن الكميات لكل حجم وكل منتج
     const salesData = {
-        splash_dam: 0, splash_sarab: 0, splash_athar: 0, splash_holam: 0,
-        makh_dam: 0, makh_sarab: 0,
-        balm_vanilla: 0, balm_straw: 0
+        splash_15_dam: 0, splash_15_sarab: 0, splash_15_athar: 0, splash_15_holam: 0,
+        splash_50_dam: 0, splash_50_sarab: 0,
+        makh_10_dam: 0, makh_10_sarab: 0,
+        makh_30_dam: 0, makh_30_sarab: 0,
+        balm_5_vanilla: 0, balm_5_straw: 0
     };
 
-    // أسعار المنتجات (تقدر تعدلها من هنا في ثانية لو تغيرت)
+    // أسعار المنتجات مقسمة بالأحجام
     const prices = {
-        splash_dam: 150, splash_sarab: 150, splash_athar: 150, splash_holam: 150,
-        makh_dam: 120, makh_sarab: 120,
-        balm_vanilla: 55, balm_straw: 55
+        splash_15_dam: 150, splash_15_sarab: 150, splash_15_athar: 150, splash_15_holam: 150,
+        splash_50_dam: 250, splash_50_sarab: 250, // أسعار تقريبية للحجم الكبير
+        makh_10_dam: 120, makh_10_sarab: 120,
+        makh_30_dam: 200, makh_30_sarab: 200,     // أسعار تقريبية للحجم الكبير
+        balm_5_vanilla: 55, balm_5_straw: 55
     };
 
-    // دالة تغيير الكمية (+ أو -)
     function changeQty(productId, amount, event) {
         if (event) {
-            event.stopPropagation(); // منع الكارت الأساسي من احتساب ضغطة زيادة عند الضغط على ناقص
+            event.stopPropagation();
         }
 
-        // تحديث القيمة مع ضمان عدم النزول تحت الصفر
         salesData[productId] = Math.max(0, salesData[productId] + amount);
         
-        // تحديث واجهة المستخدم للعداد الصغير داخل الكارت
         const badge = document.getElementById('count_' + productId);
         badge.innerText = salesData[productId];
         
@@ -306,7 +327,6 @@
         calculateTotal();
     }
 
-    // دالة حساب الإجمالي الكلي
     function calculateTotal() {
         let total = 0;
         for (const key in salesData) {
@@ -315,9 +335,8 @@
         document.getElementById('totalPrice').innerText = total + " ج.م";
     }
 
-    // دالة تصفير كافة الحسابات للبدء من جديد
     function resetAll() {
-        if (confirm("هل أنت متأكد من تصفير جميع العدادات لليوم الجديد؟")) {
+        if (confirm("هتصفر حساب اليوم كله وتبدأ من جديد؟")) {
             for (const key in salesData) {
                 salesData[key] = 0;
                 const badge = document.getElementById('count_' + key);
