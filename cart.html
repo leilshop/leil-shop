@@ -42,19 +42,16 @@
         /* تصميم الـ Custom Select */
         .custom-select-wrapper { position: relative; width: 100%; cursor: pointer; }
         .select-selected { background: rgba(255, 255, 255, 0.05); padding: 12px 30px 12px 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; color: white; text-align: right; position: relative; }
-        .select-selected:after { 
-    position: absolute; 
-    content: "▼"; 
-    right: 10px; 
-    top: 50%; 
-    transform: translateY(-50%); /* دي الخدعة اللي بتسنتر السهم في نص الارتفاع بالظبط */
-    font-size: 10px; 
-    opacity: 0.7; 
-}
+        .select-selected:after { position: absolute; content: "▼"; right: 10px; top: 50%; transform: translateY(-50%); font-size: 10px; opacity: 0.7; }
         .select-items { display: none; position: absolute; background-color: #3d0000; width: 100%; z-index: 99; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; max-height: 200px; overflow-y: auto; margin-top: 5px; }
         .select-items div { color: white; padding: 12px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .select-items div:hover { background-color: #600a1c; }
         .select-show { display: block; }
+
+        /* ستايل الـ Custom Alert */
+        .leil-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--bg); border: 1px solid rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; z-index: 9999; width: 90%; max-width: 300px; }
+        .leil-alert p { margin-bottom: 20px; font-size: 16px; color: white; }
+        .leil-alert button { background: var(--main); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
         .coupon-box { display: flex; gap: 10px; margin-top: 5px; }
         .coupon-btn { padding: 0 15px; background: var(--main); border: none; color: white; border-radius: 5px; cursor: pointer; }
@@ -98,8 +95,6 @@
                     <div data-value="100">القاهرة</div>
                     <div data-value="100">الجيزة</div>
                     <div data-value="100">الإسكندرية</div>
-                    <div data-value="100">بورسعيد</div>
-                    <div data-value="100">السويس</div>
                     <div data-value="100">الدقهلية</div>
                     <div data-value="100">البحر الأحمر</div>
                     <div data-value="100">البحيرة</div>
@@ -108,7 +103,9 @@
                     <div data-value="100">المنوفية</div>
                     <div data-value="100">القليوبية</div>
                     <div data-value="100">الوادي الجديد</div>
+                    <div data-value="100">السويس</div>
                     <div data-value="100">الشرقية</div>
+                    <div data-value="100">بورسعيد</div>
                     <div data-value="100">دمياط</div>
                     <div data-value="100">جنوب سيناء</div>
                     <div data-value="100">شمال سيناء</div>
@@ -128,8 +125,6 @@
                 <option value="100">القاهرة</option>
                 <option value="100">الجيزة</option>
                 <option value="100">الإسكندرية</option>
-                <option value="100">بورسعيد</option>
-                <option value="100">السويس</option>
                 <option value="100">الدقهلية</option>
                 <option value="100">البحر الأحمر</option>
                 <option value="100">البحيرة</option>
@@ -138,7 +133,9 @@
                 <option value="100">المنوفية</option>
                 <option value="100">القليوبية</option>
                 <option value="100">الوادي الجديد</option>
+                <option value="100">السويس</option>
                 <option value="100">الشرقية</option>
+                <option value="100">بورسعيد</option>
                 <option value="100">دمياط</option>
                 <option value="100">جنوب سيناء</option>
                 <option value="100">شمال سيناء</option>
@@ -175,6 +172,11 @@
     </div>
 </div>
 
+<div id="leil-alert" class="leil-alert">
+    <p id="alert-msg"></p>
+    <button onclick="hideLeilAlert()">موافق</button>
+</div>
+
 <script>
     const selected = document.getElementById("select-selected");
     const items = document.getElementById("select-items");
@@ -195,6 +197,15 @@
         if (!selected.contains(e.target)) items.classList.remove("select-show");
     });
 
+    function showLeilAlert(msg) {
+        document.getElementById('alert-msg').innerText = msg;
+        document.getElementById('leil-alert').style.display = 'block';
+    }
+
+    function hideLeilAlert() {
+        document.getElementById('leil-alert').style.display = 'none';
+    }
+
     let isCouponApplied = false;
     const SHEET_URL = "https://script.google.com/macros/s/AKfycbxtSddVoY6wFgPE-_n97JypH4pFdj-hf5rm1UedqMFboa6DFhDbnMMlU2U7rkVKuUb4/exec";
 
@@ -213,7 +224,7 @@
             isCouponApplied = false;
             inputField.classList.remove('coupon-success');
             inputField.classList.add('coupon-error');
-            alert("كود الخصم غير صحيح");
+            showLeilAlert("كود الخصم غير صحيح");
             updateTotal();
             return;
         }
@@ -222,7 +233,7 @@
             isCouponApplied = false;
             inputField.classList.remove('coupon-success');
             inputField.classList.add('coupon-error');
-            alert("عذراً، الحد الأدنى لتطبيق الخصم هو 100 جنيه.");
+            showLeilAlert("عذراً، الحد الأدنى لتطبيق الخصم هو 100 جنيه.");
             updateTotal();
             return;
         }
@@ -230,7 +241,7 @@
         isCouponApplied = true;
         inputField.classList.remove('coupon-error');
         inputField.classList.add('coupon-success');
-        alert("تم تطبيق خصم 10% بنجاح!");
+        showLeilAlert("تم تطبيق خصم 10% بنجاح!");
         updateTotal();
     }
 
@@ -291,7 +302,7 @@
             isCouponApplied = false;
             discountRow.style.display = 'none';
             couponInput.value = "";
-            alert("تم إلغاء الخصم لأن إجمالي المشتريات أصبح أقل من 100 جنيه.");
+            showLeilAlert("تم إلغاء الخصم لأن إجمالي المشتريات أصبح أقل من 100 جنيه.");
         }
 
         if (isCouponApplied && sub >= 100) {
@@ -314,10 +325,10 @@
         const total = document.getElementById('total_amount').innerText;
         const couponInput = document.getElementById('coupon_code').value.trim();
         
-        if(!name || !phone || !address) return alert("من فضلك أكمل البيانات");
+        if(!name || !phone || !address) return showLeilAlert("من فضلك أكمل البيانات");
         
         if (couponInput !== "" && couponInput.toUpperCase() !== "LEIL2026") {
-            alert("كود الخصم غير صحيح");
+            showLeilAlert("كود الخصم غير صحيح");
             document.getElementById('coupon_code').value = ""; 
             return; 
         }
