@@ -134,14 +134,16 @@
     document.addEventListener('click', function() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); });
     const swiper = new Swiper('.swiper', { loop: false, speed: 400, pagination: { el: '.swiper-pagination', clickable: true }, });
     let currentProductName = "عرض التوفير 1"; let currentSelectedSize = "عرض دم الغزال"; let currentUnitPrice = 50; let currentOldPrice = 60;
-
+    let currentProductImage = "Offer50-IMG1.webp";
+    
     function updateDisplayPrice(price, oldPrice) {
         document.getElementById('main-price').innerText = price + " ج.م";
         document.getElementById('old-price').innerText = oldPrice + " ج.م";
     }
 
-    function selectOffer(btn, offerName, imgIndex) {
+function selectOffer(btn, offerName, imgIndex) {
         currentSelectedSize = offerName;
+        currentProductImage = (imgIndex === 0) ? "Offer50-IMG1.webp" : "Offer50-IMG2.webp"; // السطر اللي ضفناه
         document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
         btn.classList.add('active-size');
         swiper.slideTo(imgIndex, 400, true);
