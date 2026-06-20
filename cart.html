@@ -31,6 +31,8 @@
         .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; display: inline-block; opacity: 0.5; }
         
         .cart-container { max-width: 800px; margin: 40px auto; padding: 20px; }
+        .cart-container h1 { margin-bottom: 30px; } /* هنا التعديل عشان نرفع الكلمة */
+        
         .cart-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 15px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; border-radius: 8px; }
         .item-info { display: flex; align-items: center; overflow: hidden; }
         .item-text { margin-right: 15px; min-width: 0; }
@@ -121,7 +123,9 @@
 
     <div class="summary-details">
         <div class="summary-line"><span>المشتريات:</span> <span id="subtotal">0</span></div>
-        <div id="discount-row" class="discount-row"><span>الخصم (10%):</span> <span>-<span id="discount-amount">0</span></span></div>
+<div id="discount-row" class="discount-row">
+    <span>الخصم (10%):</span> <span style="direction: ltr; display: inline-block;">-<span id="discount-amount">0</span></span>
+</div>
         <div class="summary-line"><span>التوصيل:</span> <span id="ship_cost">30</span></div>
         <div class="total-line"><span>الإجمالي:</span> <span><span id="total_amount">0</span></span></div>
         <button id="submit-btn" onclick="submitOrder()" class="checkout-btn">تأكيد الطلب</button>
@@ -257,7 +261,7 @@
         if(!name || !phone || !address) return alert("من فضلك أكمل البيانات");
         
         if (couponInput !== "" && couponInput.toUpperCase() !== "LEIL2026") {
-            alert("كود الخصم غير صحيح، سيتم إزالته لتتمكن من إتمام الطلب.");
+            alert("كود الخصم غير صحيح.");
             document.getElementById('coupon_code').value = ""; 
             return; 
         }
@@ -267,7 +271,7 @@
 
         const finalUrl = `${SHEET_URL}?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&city=${encodeURIComponent(city)}&address=${encodeURIComponent(address)}&order=${encodeURIComponent(orderString)}&total=${encodeURIComponent(total + " ج.م")}&coupon=${encodeURIComponent(couponInput)}`;
         
-        document.getElementById('submit-btn').innerText = "جاري الحفظ...";
+        document.getElementById('submit-btn').innerText = "جاري إتمام الطلب...";
         fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
         .then(() => { 
             localStorage.removeItem('leilCart'); 
