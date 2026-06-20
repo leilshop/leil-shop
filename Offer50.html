@@ -174,9 +174,11 @@ function changeQty(amount) {
     let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
     const itemKey = currentProductName + " - " + currentSelectedSize;
     
-    // التعديل هنا: ضفنا img عشان تتسجل في السلة
-    if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: currentProductImage };
-    if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: currentProductImage };
+    // السطر ده هو الحماية: لو نسينا نحط الصورة مش هيعطل الزرار
+    let safeImg = (typeof currentProductImage !== 'undefined') ? currentProductImage : "";
+
+    if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
+    if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
     
     cart[itemKey].qty += amount;
     
