@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سلة المشتريات | ليل</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root { --main: #600a1c; --bg: #3d0000; }
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
+        html, body { overflow-x: hidden; width: 100%; }
+        body { background: var(--bg); min-height: 100vh; padding-bottom: 50px; }
+
+        header { background: var(--bg); padding: 15px 4%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
+        .logo { display: block; font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; line-height: 1; }
+        nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
+        nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; color: white; display: inline-flex; align-items: center; }
+        nav a:hover, .dropdown.active > a { opacity: 1; color: white !important; }
+        
+        .cart-container { max-width: 800px; margin: 40px auto; padding: 20px; }
+        .cart-container h1 { margin-bottom: 60px; }
+        
+        .cart-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 15px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; border-radius: 8px; }
+        .item-info { display: flex; align-items: center; overflow: hidden; }
+        .item-text { margin-right: 15px; min-width: 0; }
+        .item-text h3 { font-size: 15px; line-height: 1.4; word-wrap: break-word; }
+        .item-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
+        .qty-controls { display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; flex-shrink: 0; }
+        .qty-btn { background: white; color: black; border: none; width: 27px; height: 27px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .qty-val { padding: 0 10px; font-weight: 700; min-width: 27px; text-align: center; font-size: 14px; }
+        
+        .checkout-form { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin-top: 30px; }
+        .input-group { margin-bottom: 15px; text-align: right; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
+        .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; }
+        
+        .coupon-box { display: flex; gap: 10px; margin-top: 5px; }
+        .coupon-btn { padding: 0 15px; background: var(--main); border: none; color: white; border-radius: 5px; cursor: pointer; }
+        .coupon-success { border: 2px solid #28a745 !important; }
+        .coupon-error { border: 2px solid #dc3545 !important; }
+        
+        .summary-details { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 5px; }
+        .summary-line { display: grid; grid-template-columns: 1fr 100px; align-items: center; opacity: 0.8; margin-bottom: 10px; text-align: right; }
+        .summary-line span:last-child { text-align: center; }
+        
+        .total-line { display: grid; grid-template-columns: 1fr 100px; font-size: 24px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px; }
+        .total-line span:last-child { text-align: center; }
+        
+        .discount-row { display: none; grid-template-columns: 1fr 100px; color: #00ff41 !important; font-weight: bold; margin-bottom: 10px; text-align: right; align-items: center; }
+        .discount-row span:last-child { text-align: center; }
+        
+        .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .checkout-btn:hover { background: #7a0c23; }
+        @media (max-width: 600px) { #lipBalmToggle .dropdown-content { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; } }
+    </style>
+</head>
+<body>
+
+<div id="header-container"></div>
+
+<div class="cart-container">
+    <h1>سلة المشتريات</h1>
+    <div id="items-list"></div>
+
+    <div class="checkout-form">
+        <h3>بيانات الشحن</h3>
+        <div class="input-group"><label>الاسم بالكامل</label><input type="text" id="cust_name" placeholder="أدخل اسمك" required></div>
+        <div class="input-group"><label>رقم الهاتف</label><input type="tel" id="cust_phone" placeholder="أدخل رقمك" required></div>
+        <div class="input-group">
+            <label>المحافظة</label>
+            <select id="cust_city" onchange="updateTotal()">
+                <option value="30">الإسماعيلية</option>
+                <option value="100">القاهرة</option>
+                <option value="100">الجيزة</option>
+                <option value="100">الإسكندرية</option>
+                <option value="100">الدقهلية</option>
+                <option value="100">البحر الأحمر</option>
+                <option value="100">البحيرة</option>
+                <option value="100">الفيوم</option>
+                <option value="100">الغربية</option>
+                <option value="100">المنوفية</option>
+                <option value="100">القليوبية</option>
+                <option value="100">الوادي الجديد</option>
+                <option value="100">السويس</option>
+                <option value="100">الشرقية</option>
+                <option value="100">بورسعيد</option>
+                <option value="100">دمياط</option>
+                <option value="100">جنوب سيناء</option>
+                <option value="100">شمال سيناء</option>
+                <option value="100">كفر الشيخ</option>
+                <option value="100">مطروح</option>
+                <option value="100">الأقصر</option>
+                <option value="100">قنا</option>
+                <option value="100">بني سويف</option>
+                <option value="100">سوهاج</option>
+                <option value="100">المنيا</option>
+                <option value="100">أسوان</option>
+                <option value="100">أسيوط</option>
+            </select>
+        </div>
+        <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea></div>
+        <div class="input-group">
+            <label>كود الخصم</label>
+            <div class="coupon-box">
+                <input type="text" id="coupon_code" placeholder="أدخل كود الخصم">
+                <button type="button" class="coupon-btn" onclick="applyCoupon()">تطبيق</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary-details">
+        <div class="summary-line"><span>المشتريات:</span> <span id="subtotal">0</span></div>
+        <div id="discount-row" class="discount-row">
+            <span>الخصم (10%):</span> <span style="direction: ltr; display: inline-block;">-<span id="discount-amount">0</span></span>
+        </div>
+        <div class="summary-line"><span>التوصيل:</span> <span id="ship_cost">30</span></div>
+        <div class="total-line"><span>الإجمالي:</span> <span><span id="total_amount">0</span></span></div>
+        <button id="submit-btn" onclick="submitOrder()" class="checkout-btn">تأكيد الطلب</button>
+    </div>
+</div>
+
+<script>
+    let isCouponApplied = false;
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbxtSddVoY6wFgPE-_n97JypH4pFdj-hf5rm1UedqMFboa6DFhDbnMMlU2U7rkVKuUb4/exec";
+
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+        });
+
+    function applyCoupon() {
+        const code = document.getElementById('coupon_code').value.trim().toUpperCase();
+        const inputField = document.getElementById('coupon_code');
+        const sub = parseInt(document.getElementById('subtotal').innerText) || 0;
+        
+        if (code !== "LEIL2026") {
+            isCouponApplied = false;
+            inputField.classList.remove('coupon-success');
+            inputField.classList.add('coupon-error');
+            alert("كود الخصم غير صحيح");
+            updateTotal();
+            return;
+        }
+
+        if (sub < 100) {
+            isCouponApplied = false;
+            inputField.classList.remove('coupon-success');
+            inputField.classList.add('coupon-error');
+            alert("عذراً، الحد الأدنى لتطبيق الخصم هو 100 جنيه.");
+            updateTotal();
+            return;
+        }
+
+        isCouponApplied = true;
+        inputField.classList.remove('coupon-error');
+        inputField.classList.add('coupon-success');
+        alert("تم تطبيق خصم 10% بنجاح!");
+        updateTotal();
+    }
+
+    function renderCart() {
+        let cartData = localStorage.getItem('leilCart');
+        if (!cartData) {
+            document.getElementById('items-list').innerHTML = "<p style='text-align:center;'>السلة فارغة حالياً</p>";
+            document.getElementById('subtotal').innerText = "0";
+            updateTotal();
+            return;
+        }
+        let cart = JSON.parse(cartData);
+        const list = document.getElementById('items-list');
+        list.innerHTML = '';
+        let sub = 0;
+        Object.keys(cart).forEach(key => {
+            let itemData = cart[key];
+            let q = typeof itemData === 'object' ? itemData.qty : itemData;
+            let p = typeof itemData === 'object' ? itemData.price : 30;
+            let img = typeof itemData === 'object' && itemData.img ? itemData.img : '';
+            sub += p * q;
+            list.innerHTML += `
+            <div class="cart-item">
+                <div class="item-info">
+                    <img src="${img}" class="item-img" onerror="this.style.display='none'">
+                    <div class="item-text">
+                        <h3>${key}</h3>
+                        <p>${p} ج.م</p>
+                    </div>
+                </div>
+                <div class="qty-controls">
+                    <button class="qty-btn" onclick="editQty('${key}', 1)">+</button>
+                    <span class="qty-val">${q}</span>
+                    <button class="qty-btn" onclick="editQty('${key}', -1)">-</button>
+                </div>
+            </div>`;
+        });
+        document.getElementById('subtotal').innerText = sub;
+        updateTotal();
+    }
+
+    function editQty(k, d) {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        if (typeof cart[k] === 'object') { cart[k].qty += d; if(cart[k].qty <= 0) delete cart[k]; }
+        else { cart[k] = (cart[k] || 0) + d; if(cart[k] <= 0) delete cart[k]; }
+        localStorage.setItem('leilCart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    function updateTotal() {
+        const sub = parseInt(document.getElementById('subtotal').innerText) || 0;
+        const ship = parseInt(document.getElementById('cust_city').value) || 0;
+        const discountRow = document.getElementById('discount-row');
+        const couponInput = document.getElementById('coupon_code');
+        let discount = 0;
+
+        if (isCouponApplied && sub < 100) {
+            isCouponApplied = false;
+            discountRow.style.display = 'none';
+            couponInput.value = "";
+            alert("تم إلغاء الخصم لأن إجمالي المشتريات أصبح أقل من 100 جنيه.");
+        }
+
+        if (isCouponApplied && sub >= 100) {
+            discount = Math.floor(sub * 0.10);
+            discountRow.style.display = 'grid';
+            document.getElementById('discount-amount').innerText = discount;
+        } else {
+            discountRow.style.display = 'none';
+        }
+
+        document.getElementById('ship_cost').innerText = ship;
+        document.getElementById('total_amount').innerText = (sub - discount) + ship;
+    }
+
+    function submitOrder() {
+        const name = document.getElementById('cust_name').value;
+        const phone = document.getElementById('cust_phone').value;
+        const address = document.getElementById('cust_address').value;
+        const city = document.getElementById('cust_city').options[document.getElementById('cust_city').selectedIndex].text;
+        const total = document.getElementById('total_amount').innerText;
+        const couponInput = document.getElementById('coupon_code').value.trim();
+        
+        if(!name || !phone || !address) return alert("من فضلك أكمل البيانات");
+        
+        if (couponInput !== "" && couponInput.toUpperCase() !== "LEIL2026") {
+            alert("كود الخصم غير صحيح");
+            document.getElementById('coupon_code').value = ""; 
+            return; 
+        }
+        
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        let orderString = Object.keys(cart).map(k => `${k} (${typeof cart[k] === 'object' ? cart[k].qty : cart[k]})`).join(' | ');
+
+        const finalUrl = `${SHEET_URL}?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&city=${encodeURIComponent(city)}&address=${encodeURIComponent(address)}&order=${encodeURIComponent(orderString)}&total=${encodeURIComponent(total + " ج.م")}&coupon=${encodeURIComponent(couponInput)}`;
+        
+        document.getElementById('submit-btn').innerText = "جاري إتمام الطلب...";
+        fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
+        .then(() => { 
+            localStorage.removeItem('leilCart'); 
+            window.location.href = "thankyou.html";
+        })
+        .catch(() => { 
+            localStorage.removeItem('leilCart'); 
+            window.location.href = "thankyou.html";
+        });
+    }
+    window.onload = renderCart;
+</script>
+</body>
+</html>
