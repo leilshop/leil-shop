@@ -289,26 +289,26 @@
 
     function initAdd() { changeQty(1); }
 
-    function changeQty(amount) {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const itemKey = currentProductName + " - " + currentSelectedSize;
-        
-        if (!cart[itemKey]) {
-            cart[itemKey] = { qty: 0, price: currentUnitPrice };
-        }
-        
-        if (typeof cart[itemKey] !== 'object') {
-            cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice };
-        }
+function changeQty(amount) {
+    let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+    const itemKey = currentProductName + " - " + currentSelectedSize;
+    
+    // الحل السحري: الكود ده بيسحب الصورة المعروضة في الصفحة أوتوماتيك
+    let safeImg = "";
+    let activeImg = document.querySelector('.swiper-slide-active img') || document.querySelector('.image-section img');
+    if (activeImg) safeImg = activeImg.getAttribute('src');
 
-        cart[itemKey].qty += amount;
-        cart[itemKey].price = currentUnitPrice; 
-
-        if (cart[itemKey].qty <= 0) delete cart[itemKey];
-        
-        localStorage.setItem('leilCart', JSON.stringify(cart));
-        checkCartState();
-    }
+    // تسجيل البيانات في السلة
+    if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
+    if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
+    
+    cart[itemKey].qty += amount;
+    
+    if (cart[itemKey].qty <= 0) delete cart[itemKey];
+    
+    localStorage.setItem('leilCart', JSON.stringify(cart));
+    checkCartState();
+}
 
     function updateHeaderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
