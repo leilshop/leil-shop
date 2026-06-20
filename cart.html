@@ -188,16 +188,36 @@
         updateTotal();
     }
 
-    function renderCart() {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+function renderCart() {
+        let cartData = localStorage.getItem('leilCart');
+        console.log("Current Cart Data in LocalStorage:", cartData); // دي هتطلعلك الحقيقة في الـ Console
+
+        if (!cartData) {
+            console.warn("السلة فارغة في الـ LocalStorage!");
+            document.getElementById('items-list').innerHTML = "<p style='text-align:center;'>السلة فارغة حالياً</p>";
+            document.getElementById('subtotal').innerText = "0";
+            updateTotal();
+            return;
+        }
+
+        let cart;
+        try {
+            cart = JSON.parse(cartData);
+        } catch (e) {
+            console.error("خطأ في قراءة بيانات السلة:", e);
+            return;
+        }
+
         const list = document.getElementById('items-list');
         list.innerHTML = '';
         let sub = 0;
+        
         Object.keys(cart).forEach(key => {
             let itemData = cart[key];
             let q = typeof itemData === 'object' ? itemData.qty : itemData;
             let p = typeof itemData === 'object' ? itemData.price : 30;
             let img = typeof itemData === 'object' && itemData.img ? itemData.img : '';
+            
             sub += p * q;
             list.innerHTML += `
             <div class="cart-item">
