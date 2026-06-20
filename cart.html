@@ -53,6 +53,7 @@
         .summary-details { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 5px; }
         .summary-line { display: grid; grid-template-columns: 1fr 100px; align-items: center; opacity: 0.8; margin-bottom: 10px; text-align: right; }
         .summary-line span:last-child { text-align: center; }
+        
         .total-line { display: grid; grid-template-columns: 1fr 100px; font-size: 24px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px; }
         .total-line span:last-child { text-align: center; }
         
@@ -61,6 +62,7 @@
         
         .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
         .checkout-btn:hover { background: #7a0c23; }
+        @media (max-width: 600px) { #lipBalmToggle .dropdown-content { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; } }
     </style>
 </head>
 <body>
@@ -119,7 +121,7 @@
 
     <div class="summary-details">
         <div class="summary-line"><span>المشتريات:</span> <span id="subtotal">0</span></div>
-        <div id="discount-row" class="discount-row"><span>الخصم (10%):</span> -<span id="discount-amount">0</span></div>
+        <div id="discount-row" class="discount-row"><span>الخصم (10%):</span> <span>-<span id="discount-amount">0</span></span></div>
         <div class="summary-line"><span>التوصيل:</span> <span id="ship_cost">30</span></div>
         <div class="total-line"><span>الإجمالي:</span> <span><span id="total_amount">0</span></span></div>
         <button id="submit-btn" onclick="submitOrder()" class="checkout-btn">تأكيد الطلب</button>
@@ -253,6 +255,12 @@
         const couponInput = document.getElementById('coupon_code').value.trim();
         
         if(!name || !phone || !address) return alert("من فضلك أكمل البيانات");
+        
+        if (couponInput !== "" && couponInput.toUpperCase() !== "LEIL2026") {
+            alert("كود الخصم غير صحيح، سيتم إزالته لتتمكن من إتمام الطلب.");
+            document.getElementById('coupon_code').value = ""; 
+            return; 
+        }
         
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let orderString = Object.keys(cart).map(k => `${k} (${typeof cart[k] === 'object' ? cart[k].qty : cart[k]})`).join(' | ');
