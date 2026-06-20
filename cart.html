@@ -39,14 +39,14 @@
         .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
         .input-group input, .input-group textarea { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; }
         
-        /* تصميم الـ Custom Select الجديد */
+        /* تصميم الـ Custom Select عشان يفتح غامق */
         .custom-select-wrapper { position: relative; width: 100%; cursor: pointer; }
         .select-selected { background: rgba(255, 255, 255, 0.05); padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; color: white; text-align: right; position: relative; }
         .select-selected:after { position: absolute; content: "▼"; right: 10px; top: 12px; font-size: 10px; opacity: 0.7; }
         .select-items { display: none; position: absolute; background-color: #3d0000; width: 100%; z-index: 99; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; max-height: 200px; overflow-y: auto; margin-top: 5px; }
         .select-items div { color: white; padding: 12px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .select-items div:hover { background-color: #600a1c; }
-        .select-hide { display: none; }
+        .select-show { display: block; }
 
         .coupon-box { display: flex; gap: 10px; margin-top: 5px; }
         .coupon-btn { padding: 0 15px; background: var(--main); border: none; color: white; border-radius: 5px; cursor: pointer; }
@@ -83,7 +83,7 @@
         
         <div class="input-group">
             <label>المحافظة</label>
-            <div class="custom-select-wrapper" id="custom-select-wrapper">
+            <div class="custom-select-wrapper">
                 <div class="select-selected" id="select-selected">الإسماعيلية</div>
                 <div class="select-items" id="select-items">
                     <div data-value="30">الإسماعيلية</div>
@@ -168,20 +168,24 @@
 </div>
 
 <script>
-    // كود القائمة المخصصة
+    // لوجيك القائمة المخصصة
     const selected = document.getElementById("select-selected");
     const items = document.getElementById("select-items");
     const realSelect = document.getElementById("cust_city");
 
-    selected.addEventListener("click", () => items.classList.toggle("select-hide"));
+    selected.addEventListener("click", () => items.classList.toggle("select-show"));
 
     items.querySelectorAll("div").forEach(div => {
         div.addEventListener("click", () => {
             selected.innerText = div.innerText;
             realSelect.value = div.getAttribute("data-value");
             realSelect.dispatchEvent(new Event('change'));
-            items.classList.add("select-hide");
+            items.classList.remove("select-show");
         });
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!selected.contains(e.target)) items.classList.remove("select-show");
     });
 
     let isCouponApplied = false;
