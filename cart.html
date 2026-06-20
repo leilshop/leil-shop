@@ -37,18 +37,16 @@
         .checkout-form { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin-top: 30px; }
         .input-group { margin-bottom: 15px; text-align: right; }
         .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
-        .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; }
+        .input-group input, .input-group textarea { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; }
         
-        /* تنسيق الـ select ليطابق باقي الخانات */
-        #cust_city {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            cursor: pointer;
-            background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: left 10px center;
-        }
+        /* تصميم الـ Custom Select الجديد */
+        .custom-select-wrapper { position: relative; width: 100%; cursor: pointer; }
+        .select-selected { background: rgba(255, 255, 255, 0.05); padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; color: white; text-align: right; position: relative; }
+        .select-selected:after { position: absolute; content: "▼"; right: 10px; top: 12px; font-size: 10px; opacity: 0.7; }
+        .select-items { display: none; position: absolute; background-color: #3d0000; width: 100%; z-index: 99; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; max-height: 200px; overflow-y: auto; margin-top: 5px; }
+        .select-items div { color: white; padding: 12px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .select-items div:hover { background-color: #600a1c; }
+        .select-hide { display: none; }
 
         .coupon-box { display: flex; gap: 10px; margin-top: 5px; }
         .coupon-btn { padding: 0 15px; background: var(--main); border: none; color: white; border-radius: 5px; cursor: pointer; }
@@ -82,9 +80,42 @@
         <h3>بيانات الشحن</h3>
         <div class="input-group"><label>الاسم بالكامل</label><input type="text" id="cust_name" placeholder="أدخل اسمك" required></div>
         <div class="input-group"><label>رقم الهاتف</label><input type="tel" id="cust_phone" placeholder="أدخل رقمك" required></div>
+        
         <div class="input-group">
             <label>المحافظة</label>
-            <select id="cust_city" onchange="updateTotal()">
+            <div class="custom-select-wrapper" id="custom-select-wrapper">
+                <div class="select-selected" id="select-selected">الإسماعيلية</div>
+                <div class="select-items" id="select-items">
+                    <div data-value="30">الإسماعيلية</div>
+                    <div data-value="100">القاهرة</div>
+                    <div data-value="100">الجيزة</div>
+                    <div data-value="100">الإسكندرية</div>
+                    <div data-value="100">الدقهلية</div>
+                    <div data-value="100">البحر الأحمر</div>
+                    <div data-value="100">البحيرة</div>
+                    <div data-value="100">الفيوم</div>
+                    <div data-value="100">الغربية</div>
+                    <div data-value="100">المنوفية</div>
+                    <div data-value="100">القليوبية</div>
+                    <div data-value="100">الوادي الجديد</div>
+                    <div data-value="100">السويس</div>
+                    <div data-value="100">الشرقية</div>
+                    <div data-value="100">بورسعيد</div>
+                    <div data-value="100">دمياط</div>
+                    <div data-value="100">جنوب سيناء</div>
+                    <div data-value="100">شمال سيناء</div>
+                    <div data-value="100">كفر الشيخ</div>
+                    <div data-value="100">مطروح</div>
+                    <div data-value="100">الأقصر</div>
+                    <div data-value="100">قنا</div>
+                    <div data-value="100">بني سويف</div>
+                    <div data-value="100">سوهاج</div>
+                    <div data-value="100">المنيا</div>
+                    <div data-value="100">أسوان</div>
+                    <div data-value="100">أسيوط</div>
+                </div>
+            </div>
+            <select id="cust_city" onchange="updateTotal()" style="display:none;">
                 <option value="30">الإسماعيلية</option>
                 <option value="100">القاهرة</option>
                 <option value="100">الجيزة</option>
@@ -114,6 +145,7 @@
                 <option value="100">أسيوط</option>
             </select>
         </div>
+
         <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea></div>
         <div class="input-group">
             <label>كود الخصم</label>
@@ -136,6 +168,22 @@
 </div>
 
 <script>
+    // كود القائمة المخصصة
+    const selected = document.getElementById("select-selected");
+    const items = document.getElementById("select-items");
+    const realSelect = document.getElementById("cust_city");
+
+    selected.addEventListener("click", () => items.classList.toggle("select-hide"));
+
+    items.querySelectorAll("div").forEach(div => {
+        div.addEventListener("click", () => {
+            selected.innerText = div.innerText;
+            realSelect.value = div.getAttribute("data-value");
+            realSelect.dispatchEvent(new Event('change'));
+            items.classList.add("select-hide");
+        });
+    });
+
     let isCouponApplied = false;
     const SHEET_URL = "https://script.google.com/macros/s/AKfycbxtSddVoY6wFgPE-_n97JypH4pFdj-hf5rm1UedqMFboa6DFhDbnMMlU2U7rkVKuUb4/exec";
 
@@ -251,7 +299,7 @@
         const name = document.getElementById('cust_name').value;
         const phone = document.getElementById('cust_phone').value;
         const address = document.getElementById('cust_address').value;
-        const city = document.getElementById('cust_city').options[document.getElementById('cust_city').selectedIndex].text;
+        const city = document.getElementById("select-selected").innerText;
         const total = document.getElementById('total_amount').innerText;
         const couponInput = document.getElementById('coupon_code').value.trim();
         
