@@ -37,11 +37,14 @@
         .checkout-form { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin-top: 30px; }
         .input-group { margin-bottom: 15px; text-align: right; }
         .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
-        .input-group input, .input-group textarea { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; }
+        
+        /* Focus State Effect */
+        .input-group input, .input-group textarea, .select-selected { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; transition: 0.3s; }
+        .input-group input:focus, .input-group textarea:focus { border-color: var(--main); box-shadow: 0 0 8px rgba(96, 10, 28, 0.5); }
         
         /* تصميم الـ Custom Select */
         .custom-select-wrapper { position: relative; width: 100%; cursor: pointer; }
-        .select-selected { background: rgba(255, 255, 255, 0.05); padding: 12px 30px 12px 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; color: white; text-align: right; position: relative; }
+        .select-selected { position: relative; padding: 12px 30px 12px 12px; }
         .select-selected:after { position: absolute; content: "▼"; right: 10px; top: 50%; transform: translateY(-50%); font-size: 10px; opacity: 0.7; }
         .select-items { display: none; position: absolute; background-color: #3d0000; width: 100%; z-index: 99; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; max-height: 200px; overflow-y: auto; margin-top: 5px; }
         .select-items div { color: white; padding: 12px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -58,7 +61,8 @@
         .coupon-success { border: 2px solid #28a745 !important; }
         .coupon-error { border: 2px solid #dc3545 !important; }
         
-        .summary-details { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 5px; }
+        /* Sticky Summary */
+        .summary-details { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 5px; position: sticky; bottom: 10px; z-index: 100; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
         .summary-line { display: grid; grid-template-columns: 1fr 100px; align-items: center; opacity: 0.8; margin-bottom: 10px; text-align: right; }
         .summary-line span:last-child { text-align: center; }
         
@@ -68,8 +72,13 @@
         .discount-row { display: none; grid-template-columns: 1fr 100px; color: #00ff41 !important; font-weight: bold; margin-bottom: 10px; text-align: right; align-items: center; }
         .discount-row span:last-child { text-align: center; }
         
-        .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; transition: 0.3s; position: relative; }
         .checkout-btn:hover { background: #7a0c23; }
+        
+        /* Spinner */
+        .spinner { border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid white; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-left: 10px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
         @media (max-width: 600px) { #lipBalmToggle .dropdown-content { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; } }
     </style>
 </head>
@@ -249,14 +258,18 @@
 
     function renderCart() {
         let cartData = localStorage.getItem('leilCart');
-        if (!cartData) {
-            document.getElementById('items-list').innerHTML = "<p style='text-align:center;'>السلة فارغة حالياً</p>";
+        const list = document.getElementById('items-list');
+        
+        if (!cartData || cartData === "{}") {
+            list.innerHTML = `
+                <p style='text-align:center;'>السلة فارغة حالياً</p>
+                <a href="/" style="display:block; text-align:center; margin-top:20px; color:white; text-decoration:underline;">استمر في التسوق</a>
+            `;
             document.getElementById('subtotal').innerText = "0";
             updateTotal();
             return;
         }
         let cart = JSON.parse(cartData);
-        const list = document.getElementById('items-list');
         list.innerHTML = '';
         let sub = 0;
         Object.keys(cart).forEach(key => {
@@ -340,7 +353,10 @@
 
         const finalUrl = `${SHEET_URL}?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&city=${encodeURIComponent(city)}&address=${encodeURIComponent(address)}&order=${encodeURIComponent(orderString)}&total=${encodeURIComponent(total + " ج.م")}&coupon=${encodeURIComponent(couponInput)}`;
         
-        document.getElementById('submit-btn').innerText = "جاري إتمام الطلب...";
+        const btn = document.getElementById('submit-btn');
+        btn.innerHTML = '<span class="spinner"></span> جاري إتمام الطلب...';
+        btn.disabled = true;
+
         fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
         .then(() => { 
             localStorage.removeItem('leilCart'); 
