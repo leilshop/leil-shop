@@ -67,16 +67,20 @@
         100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
     }
 
-  /* كود الأنيميشن - حطه في الـ style جوه header.html */
+/* كود الأنيميشن الناعم */
 .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
+    transform: translateY(20px) scale(0.98); /* حركة أقل حدة مع تكبير خفيف */
+    filter: blur(5px); /* بلور خفيف في البداية عشان النعومة */
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+                filter 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .reveal.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    filter: blur(0px); /* يختفي البلور لما يظهر */
 }
     /* باقي كود الهيدر الخاص بيك */
     .leil-header { 
