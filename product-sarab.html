@@ -121,104 +121,93 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-    // جلب الهيدر الموحد
-    fetch('header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-container').innerHTML = data;
-            // تفعيل القوائم المنسدلة
-            document.querySelectorAll('.dropdown').forEach(d => {
-                d.addEventListener('click', function(e) {
+    fetch('header.html').then(r => r.text()).then(data => {
+        document.getElementById('header-container').innerHTML = data;
+        function setupDropdown(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    document.querySelectorAll('.dropdown').forEach(x => { if(x !== d) x.classList.remove('active'); });
-                    d.classList.toggle('active');
+                    document.querySelectorAll('.dropdown').forEach(d => { if(d !== el) d.classList.remove('active'); });
+                    this.classList.toggle('active');
                 });
-            });
-            // تحديث عداد السلة
-            let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-            const countEl = document.getElementById('cart-count');
-            if(countEl) countEl.innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
-        });
+            }
+        }
+        setupDropdown('makhmariatToggle'); setupDropdown('splashToggle'); setupDropdown('lipBalmToggle');
+        if(typeof updateHeaderCart === 'function') updateHeaderCart();
+    });
 
     document.addEventListener('click', () => document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')));
 
-    const swiper = new Swiper('.swiper', { loop: true, pagination: { el: '.swiper-pagination', clickable: true } });
+    const swiper = new Swiper('.swiper', { loop: false, speed: 400, pagination: { el: '.swiper-pagination', clickable: true } });
 
-    let currentProductName = "مخمرية سراب"; 
+    let currentProductName = "مخمرية دم الغزال";
     let currentSelectedSize = "3 جرام";
     let currentUnitPrice = 25;
     let currentOldPrice = 30;
 
-    function selectSize(btn, sizeName) {
+    function selectSize(btn, sizeName, imgIndex) {
         currentSelectedSize = sizeName;
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
+        document.querySelectorAll('.size-btn, .pinky-btn').forEach(b => b.classList.remove('active-size'));
         btn.classList.add('active-size');
+        
         currentUnitPrice = parseInt(btn.getAttribute('data-price'));
         currentOldPrice = parseInt(btn.getAttribute('data-old'));
         
+        if (typeof imgIndex !== 'undefined') {
+            swiper.slideTo(imgIndex, 400, true);
+        }
+        
+        const addBtn = document.getElementById('add-btn');
+        if (sizeName === "5 جرام") { addBtn.innerText = "المنتج غير متاح"; addBtn.disabled = true; } 
+        else { addBtn.innerText = "أضف إلى السلة"; addBtn.disabled = false; }
+        
+        checkCartState();
+    }
+
+    function checkCartState() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        const itemKey = currentProductName + " - " + currentSelectedSize;
         const addBtn = document.getElementById('add-btn');
         const qtyGroup = document.getElementById('qty-group');
-
-        if (sizeName === "5 جرام") {
-            addBtn.style.display = "block";
-            addBtn.innerText = "المنتج غير متاح حالياً";
-            addBtn.disabled = true;
-            qtyGroup.style.display = "none";
-            updateDisplayPrice(currentUnitPrice, currentOldPrice);
-        } else {
-            addBtn.disabled = false;
-            addBtn.innerText = "أضف إلى السلة";
-            checkCartState();
+        const q = cart[itemKey] ? (typeof cart[itemKey] === 'object' ? cart[itemKey].qty : cart[itemKey]) : 0;
+        
+        if (q > 0) { 
+            addBtn.style.display = "none"; 
+            qtyGroup.style.display = "grid"; 
+            document.getElementById('current-qty').innerText = q; 
+        } else { 
+            addBtn.style.display = "block"; 
+            qtyGroup.style.display = "none"; 
         }
+        
+        document.getElementById('main-price').innerText = (currentUnitPrice * (q || 1)) + " ج.م";
+        document.getElementById('old-price').innerText = (currentOldPrice * (q || 1)) + " ج.م";
+        
+        updateHeaderCart();
     }
-
-    function updateDisplayPrice(price, oldPrice) {
-        document.getElementById('main-price').innerText = price + " ج.م";
-        const oldPriceEl = document.getElementById('old-price');
-        oldPriceEl.style.display = (price < oldPrice) ? "block" : "none";
-        oldPriceEl.innerText = oldPrice + " ج.م";
-    }
-
-function checkCartState() {
-    let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-    const itemKey = currentProductName + " - " + currentSelectedSize;
-    const addBtn = document.getElementById('add-btn');
-    const qtyGroup = document.getElementById('qty-group');
-    const q = cart[itemKey] ? (typeof cart[itemKey] === 'object' ? cart[itemKey].qty : cart[itemKey]) : 0;
-    
-    if (q > 0) { addBtn.style.display = "none"; qtyGroup.style.display = "grid"; document.getElementById('current-qty').innerText = q; }
-    else { addBtn.style.display = "block"; qtyGroup.style.display = "none"; }
-    
-    document.getElementById('main-price').innerText = (currentUnitPrice * (q || 1)) + " ج.م";
-    // السطر ده هو اللي هيحدث السعر المشطوب ويفك التعليقة
-    document.getElementById('old-price').innerText = (currentOldPrice * (q || 1)) + " ج.م";
-    
-    updateHeaderCart();
-}
 
     function initAdd() { changeQty(1); }
+    
+    function changeQty(amount) {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        const itemKey = currentProductName + " - " + currentSelectedSize;
+        
+        let safeImg = "";
+        let activeImg = document.querySelector('.swiper-slide-active img') || document.querySelector('.image-section img');
+        if (activeImg) safeImg = activeImg.getAttribute('src');
 
-function changeQty(amount) {
-    let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-    const itemKey = currentProductName + " - " + currentSelectedSize;
-    
-    // الحل السحري: الكود ده بيسحب الصورة المعروضة في الصفحة أوتوماتيك
-    let safeImg = "";
-    let activeImg = document.querySelector('.swiper-slide-active img') || document.querySelector('.image-section img');
-    if (activeImg) safeImg = activeImg.getAttribute('src');
-
-    // تسجيل البيانات في السلة
-    if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
-    if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
-    
-    cart[itemKey].qty += amount;
-    
-    if (cart[itemKey].qty <= 0) delete cart[itemKey];
-    
-    localStorage.setItem('leilCart', JSON.stringify(cart));
-    checkCartState();
-}
-
+        if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
+        if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
+        
+        cart[itemKey].qty += amount;
+        
+        if (cart[itemKey].qty <= 0) delete cart[itemKey];
+        
+        localStorage.setItem('leilCart', JSON.stringify(cart));
+        checkCartState();
+    }
+        
     function updateHeaderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const countEl = document.getElementById('cart-count');
