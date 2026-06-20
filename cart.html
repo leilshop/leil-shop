@@ -16,7 +16,6 @@
         html, body { overflow-x: hidden; width: 100%; }
         body { background: var(--bg); min-height: 100vh; padding-bottom: 50px; }
 
-        /* الهيدر الموحد */
         header { background: var(--bg); padding: 15px 4%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
         .logo { display: block; font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 22px; text-decoration: none; color: white; line-height: 1; }
         nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
@@ -34,56 +33,15 @@
         .cart-trigger { position: relative; cursor: pointer; text-decoration: none; display: flex; align-items: center; }
         .cart-count { position: absolute; top: -8px; left: -10px; background: var(--main); width: 18px; height: 18px; border-radius: 50%; font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
 
-        /* تنسيقات السلة */
-/* تنسيقات السلة المحدثة */
         .cart-container { max-width: 800px; margin: 40px auto; padding: 20px; }
-        .cart-item { 
-            display: grid; 
-            grid-template-columns: 1fr auto; 
-            align-items: center; 
-            gap: 15px;
-            padding: 15px; 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            margin-bottom: 15px; 
-            border-radius: 8px; 
-        }
+        .cart-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 15px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; border-radius: 8px; }
         .item-info { display: flex; align-items: center; overflow: hidden; }
-        .item-text { 
-            margin-right: 15px; 
-            min-width: 0; /* مهمة جداً عشان النص يتكسر لسطرين */
-        }
-        .item-text h3 { 
-            font-size: 15px; 
-            line-height: 1.4; 
-            word-wrap: break-word; 
-        }
+        .item-text { margin-right: 15px; min-width: 0; }
+        .item-text h3 { font-size: 15px; line-height: 1.4; word-wrap: break-word; }
         .item-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
-     .qty-controls { 
-            display: flex; 
-            align-items: center; 
-            background: rgba(255,255,255,0.1); 
-            border-radius: 5px; 
-            overflow: hidden; 
-            flex-shrink: 0; 
-        }
-        .qty-btn { 
-            background: white; 
-            color: black; 
-            border: none; 
-            width: 30px;  /* الزرار صغر بقى 30 */
-            height: 30px; /* الزرار صغر بقى 30 */
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 16px; /* خط أصغر شوية عشان يتناسب مع المقاس */
-        }
-        .qty-val { 
-            padding: 0 10px; /* قللنا البادينج عشان العرض يلم معانا */
-            font-weight: 700; 
-            min-width: 25px; /* صغرنا المساحة المخصصة للرقم */
-            text-align: center; 
-            font-size: 14px; 
-        }
+        .qty-controls { display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; flex-shrink: 0; }
+        .qty-btn { background: white; color: black; border: none; width: 23px; height: 23px; cursor: pointer; font-weight: bold; font-size: 14px; }
+        .qty-val { padding: 0 10px; font-weight: 700; min-width: 25px; text-align: center; font-size: 14px; }
         .checkout-form { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin-top: 30px; }
         .input-group { margin-bottom: 15px; text-align: right; }
         .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
@@ -156,6 +114,9 @@
 </div>
 
 <script>
+    const VALID_COUPONS = ["LEIL2026"];
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbxtSddVoY6wFgPE-_n97JypH4pFdj-hf5rm1UedqMFboa6DFhDbnMMlU2U7rkVKuUb4/exec";
+
     fetch('header.html')
         .then(response => response.text())
         .then(data => {
@@ -176,8 +137,6 @@
 
     document.addEventListener('click', function() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); });
 
-    const SHEET_URL = "https://script.google.com/macros/s/AKfycbxtSddVoY6wFgPE-_n97JypH4pFdj-hf5rm1UedqMFboa6DFhDbnMMlU2U7rkVKuUb4/exec";
-
     function renderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const list = document.getElementById('items-list');
@@ -187,11 +146,9 @@
             let itemData = cart[key];
             let q = typeof itemData === 'object' ? itemData.qty : itemData;
             let p = typeof itemData === 'object' ? itemData.price : 30;
-            let img = typeof itemData === 'object' && itemData.img ? itemData.img : ''; // سحب الصورة
+            let img = typeof itemData === 'object' && itemData.img ? itemData.img : '';
             
             sub += p * q;
-            // ضيفت الـ img tag هنا، ولو مفيش صورة مش هيبوظ الشكل
-// هذا الجزء الجديد يضمن توزيع العناصر بشكل صحيح
             list.innerHTML += `
             <div class="cart-item">
                 <div class="item-info">
@@ -227,28 +184,42 @@
         document.getElementById('total_amount').innerText = sub + ship;
     }
 
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        const countEl = document.getElementById('cart-count');
+        if(countEl) countEl.innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
+    }
+
     function submitOrder() {
         const name = document.getElementById('cust_name').value;
         const phone = document.getElementById('cust_phone').value;
         const address = document.getElementById('cust_address').value;
         const city = document.getElementById('cust_city').options[document.getElementById('cust_city').selectedIndex].text;
         const total = document.getElementById('total_amount').innerText;
+        const couponInput = document.getElementById('coupon_code').value.trim();
+        
         if(!name || !phone || !address) return alert("من فضلك أكمل البيانات");
+        
+        if (couponInput !== "" && !VALID_COUPONS.includes(couponInput.toUpperCase())) {
+            alert("كود الخصم غير صحيح، سيتم إزالته لتتمكن من إتمام الطلب.");
+            document.getElementById('coupon_code').value = ""; 
+            return; 
+        }
         
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let orderString = Object.keys(cart).map(k => `${k} (${typeof cart[k] === 'object' ? cart[k].qty : cart[k]})`).join(' | ');
 
-        const finalUrl = `${SHEET_URL}?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&city=${encodeURIComponent(city)}&address=${encodeURIComponent(address)}&order=${encodeURIComponent(orderString)}&total=${encodeURIComponent(total + " ج.م")}`;
+        const finalUrl = `${SHEET_URL}?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&city=${encodeURIComponent(city)}&address=${encodeURIComponent(address)}&order=${encodeURIComponent(orderString)}&total=${encodeURIComponent(total + " ج.م")}&coupon=${encodeURIComponent(couponInput)}`;
         
         document.getElementById('submit-btn').innerText = "جاري الحفظ...";
         fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
         .then(() => { 
             localStorage.removeItem('leilCart'); 
-            window.location.href = "thankyou.html"; // التحويل لصفحة شكراً
+            window.location.href = "thankyou.html";
         })
         .catch(() => { 
             localStorage.removeItem('leilCart'); 
-            window.location.href = "thankyou.html"; // التحويل لصفحة شكراً
+            window.location.href = "thankyou.html";
         });
     }
     window.onload = renderCart;
