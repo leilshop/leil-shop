@@ -57,6 +57,27 @@
         .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
         .checkout-btn:hover { background: #7a0c23; }
         @media (max-width: 600px) { #lipBalmToggle .dropdown-content { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; } }
+        /* تنسيق القائمة المنسدلة عشان تتماشى مع الموقع الغامق */
+#cust_city {
+    background-color: #3d0000 !important; /* لون الخلفية الغامق اللي عندك */
+    color: white !important; /* لون الخط أبيض */
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    padding: 12px;
+    border-radius: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    /* السهم الأبيض */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+}
+
+#cust_city option {
+    background-color: #3d0000 !important;
+    color: white !important;
+}
     </style>
 </head>
 <body>
