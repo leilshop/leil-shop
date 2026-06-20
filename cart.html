@@ -57,28 +57,25 @@
         .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
         .checkout-btn:hover { background: #7a0c23; }
         @media (max-width: 600px) { #lipBalmToggle .dropdown-content { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; } }
+/* عدل الكود ده مكان اللي عندك */
 #cust_city {
-    background-color: #3d0000 !important; /* لون الخلفية الغامق */
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    width: 100%;
     padding: 12px;
+    background: rgba(255, 255, 255, 0.05) !important; /* نفس خلفية الخانات التانية */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 5px;
+    color: white !important;
+    text-align: right;
+    outline: none;
     cursor: pointer;
     /* إزالة الشكل الافتراضي للمتصفح */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    /* سهم مخصص */
+    /* السهم المخصص */
     background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
     background-repeat: no-repeat;
     background-position: left 10px center;
-}
-
-/* تنسيق الـ Options (بيشتغل على أجهزة الموبايل وبعض المتصفحات) */
-#cust_city option {
-    background-color: #3d0000 !important;
-    color: white !important;
-    padding: 10px;
 }
     </style>
 </head>
