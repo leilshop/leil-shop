@@ -108,7 +108,14 @@
             gap: 30px; 
         }
 
-        .card { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; overflow: hidden; }
+.card { 
+    background: rgba(255, 255, 255, 0.03); /* شفافية بسيطة جداً */
+    backdrop-filter: blur(10px); /* ده سر الفخامة */
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 15px; /* كورة بسيطة في الحواف بتخلي التصميم "ناعم" */
+    transition: 0.4s; 
+    overflow: hidden; 
+}
         .card:hover { transform: translateY(-5px); border-color: var(--main); }
         .card-img { width: 100%; height: 380px; object-fit: cover; background: #222; transition: transform 0.5s ease; }
         .card:hover .card-img { transform: scale(1.05); }
