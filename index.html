@@ -109,14 +109,27 @@
         }
 
 .card { 
-    background: rgba(255, 255, 255, 0.03); /* شفافية بسيطة جداً */
-    backdrop-filter: blur(10px); /* ده سر الفخامة */
+    /* إضاءة خفيفة (لمعة) وزاوية إضاءة */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); 
+    
+    /* البلور اللي طلبته */
+    backdrop-filter: blur(15px); 
+    
+    /* حدود شفافة وإضاءة خفيفة عليها */
     border: 1px solid rgba(255, 255, 255, 0.1); 
-    border-radius: 15px; /* كورة بسيطة في الحواف بتخلي التصميم "ناعم" */
+    border-radius: 15px; 
+    
+    /* الظل اللي بيخلي الكارت "يتحس" ويبان أفتح من الخلفية */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
+    
     transition: 0.4s; 
     overflow: hidden; 
 }
-        .card:hover { transform: translateY(-5px); border-color: var(--main); }
+.card:hover { 
+    transform: translateY(-5px); 
+    border: 1px solid rgba(255, 255, 255, 0.3); /* البوردر بيفتح أكتر لما تقف عليه */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)); /* بيزيد لمعان */
+}
         .card-img { width: 100%; height: 380px; object-fit: cover; background: #222; transition: transform 0.5s ease; }
         .card:hover .card-img { transform: scale(1.05); }
         .card-info { padding: 25px; text-align: center; }
