@@ -139,17 +139,32 @@
     }
 
     function initAdd() { changeQty(1); }
-    function changeQty(amount) {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const itemKey = currentProductName + " - " + currentSelectedSize;
-        let safeImg = document.querySelector('.swiper-slide-active img')?.getAttribute('src') || document.querySelector('.image-section img')?.getAttribute('src') || "";
-        if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
-        if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
-        cart[itemKey].qty += amount;
-        if (cart[itemKey].qty <= 0) delete cart[itemKey];
-        localStorage.setItem('leilCart', JSON.stringify(cart));
-        checkCartState();
+function changeQty(amount) {
+    let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+    // المفتاح هنا بقى بياخد اسم المنتج + الحجم عشان يبقى فريد لكل قطعة
+    const itemKey = currentProductName + " - " + currentSelectedSize;
+    
+    // صورة المنتج من السلايدر النشط حالياً
+    let activeImg = document.querySelector('.swiper-slide-active img')?.getAttribute('src') || document.querySelector('.image-section img')?.getAttribute('src') || "";
+
+    // لو المنتج مش موجود، بننشئه
+    if (!cart[itemKey]) {
+        cart[itemKey] = { 
+            qty: 0, 
+            price: currentUnitPrice, 
+            img: activeImg, 
+            displayName: currentProductName + " (" + currentSelectedSize + ")" 
+        };
     }
+    
+    cart[itemKey].qty += amount;
+    
+    // لو الكمية وصلت لصفر، بنمسح المنتج ده بس من السلة
+    if (cart[itemKey].qty <= 0) delete cart[itemKey];
+    
+    localStorage.setItem('leilCart', JSON.stringify(cart));
+    checkCartState();
+}
     function updateHeaderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const countEl = document.getElementById('cart-count');
