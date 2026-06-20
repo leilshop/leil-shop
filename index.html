@@ -67,6 +67,17 @@
         100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
     }
 
+  /* كود الأنيميشن - حطه في الـ style جوه header.html */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
     /* باقي كود الهيدر الخاص بيك */
     .leil-header { 
         background: #3d0000 !important; 
@@ -146,7 +157,7 @@
 <div class="sub-title">عروض التوفير</div>
 <div class="line-divider"></div>
 <div class="container">
-    <div class="card">
+    <div class="card reveal">
         <img src="Offer50-Cover.webp" class="card-img" alt="عرض التوفير 1">
         <div class="card-info">
             <h3 class="card-title">عرض التوفير 1</h3>
@@ -158,7 +169,7 @@
             <a href="Offer50.html" class="btn-view">عرض التفاصيل</a>
         </div>
     </div>
-    <div class="card">
+    <div class="card reveal">
         <img src="Offer100-IMG1.webp" class="card-img" alt="عرض التوفير 2">
         <div class="card-info">
             <h3 class="card-title">عرض التوفير 2</h3>
@@ -175,7 +186,7 @@
 <div class="sub-title">زبدة كاكاو</div>
 <div class="line-divider"></div>
 <div class="container">
-    <div class="card">
+    <div class="card reveal">
         <img src="Lip1_5gm.webp" class="card-img" alt="زبدة كاكاو فانيليا">
         <div class="card-info">
             <h3 class="card-title">فانيليا</h3>
@@ -186,7 +197,7 @@
             <a href="Lip-Balm-1.html" class="btn-view">عرض المزيد</a>
         </div>
     </div>
-    <div class="card">
+    <div class="card reveal">
         <img src="Lip2_5gm.webp" class="card-img" alt="زبدة كاكاو فراولة">
         <div class="card-info">
             <h3 class="card-title">فراولة</h3>
@@ -202,7 +213,7 @@
 <div class="sub-title">بادي سبلاش</div>
 <div class="line-divider"></div>
 <div class="container">
-    <div class="card">
+    <div class="card reveal">
         <img src="SPLASH_9703.webp" class="card-img" alt="دم الغزال">
         <div class="card-info">
             <h3 class="card-title">دم الغزال</h3>
@@ -214,7 +225,7 @@
             <a href="splash-d.html" class="btn-view">عرض المزيد</a>
         </div>
     </div>
-    <div class="card">
+    <div class="card reveal">
         <img src="SPLASH_9704.webp" class="card-img" alt="سراب">
         <div class="card-info">
             <h3 class="card-title">سراب</h3>
@@ -226,7 +237,7 @@
             <a href="splash-s.html" class="btn-view">عرض المزيد</a>
         </div>
     </div>
-    <div class="card">
+    <div class="card reveal">
         <img src="ATHER_5ml.webp" class="card-img" alt="أثر">
         <div class="card-info">
             <h3 class="card-title">أثر</h3>
@@ -238,7 +249,7 @@
             <a href="splash-a.html" class="btn-view">عرض المزيد</a>
         </div>
     </div>
-    <div class="card">
+    <div class="card reveal">
         <img src="HELM_5ml.webp" class="card-img" alt="حلم">
         <div class="card-info">
             <h3 class="card-title">حلم</h3>
@@ -255,7 +266,7 @@
 <div class="sub-title">مخمريات</div>
 <div class="line-divider"></div>
 <div class="container" style="padding-bottom: 60px;">
-    <div class="card">
+    <div class="card reveal">
         <img src="FIMG9626WEB.webp" class="card-img" alt="دم الغزال">
         <div class="card-info">
             <h3 class="card-title">دم الغزال</h3>
@@ -267,7 +278,7 @@
             <a href="product-dam.html" class="btn-view">عرض المزيد</a>
         </div>
     </div>
-    <div class="card">
+    <div class="card reveal">
         <img src="FIMG9631WEB.webp" class="card-img" alt="سراب">
         <div class="card-info">
             <h3 class="card-title">سراب</h3>
@@ -307,11 +318,25 @@
         const countEl = document.getElementById('cart-count');
         if(countEl) countEl.innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
     }
-</script>
+  
 <a href="https://wa.me/201037322374" class="whatsapp-float" target="_blank">
     <svg viewBox="0 0 24 24" fill="white" width="35" height="35">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.955c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.549 4.142 1.594 5.945L0 24l6.333-1.666a11.85 11.85 0 005.718 1.457h.005c6.555 0 11.89-5.335 11.894-11.893a11.82 11.82 0 00-3.475-8.411z"/>
     </svg>
 </a>
+
+  <script>
+    // المراقب اللي هيشوف المنتجات لما تظهر
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    });
+
+    // مراقبة كل العناصر اللي واخده كلاس reveal
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
 </body>
 </html>
