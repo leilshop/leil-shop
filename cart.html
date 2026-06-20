@@ -37,6 +37,7 @@
         /* تنسيقات السلة */
         .cart-container { max-width: 800px; margin: 40px auto; padding: 20px; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; border-radius: 5px; }
+        .item-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-left: 15px; border: 1px solid rgba(255,255,255,0.1); } /* تنسيق صورة المنتج */
         .qty-controls { display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
         .qty-btn { background: white; color: black; border: none; width: 30px; height: 30px; cursor: pointer; font-weight: bold; }
         .qty-val { padding: 0 12px; font-weight: 700; }
@@ -47,7 +48,8 @@
         .input-group select option { color: black; background: white; }
         .summary-details { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 5px; }
         .total-line { display: flex; justify-content: space-between; font-size: 24px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px; }
-        .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+        .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .checkout-btn:hover { background: #7a0c23; }
         
         @media (max-width: 600px) {
             #lipBalmToggle .dropdown-content { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; }
@@ -99,6 +101,7 @@
             </select>
         </div>
         <div class="input-group"><label>العنوان بالتفصيل</label><textarea id="cust_address" rows="2" placeholder="المنطقة، الشارع، رقم المنزل..." required></textarea></div>
+        <div class="input-group"><label>كود الخصم</label><input type="text" id="coupon_code" placeholder="أدخل كود الخصم إن وجد"></div>
     </div>
 
     <div class="summary-details">
@@ -141,8 +144,25 @@
             let itemData = cart[key];
             let q = typeof itemData === 'object' ? itemData.qty : itemData;
             let p = typeof itemData === 'object' ? itemData.price : 30;
+            let img = typeof itemData === 'object' && itemData.img ? itemData.img : ''; // سحب الصورة
+            
             sub += p * q;
-            list.innerHTML += `<div class="cart-item"><div><h3>${key}</h3><p>${p} ج.م</p></div><div class="qty-controls"><button class="qty-btn" onclick="editQty('${key}', 1)">+</button><span class="qty-val">${q}</span><button class="qty-btn" onclick="editQty('${key}', -1)">-</button></div></div>`;
+            // ضيفت الـ img tag هنا، ولو مفيش صورة مش هيبوظ الشكل
+            list.innerHTML += `
+            <div class="cart-item">
+                <div style="display: flex; align-items: center;">
+                    <img src="${img}" class="item-img" onerror="this.style.display='none'">
+                    <div>
+                        <h3>${key}</h3>
+                        <p>${p} ج.م</p>
+                    </div>
+                </div>
+                <div class="qty-controls">
+                    <button class="qty-btn" onclick="editQty('${key}', 1)">+</button>
+                    <span class="qty-val">${q}</span>
+                    <button class="qty-btn" onclick="editQty('${key}', -1)">-</button>
+                </div>
+            </div>`;
         });
         document.getElementById('subtotal').innerText = sub;
         updateTotal();
@@ -178,8 +198,14 @@
         
         document.getElementById('submit-btn').innerText = "جاري الحفظ...";
         fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
-        .then(() => { alert("تم تسجيل طلبك بنجاح!"); localStorage.removeItem('leilCart'); window.location.href = "index.html"; })
-        .catch(() => { alert("تم تسجيل الطلب!"); localStorage.removeItem('leilCart'); window.location.href = "index.html"; });
+        .then(() => { 
+            localStorage.removeItem('leilCart'); 
+            window.location.href = "thankyou.html"; // التحويل لصفحة شكراً
+        })
+        .catch(() => { 
+            localStorage.removeItem('leilCart'); 
+            window.location.href = "thankyou.html"; // التحويل لصفحة شكراً
+        });
     }
     window.onload = renderCart;
 </script>
