@@ -21,19 +21,9 @@
         nav { display: flex; gap: 25px; flex-grow: 1; justify-content: center; align-items: center; }
         nav a { text-decoration: none; font-size: 14px; opacity: 0.8; transition: 0.3s; white-space: nowrap; color: white; display: inline-flex; align-items: center; }
         nav a:hover, .dropdown.active > a { opacity: 1; color: white !important; }
-        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-        .dropdown-content { display: none; position: absolute; background-color: var(--bg); min-width: 160px; box-shadow: 0px 10px 20px rgba(0,0,0,0.6); z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.1); top: 100%; right: 0; border-radius: 4px; overflow: hidden; backdrop-filter: blur(15px); }
-        .dropdown.active .dropdown-content { display: block; animation: fadeInSlide 0.3s ease forwards; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; text-align: right; transition: 0.3s; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .dropdown-content a:last-child { border-bottom: none; }
-        .dropdown-content a:hover { background-color: var(--main); padding-right: 20px; }
-        @keyframes fadeInSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .dropdown > a::after { content: ' ▾'; font-size: 10px; margin-right: 4px; display: inline-block; opacity: 0.5; }
         
         .cart-container { max-width: 800px; margin: 40px auto; padding: 20px; }
-.cart-container h1 { 
-    margin-bottom: 60px; /* زود الرقم ده كل ما تحب تبعد الكلمة عن المنتجات */
-}
+        .cart-container h1 { margin-bottom: 60px; }
         
         .cart-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 15px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; border-radius: 8px; }
         .item-info { display: flex; align-items: center; overflow: hidden; }
@@ -61,7 +51,7 @@
         .total-line { display: grid; grid-template-columns: 1fr 100px; font-size: 24px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px; }
         .total-line span:last-child { text-align: center; }
         
-        .discount-row { display: none; grid-template-columns: 1fr 100px; color: #00ff41 !important; font-weight: bold; margin-bottom: 10px; text-align: right; }
+        .discount-row { display: none; grid-template-columns: 1fr 100px; color: #00ff41 !important; font-weight: bold; margin-bottom: 10px; text-align: right; align-items: center; }
         .discount-row span:last-child { text-align: center; }
         
         .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
@@ -125,9 +115,9 @@
 
     <div class="summary-details">
         <div class="summary-line"><span>المشتريات:</span> <span id="subtotal">0</span></div>
-<div id="discount-row" class="discount-row">
-    <span>الخصم (10%):</span> <span style="direction: ltr; display: inline-block;">-<span id="discount-amount">0</span></span>
-</div>
+        <div id="discount-row" class="discount-row">
+            <span>الخصم (10%):</span> <span style="direction: ltr; display: inline-block;">-<span id="discount-amount">0</span></span>
+        </div>
         <div class="summary-line"><span>التوصيل:</span> <span id="ship_cost">30</span></div>
         <div class="total-line"><span>الإجمالي:</span> <span><span id="total_amount">0</span></span></div>
         <button id="submit-btn" onclick="submitOrder()" class="checkout-btn">تأكيد الطلب</button>
@@ -142,21 +132,7 @@
         .then(response => response.text())
         .then(data => {
             document.getElementById('header-container').innerHTML = data;
-            function setupDropdown(id) {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        document.querySelectorAll('.dropdown').forEach(d => { if(d !== el) d.classList.remove('active'); });
-                        this.classList.toggle('active');
-                    });
-                }
-            }
-            setupDropdown('makhmariatToggle'); setupDropdown('splashToggle'); setupDropdown('lipBalmToggle');
-            updateCartCount();
         });
-
-    document.addEventListener('click', function() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); });
 
     function applyCoupon() {
         const code = document.getElementById('coupon_code').value.trim().toUpperCase();
@@ -188,36 +164,23 @@
         updateTotal();
     }
 
-function renderCart() {
+    function renderCart() {
         let cartData = localStorage.getItem('leilCart');
-        console.log("Current Cart Data in LocalStorage:", cartData); // دي هتطلعلك الحقيقة في الـ Console
-
         if (!cartData) {
-            console.warn("السلة فارغة في الـ LocalStorage!");
             document.getElementById('items-list').innerHTML = "<p style='text-align:center;'>السلة فارغة حالياً</p>";
             document.getElementById('subtotal').innerText = "0";
             updateTotal();
             return;
         }
-
-        let cart;
-        try {
-            cart = JSON.parse(cartData);
-        } catch (e) {
-            console.error("خطأ في قراءة بيانات السلة:", e);
-            return;
-        }
-
+        let cart = JSON.parse(cartData);
         const list = document.getElementById('items-list');
         list.innerHTML = '';
         let sub = 0;
-        
         Object.keys(cart).forEach(key => {
             let itemData = cart[key];
             let q = typeof itemData === 'object' ? itemData.qty : itemData;
             let p = typeof itemData === 'object' ? itemData.price : 30;
             let img = typeof itemData === 'object' && itemData.img ? itemData.img : '';
-            
             sub += p * q;
             list.innerHTML += `
             <div class="cart-item">
@@ -247,22 +210,20 @@ function renderCart() {
         renderCart();
     }
 
-function updateTotal() {
+    function updateTotal() {
         const sub = parseInt(document.getElementById('subtotal').innerText) || 0;
         const ship = parseInt(document.getElementById('cust_city').value) || 0;
         const discountRow = document.getElementById('discount-row');
-        const couponInput = document.getElementById('coupon_code'); // جبنا خانة الكود عشان نتحكم فيها
+        const couponInput = document.getElementById('coupon_code');
         let discount = 0;
 
-        // لو الكود متطبق والمبلغ نزل عن 100
         if (isCouponApplied && sub < 100) {
             isCouponApplied = false;
             discountRow.style.display = 'none';
-            couponInput.value = ""; // مسح الكود من الخانة
+            couponInput.value = "";
             alert("تم إلغاء الخصم لأن إجمالي المشتريات أصبح أقل من 100 جنيه.");
         }
 
-        // حساب الخصم
         if (isCouponApplied && sub >= 100) {
             discount = Math.floor(sub * 0.10);
             discountRow.style.display = 'grid';
@@ -273,13 +234,6 @@ function updateTotal() {
 
         document.getElementById('ship_cost').innerText = ship;
         document.getElementById('total_amount').innerText = (sub - discount) + ship;
-    }
-    }
-
-    function updateCartCount() {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const countEl = document.getElementById('cart-count');
-        if(countEl) countEl.innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
     }
 
     function submitOrder() {
@@ -293,7 +247,7 @@ function updateTotal() {
         if(!name || !phone || !address) return alert("من فضلك أكمل البيانات");
         
         if (couponInput !== "" && couponInput.toUpperCase() !== "LEIL2026") {
-            alert("كود الخصم غير صحيح.");
+            alert("كود الخصم غير صحيح");
             document.getElementById('coupon_code').value = ""; 
             return; 
         }
