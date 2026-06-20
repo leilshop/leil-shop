@@ -39,6 +39,17 @@
         .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
         .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; text-align: right; outline: none; }
         
+        /* تنسيق الـ select ليطابق باقي الخانات */
+        #cust_city {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: left 10px center;
+        }
+
         .coupon-box { display: flex; gap: 10px; margin-top: 5px; }
         .coupon-btn { padding: 0 15px; background: var(--main); border: none; color: white; border-radius: 5px; cursor: pointer; }
         .coupon-success { border: 2px solid #28a745 !important; }
@@ -57,26 +68,6 @@
         .checkout-btn { display: block; width: 100%; padding: 18px; background: var(--main); color: white; font-weight: 700; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
         .checkout-btn:hover { background: #7a0c23; }
         @media (max-width: 600px) { #lipBalmToggle .dropdown-content { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; } }
-/* عدل الكود ده مكان اللي عندك */
-#cust_city {
-    width: 100%;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.05) !important; /* نفس خلفية الخانات التانية */
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    border-radius: 5px;
-    color: white !important;
-    text-align: right;
-    outline: none;
-    cursor: pointer;
-    /* إزالة الشكل الافتراضي للمتصفح */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    /* السهم المخصص */
-    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: left 10px center;
-}
     </style>
 </head>
 <body>
