@@ -19,16 +19,18 @@
     <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-      .whatsapp-float {
+<style>
+    /* تنسيق زرار الواتساب */
+    .whatsapp-float {
         position: fixed;
         width: 60px;
         height: 60px;
         bottom: 20px;
         right: 20px;
-        background-color: #25d366;
-        color: #FFF;
-        border-radius: 50px;
+        /* تثبيت اللون حتى بعد الزيارة */
+        background-color: #25d366 !important; 
+        color: #FFF !important;
+        border-radius: 50px !important;
         text-align: center;
         font-size: 30px;
         box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
@@ -36,14 +38,42 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        text-decoration: none;
+        text-decoration: none !important;
         transition: transform 0.3s ease;
+        /* إضافة الأنيميشن */
+        animation: pulse-animation 2s infinite;
     }
+
+    /* عشان نمنع تغير اللون بعد الزيارة */
+    .whatsapp-float:visited {
+        background-color: #25d366 !important;
+    }
+
     .whatsapp-float:hover {
         transform: scale(1.1);
-        background-color: #128c7e;
+        background-color: #128c7e !important;
     }
-      
+
+    /* كود حركة النبض */
+    @keyframes pulse-animation {
+        0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+        70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+
+    /* باقي كود الهيدر الخاص بيك */
+    .leil-header { 
+        background: #3d0000 !important; 
+        padding: 10px 4% !important; 
+        display: flex !important; 
+        justify-content: space-between !important; 
+        align-items: center !important; 
+        width: 100% !important; 
+        position: sticky !important; 
+        top: 0 !important; 
+        z-index: 9999 !important; 
+    }
+   
         :root { --main: #600a1c; --bg-site: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         
