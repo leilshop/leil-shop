@@ -224,6 +224,7 @@
             isCouponApplied = false;
             inputField.classList.remove('coupon-success');
             inputField.classList.add('coupon-error');
+            inputField.value = ""; // تم إضافة مسح الخانة أوتوماتيك
             showLeilAlert("كود الخصم غير صحيح");
             updateTotal();
             return;
@@ -233,6 +234,7 @@
             isCouponApplied = false;
             inputField.classList.remove('coupon-success');
             inputField.classList.add('coupon-error');
+            inputField.value = ""; // تم إضافة مسح الخانة أوتوماتيك
             showLeilAlert("عذراً، الحد الأدنى لتطبيق الخصم هو 100 جنيه.");
             updateTotal();
             return;
