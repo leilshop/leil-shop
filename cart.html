@@ -225,23 +225,33 @@
         renderCart();
     }
 
-    function updateTotal() {
+function updateTotal() {
         const sub = parseInt(document.getElementById('subtotal').innerText) || 0;
         const ship = parseInt(document.getElementById('cust_city').value) || 0;
         const discountRow = document.getElementById('discount-row');
+        const couponInput = document.getElementById('coupon_code'); // جبنا خانة الكود عشان نتحكم فيها
         let discount = 0;
 
+        // لو الكود متطبق والمبلغ نزل عن 100
+        if (isCouponApplied && sub < 100) {
+            isCouponApplied = false;
+            discountRow.style.display = 'none';
+            couponInput.value = ""; // مسح الكود من الخانة
+            alert("تم إلغاء الخصم لأن إجمالي المشتريات أصبح أقل من 100 جنيه.");
+        }
+
+        // حساب الخصم
         if (isCouponApplied && sub >= 100) {
             discount = Math.floor(sub * 0.10);
             discountRow.style.display = 'grid';
             document.getElementById('discount-amount').innerText = discount;
         } else {
-            isCouponApplied = false;
             discountRow.style.display = 'none';
         }
 
         document.getElementById('ship_cost').innerText = ship;
         document.getElementById('total_amount').innerText = (sub - discount) + ship;
+    }
     }
 
     function updateCartCount() {
