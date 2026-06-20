@@ -179,26 +179,22 @@
         oldPriceEl.innerText = oldPrice + " ج.م";
     }
 
-    function checkCartState() {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const itemKey = currentProductName + " - " + currentSelectedSize;
-        const addBtn = document.getElementById('add-btn');
-        const qtyGroup = document.getElementById('qty-group');
-        const currentQtyDisplay = document.getElementById('current-qty');
-        const q = cart[itemKey] ? (typeof cart[itemKey] === 'object' ? cart[itemKey].qty : cart[itemKey]) : 0;
-
-        if (q > 0) {
-            addBtn.style.display = "none";
-            qtyGroup.style.display = "grid";
-            currentQtyDisplay.innerText = q;
-            updateDisplayPrice(currentUnitPrice * q, currentOldPrice * q);
-        } else {
-            addBtn.style.display = "block";
-            qtyGroup.style.display = "none";
-            updateDisplayPrice(currentUnitPrice, currentOldPrice);
-        }
-        updateHeaderCart();
-    }
+function checkCartState() {
+    let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+    const itemKey = currentProductName + " - " + currentSelectedSize;
+    const addBtn = document.getElementById('add-btn');
+    const qtyGroup = document.getElementById('qty-group');
+    const q = cart[itemKey] ? (typeof cart[itemKey] === 'object' ? cart[itemKey].qty : cart[itemKey]) : 0;
+    
+    if (q > 0) { addBtn.style.display = "none"; qtyGroup.style.display = "grid"; document.getElementById('current-qty').innerText = q; }
+    else { addBtn.style.display = "block"; qtyGroup.style.display = "none"; }
+    
+    document.getElementById('main-price').innerText = (currentUnitPrice * (q || 1)) + " ج.م";
+    // السطر ده هو اللي هيحدث السعر المشطوب ويفك التعليقة
+    document.getElementById('old-price').innerText = (currentOldPrice * (q || 1)) + " ج.م";
+    
+    updateHeaderCart();
+}
 
     function initAdd() { changeQty(1); }
 
