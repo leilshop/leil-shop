@@ -42,7 +42,15 @@
         /* تصميم الـ Custom Select */
         .custom-select-wrapper { position: relative; width: 100%; cursor: pointer; }
         .select-selected { background: rgba(255, 255, 255, 0.05); padding: 12px 30px 12px 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; color: white; text-align: right; position: relative; }
-        .select-selected:after { position: absolute; content: "▼"; right: 10px; top: 12px; font-size: 10px; opacity: 0.7; }
+        .select-selected:after { 
+    position: absolute; 
+    content: "▼"; 
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); /* دي الخدعة اللي بتسنتر السهم في نص الارتفاع بالظبط */
+    font-size: 10px; 
+    opacity: 0.7; 
+}
         .select-items { display: none; position: absolute; background-color: #3d0000; width: 100%; z-index: 99; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; max-height: 200px; overflow-y: auto; margin-top: 5px; }
         .select-items div { color: white; padding: 12px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .select-items div:hover { background-color: #600a1c; }
