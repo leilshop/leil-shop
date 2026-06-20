@@ -15,7 +15,6 @@
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         body { background: var(--bg); overflow-x: hidden; }
 
-        /* تنسيق المنتج فقط */
         .product-wrapper { max-width: 1200px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 40px; padding: 20px; }
         .image-section { flex: 1; min-width: 300px; max-width: 550px; width: 100%; }
         .swiper { width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); }
@@ -48,24 +47,12 @@
         .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
 
-        @media (max-width: 480px) { 
-            .product-wrapper { flex-direction: column; }
-        }
+        @media (max-width: 480px) { .product-wrapper { flex-direction: column; } }
     </style>
 </head>
 <body>
 
 <div id="header-container"></div>
-<script>
-    fetch('header.html')
-        .then(r => r.text())
-        .then(data => {
-            document.getElementById('header-container').innerHTML = data;
-            // تحديث عدد السلة بعد جلب الهيدر
-            let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-            document.getElementById('cart-count').innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
-        });
-</script>
 
 <div class="product-wrapper">
     <div class="image-section">
@@ -86,10 +73,11 @@
         <span class="slogan">عطر من الخيال</span>
         <span class="label">الحجم</span>
         <div class="size-selector">
-<button class="size-btn active-size" data-price="25" data-old="30" onclick="selectSize(this, '3 جرام', 0)">3 جرام</button>
-<button class="size-btn" data-price="60" data-old="70" onclick="selectSize(this, '10 جرام', 0)">10 جرام</button>
-<button class="pinky-btn" data-price="70" data-old="80" onclick="selectSize(this, '10 جرام Pinky Edition', 4)">10 جرام Pinky Edition</button>
-<button class="size-btn" data-price="125" data-old="135" onclick="selectSize(this, '35 جرام', 0)">35 جرام</button>
+            <button class="size-btn active-size" data-price="25" data-old="30" onclick="selectSize(this, '3 جرام', 0)">3 جرام</button>
+            <button class="size-btn out-of-stock" data-price="50" data-old="50" onclick="selectSize(this, '5 جرام', 0)">5 جرام</button>
+            <button class="size-btn" data-price="60" data-old="70" onclick="selectSize(this, '10 جرام', 0)">10 جرام</button>
+            <button class="pinky-btn" data-price="70" data-old="80" onclick="selectSize(this, '10 جرام Pinky Edition', 4)">10 جرام Pinky Edition</button>
+            <button class="size-btn" data-price="125" data-old="175" onclick="selectSize(this, '35 جرام', 0)">35 جرام</button>
         </div>
         <span class="label">السعر الحالي</span>
         <div class="price-container">
@@ -106,12 +94,7 @@
         </div>
         <div class="product-desc">
             <h3>وصف المنتج:</h3>
-            <p>مزيج ساحر يجمع بين طهارة المسك الأبيض وعبير الفراولة المخملي.
-            صُممت هذه المخمرية لنظافة وانتعاش يدوم طويلاً.
-            ريحة "بناتى" رقيقة، مبهجة، وتخطف القلب من أول لمسة.
-            الإحساس: نظافة، أنوثة طاغية، وحيوية.
-            الثبات: عالٍ جداً (الجسم و الشعر).
-            لماذا ليل؟ تترك جسمك ناعماً كالحرير برائحة منعشة.</p>
+            <p>مزيج ساحر يجمع بين طهارة المسك الأبيض وعبير الفراولة المخملي. صُممت هذه المخمرية لنظافة وانتعاش يدوم طويلاً. ريحة "بناتى" رقيقة، مبهجة، وتخطف القلب من أول لمسة.</p>
         </div>
     </div>
 </div>
@@ -120,21 +103,8 @@
 <script>
     fetch('header.html').then(r => r.text()).then(data => {
         document.getElementById('header-container').innerHTML = data;
-        function setupDropdown(id) {
-            const el = document.getElementById(id);
-            if (el) {
-                el.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    document.querySelectorAll('.dropdown').forEach(d => { if(d !== el) d.classList.remove('active'); });
-                    this.classList.toggle('active');
-                });
-            }
-        }
-        setupDropdown('makhmariatToggle'); setupDropdown('splashToggle'); setupDropdown('lipBalmToggle');
         if(typeof updateHeaderCart === 'function') updateHeaderCart();
     });
-
-    document.addEventListener('click', () => document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')));
 
     const swiper = new Swiper('.swiper', { loop: false, speed: 400, pagination: { el: '.swiper-pagination', clickable: true } });
 
@@ -143,60 +113,43 @@
     let currentUnitPrice = 25;
     let currentOldPrice = 30;
 
-function selectSize(btn, sizeName, imgIndex) {
-    currentSelectedSize = sizeName;
-    document.querySelectorAll('.size-btn, .pinky-btn').forEach(b => b.classList.remove('active-size'));
-    btn.classList.add('active-size');
-    currentUnitPrice = parseInt(btn.getAttribute('data-price'));
-    currentOldPrice = parseInt(btn.getAttribute('data-old'));
-    
-    // السطر ده اللي بيحرك السلايدر
-    if (typeof imgIndex !== 'undefined') {
-        swiper.slideTo(imgIndex, 400, true);
+    function selectSize(btn, sizeName, imgIndex) {
+        currentSelectedSize = sizeName;
+        document.querySelectorAll('.size-btn, .pinky-btn').forEach(b => b.classList.remove('active-size'));
+        btn.classList.add('active-size');
+        currentUnitPrice = parseInt(btn.getAttribute('data-price'));
+        currentOldPrice = parseInt(btn.getAttribute('data-old'));
+        if (typeof imgIndex !== 'undefined') swiper.slideTo(imgIndex, 400, true);
+        const addBtn = document.getElementById('add-btn');
+        if (sizeName === "5 جرام") { addBtn.innerText = "المنتج غير متاح"; addBtn.disabled = true; } 
+        else { addBtn.innerText = "أضف إلى السلة"; addBtn.disabled = false; }
+        checkCartState();
     }
-    
-    const addBtn = document.getElementById('add-btn');
-    if (sizeName === "5 جرام") { addBtn.innerText = "المنتج غير متاح"; addBtn.disabled = true; } 
-    else { addBtn.innerText = "أضف إلى السلة"; addBtn.disabled = false; }
-    checkCartState();
-}
 
     function checkCartState() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const itemKey = currentProductName + " - " + currentSelectedSize;
-        const addBtn = document.getElementById('add-btn');
-        const qtyGroup = document.getElementById('qty-group');
         const q = cart[itemKey] ? (typeof cart[itemKey] === 'object' ? cart[itemKey].qty : cart[itemKey]) : 0;
-        
-        if (q > 0) { addBtn.style.display = "none"; qtyGroup.style.display = "grid"; document.getElementById('current-qty').innerText = q; }
-        else { addBtn.style.display = "block"; qtyGroup.style.display = "none"; }
-        
+        document.getElementById('add-btn').style.display = q > 0 ? "none" : "block";
+        document.getElementById('qty-group').style.display = q > 0 ? "grid" : "none";
+        if(q > 0) document.getElementById('current-qty').innerText = q;
         document.getElementById('main-price').innerText = (currentUnitPrice * (q || 1)) + " ج.م";
+        document.getElementById('old-price').innerText = (currentOldPrice * (q || 1)) + " ج.م";
         updateHeaderCart();
     }
 
     function initAdd() { changeQty(1); }
-function changeQty(amount) {
-    let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-    const itemKey = currentProductName + " - " + currentSelectedSize;
-    
-    // الحل السحري: الكود ده بيسحب الصورة المعروضة في الصفحة أوتوماتيك
-    let safeImg = "";
-    let activeImg = document.querySelector('.swiper-slide-active img') || document.querySelector('.image-section img');
-    if (activeImg) safeImg = activeImg.getAttribute('src');
-
-    // تسجيل البيانات في السلة
-    if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
-    if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
-    
-    cart[itemKey].qty += amount;
-    
-    if (cart[itemKey].qty <= 0) delete cart[itemKey];
-    
-    localStorage.setItem('leilCart', JSON.stringify(cart));
-    checkCartState();
-}
-    
+    function changeQty(amount) {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        const itemKey = currentProductName + " - " + currentSelectedSize;
+        let safeImg = document.querySelector('.swiper-slide-active img')?.getAttribute('src') || document.querySelector('.image-section img')?.getAttribute('src') || "";
+        if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
+        if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
+        cart[itemKey].qty += amount;
+        if (cart[itemKey].qty <= 0) delete cart[itemKey];
+        localStorage.setItem('leilCart', JSON.stringify(cart));
+        checkCartState();
+    }
     function updateHeaderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const countEl = document.getElementById('cart-count');
