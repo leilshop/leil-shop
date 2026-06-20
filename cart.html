@@ -40,8 +40,23 @@
         .item-text h3 { font-size: 15px; line-height: 1.4; word-wrap: break-word; }
         .item-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
         .qty-controls { display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; flex-shrink: 0; }
-        .qty-btn { background: white; color: black; border: none; width: 23px; height: 23px; cursor: pointer; font-weight: bold; font-size: 14px; }
-        .qty-val { padding: 0 10px; font-weight: 700; min-width: 25px; text-align: center; font-size: 14px; }
+.qty-btn { 
+            background: white; 
+            color: black; 
+            border: none; 
+            width: 27px;  /* هنا التعديل لـ 27px */
+            height: 27px; /* هنا التعديل لـ 27px */
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 16px; /* عدلت الخط لـ 16 عشان يتناسب مع الـ 27 */
+        }
+        .qty-val { 
+            padding: 0 10px; 
+            font-weight: 700; 
+            min-width: 27px; /* خليت المينيموم ويدث نفس حجم الزرار للتناسق */
+            text-align: center; 
+            font-size: 14px; 
+        }
         .checkout-form { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin-top: 30px; }
         .input-group { margin-bottom: 15px; text-align: right; }
         .input-group label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
