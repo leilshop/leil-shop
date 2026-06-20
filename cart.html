@@ -198,7 +198,7 @@
     });
 
     function showLeilAlert(msg) {
-        document.getElementById('alert-msg').innerText = msg;
+        document.getElementById('alert-msg').innerHTML = msg;
         document.getElementById('leil-alert').style.display = 'block';
     }
 
@@ -235,7 +235,7 @@
             inputField.classList.remove('coupon-success');
             inputField.classList.add('coupon-error');
             inputField.value = ""; 
-            showLeilAlert("عذراً، الحد الأدنى لتطبيق الخصم هو 100 جنيه.");
+            showLeilAlert("عذراً، الحد الأدنى لتطبيق<br>الخصم هو 100 جنيه.");
             updateTotal();
             return;
         }
@@ -304,7 +304,7 @@
             isCouponApplied = false;
             discountRow.style.display = 'none';
             couponInput.value = "";
-            showLeilAlert("تم إلغاء الخصم لأن إجمالي المشتريات أصبح أقل من 100 جنيه.");
+            showLeilAlert("تم إلغاء الخصم لأن إجمالي المشتريات<br>أصبح أقل من 100 جنيه.");
         }
 
         if (isCouponApplied && sub >= 100) {
