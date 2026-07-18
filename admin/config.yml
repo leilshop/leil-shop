@@ -1,11 +1,11 @@
 backend:
   name: git-gateway
-  branch: main # أو master لو ده اسم الفرع بتاعك
+  branch: main
 
 site_url: https://leil.shop
 display_url: https://leil.shop
 
-media_folder: "images" # الفولدر اللي هتترفع فيه صور المنتجات
+media_folder: "images"
 public_folder: "/images"
 
 collections:
@@ -14,7 +14,7 @@ collections:
     files:
       - label: "بيانات المنتجات"
         name: "products"
-        file: "data.json" # ده الملف اللي هيتخزن فيه الأسعار والكميات
+        file: "data.json"
         fields:
           - label: "قائمة المنتجات"
             name: "items"
