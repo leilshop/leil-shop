@@ -4,6 +4,7 @@ backend:
   branch: main
   proxy_url: https://decap-proxy.herokuapp.com
   client_id: Ov23liuoy1BqYWupjRjl
+  client_secret: [حط الـ Client Secret اللي طلعته هنا]
 
 site_url: "https://leil.shop"
 display_url: "https://leil.shop"
