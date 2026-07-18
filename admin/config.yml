@@ -2,6 +2,8 @@ backend:
   name: github
   repo: leilshop/leil-shop
   branch: main
+  base_url: https://api.github.com
+  auth_endpoint: oauth/authorize
 
 site_url: "https://leil.shop"
 display_url: "https://leil.shop"
