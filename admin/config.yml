@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: your-username/your-repo-name # غير دول لاسم حسابك واسم المستودع على جيت هاب
   branch: main
 
 site_url: https://leil.shop
