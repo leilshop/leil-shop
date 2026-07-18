@@ -2,8 +2,7 @@ backend:
   name: github
   repo: leilshop/leil-shop
   branch: main
-  base_url: https://api.github.com
-  auth_endpoint: oauth/authorize
+  proxy_url: https://decap-proxy.herokuapp.com
 
 site_url: "https://leil.shop"
 display_url: "https://leil.shop"
