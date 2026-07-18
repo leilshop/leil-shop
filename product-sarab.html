@@ -96,15 +96,15 @@
 
         <span class="label">الحجم</span>
         <div class="size-selector">
-            <button class="size-btn active-size" data-price="25" data-old="30" onclick="selectSize(this, '3 جرام')">3 جرام</button>
+            <button class="size-btn active-size" data-price="30" data-old="35" onclick="selectSize(this, '3 جرام')">3 جرام</button>
             <button class="size-btn" data-price="60" data-old="70" onclick="selectSize(this, '10 جرام')">10 جرام</button>
-            <button class="size-btn" data-price="125" data-old="175" onclick="selectSize(this, '35 جرام')">35 جرام</button>
+            <button class="size-btn" data-price="135" data-old="150" onclick="selectSize(this, '35 جرام')">35 جرام</button>
         </div>
 
         <span class="label">السعر الحالي</span>
         <div class="price-container">
-            <span class="price-tag" id="main-price">25 ج.م</span>
-            <span class="old-price-tag" id="old-price">30 ج.م</span>
+            <span class="price-tag" id="main-price">30 ج.م</span>
+            <span class="old-price-tag" id="old-price">35 ج.م</span>
         </div>
 
         <div class="cart-controls">
@@ -152,8 +152,8 @@
 
     let currentProductName = "مخمرية سراب";
     let currentSelectedSize = "3 جرام";
-    let currentUnitPrice = 25;
-    let currentOldPrice = 30;
+    let currentUnitPrice = 30;
+    let currentOldPrice = 35;
 
     function selectSize(btn, sizeName, imgIndex) {
         currentSelectedSize = sizeName;
