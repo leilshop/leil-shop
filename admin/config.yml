@@ -2,7 +2,6 @@ backend:
   name: github
   repo: leilshop/leil-shop
   branch: main
-  auth_type: "pkce"
 
 site_url: "https://leil.shop"
 display_url: "https://leil.shop"
