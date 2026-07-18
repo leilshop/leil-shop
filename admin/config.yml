@@ -1,6 +1,9 @@
 backend:
   name: git-gateway
-  branch: main # لو الفرع الرئيسي للمشروع اسمه master، غير الكلمة دي لـ master
+  branch: main # أو master لو ده اسم الفرع بتاعك
+
+site_url: https://leil.shop
+display_url: https://leil.shop
 
 media_folder: "images" # الفولدر اللي هتترفع فيه صور المنتجات
 public_folder: "/images"
