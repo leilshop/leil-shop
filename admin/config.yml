@@ -3,6 +3,7 @@ backend:
   repo: leilshop/leil-shop
   branch: main
   proxy_url: https://decap-proxy.herokuapp.com
+  client_id: Ov23liuoy1BqYWupjRjl
 
 site_url: "https://leil.shop"
 display_url: "https://leil.shop"
