@@ -169,7 +169,8 @@
         </div>
 
         <div class="cart-controls">
-            <button class="add-to-cart-btn" id="add-btn" onclick="initAdd()">أضف إلى السلة</button>
+            <!-- تم التعديل هنا: إضافة خاصية disabled وتغيير النص إلى غير متوفر -->
+            <button class="add-to-cart-btn" id="add-btn" onclick="initAdd()" disabled>غير متوفر</button>
             <div class="quantity-btn-group" id="qty-group">
                 <button class="q-btn" onclick="changeQty(1)">+</button>
                 <div class="q-val" id="current-qty">1</div>
@@ -268,6 +269,20 @@
         const qtyGroup = document.getElementById('qty-group');
         const currentQtyDisplay = document.getElementById('current-qty');
 
+        // --- تم التعديل هنا: تثبيت حالة "نفدت الكمية/غير متوفر" بشكل دائم ---
+        const isOutOfStock = true; // يمكنك تغييرها إلى false مستقبلاً لإعادة التوفر
+        
+        if (isOutOfStock) {
+            addBtn.style.display = "block";
+            addBtn.innerText = "غير متوفر";
+            addBtn.disabled = true;
+            qtyGroup.style.display = "none";
+            updateDisplayPrice(currentUnitPrice, currentOldPrice);
+            updateHeaderCart();
+            return; // إنهاء الدالة لمنع تشغيل باقي الكود الخاص بالسلة
+        }
+        // -------------------------------------------------------------------
+
         if (cart[itemKey] && (cart[itemKey].qty || cart[itemKey]) > 0) {
             const itemData = cart[itemKey];
             const qty = typeof itemData === 'object' ? itemData.qty : itemData;
@@ -285,26 +300,27 @@
 
     function initAdd() { changeQty(1); }
 
-function changeQty(amount) {
-    let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-    const itemKey = currentProductName + " - " + currentSelectedSize;
-    
-    // الحل السحري: الكود ده بيسحب الصورة المعروضة في الصفحة أوتوماتيك
-    let safeImg = "";
-    let activeImg = document.querySelector('.swiper-slide-active img') || document.querySelector('.image-section img');
-    if (activeImg) safeImg = activeImg.getAttribute('src');
+    function changeQty(amount) {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        const itemKey = currentProductName + " - " + currentSelectedSize;
+        
+        // الحل السحري: الكود ده بيسحب الصورة المعروضة في الصفحة أوتوماتيك
+        let safeImg = "";
+        let activeImg = document.querySelector('.swiper-slide-active img') || document.querySelector('.image-section img');
+        if (activeImg) safeImg = activeImg.getAttribute('src');
 
-    // تسجيل البيانات في السلة
-    if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
-    if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
+        // تسجيل البيانات في السلة
+        if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
+        if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
+        
+        cart[itemKey].qty += amount;
+        
+        if (cart[itemKey].qty <= 0) delete cart[itemKey];
+        
+        localStorage.setItem('leilCart', JSON.stringify(cart));
+        checkCartState();
+    }
     
-    cart[itemKey].qty += amount;
-    
-    if (cart[itemKey].qty <= 0) delete cart[itemKey];
-    
-    localStorage.setItem('leilCart', JSON.stringify(cart));
-    checkCartState();
-}
     function updateHeaderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let total = Object.values(cart).reduce((a, b) => {
