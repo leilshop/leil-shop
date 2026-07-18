@@ -2,7 +2,7 @@ backend:
   name: github
   repo: leilshop/leil-shop
   branch: main
-  site_domain: lively-malabi-821bd8.netlify.app
+  auth_type: "pkce"
 
 site_url: "https://leil.shop"
 display_url: "https://leil.shop"
