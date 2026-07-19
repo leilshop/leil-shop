@@ -2,19 +2,23 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة الأدمن | ليل</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Leil Admin</title>
+    <!-- استيراد خط كايرو -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --main: #600a1c; --bg-site: #3d0000; }
         body { 
             background: var(--bg-site); 
             color: white; 
-            font-family: 'Tajawal', sans-serif; 
+            font-family: 'Cairo', sans-serif; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
             margin: 0; 
+            overflow: hidden; /* منع الحركة */
+            touch-action: none; /* منع التمطيط في الموبايل */
         }
         .admin-box { 
             background: rgba(255, 255, 255, 0.05); 
@@ -23,19 +27,22 @@
             border-radius: 20px; 
             border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center; 
-            width: 90%; 
-            max-width: 400px; 
+            width: 85%; 
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* مسافة ثابتة بين العناصر */
         }
         input { 
             width: 100%; 
             padding: 15px; 
-            margin: 20px 0; 
             border-radius: 10px; 
             border: none; 
             background: rgba(255, 255, 255, 0.1); 
             color: white; 
             text-align: center; 
-            font-size: 18px;
+            font-size: 16px;
+            box-sizing: border-box; /* عشان الـ width ميبوظش */
         }
         button { 
             width: 100%; 
@@ -47,15 +54,16 @@
             font-weight: 700; 
             cursor: pointer; 
             transition: 0.3s;
+            font-family: 'Cairo', sans-serif;
         }
         button:hover { filter: brightness(1.2); }
-        #message { margin-top: 15px; font-weight: bold; min-height: 24px; }
+        #message { margin-top: 10px; font-weight: bold; min-height: 20px; }
     </style>
 </head>
 <body>
 
     <div class="admin-box">
-        <h2>بوابة ليل السرية</h2>
+        <h2 style="font-family: 'Cairo', sans-serif;">Leil Admin</h2>
         <input type="password" id="pass" placeholder="كلمة المرور">
         <button onclick="login()">دخول</button>
         <div id="message"></div>
@@ -65,7 +73,6 @@
         function login() {
             let pass = document.getElementById('pass').value;
             let msg = document.getElementById('message');
-            
             if(pass === "2026") {
                 msg.style.color = "#25d366";
                 msg.innerText = "جاري الدخول...";
