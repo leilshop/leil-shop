@@ -1,39 +1,23 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <body>
-  <h1>تعديل منتجات ليل</h1>
-  <textarea id="json-editor" style="width: 100%; height: 300px;"></textarea>
-  <button onclick="saveData()">حفظ التعديلات</button>
+    <div style="text-align:center; margin-top:50px; font-family:sans-serif;">
+        <h2>بوابة ليل السرية</h2>
+        <input type="password" id="pass" placeholder="دخل الباسورد">
+        <button onclick="login()">دخول</button>
+    </div>
 
-  <script>
-    const GITHUB_TOKEN = 'YOUR_GITHUB_TOKEN'; // حط التوكين بتاعك هنا
-    const REPO = 'leilshop/leil-shop';
-    const FILE_PATH = 'data.json';
-
-    // 1. جلب البيانات من جيت هاب
-    fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
-      headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
-    })
-    .then(res => res.json())
-    .then(data => {
-      const content = atob(data.content);
-      document.getElementById('json-editor').value = content;
-    });
-
-    // 2. دالة الحفظ
-    async function saveData() {
-      const newContent = document.getElementById('json-editor').value;
-      const response = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
-        method: 'PUT',
-        headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: "تحديث البيانات من الداشبورد",
-          content: btoa(newContent),
-          sha: await getSha() // لازم نجيب الـ SHA بتاع الملف
-        })
-      });
-      alert('تم الحفظ يا هندسة!');
-    }
-  </script>
+    <script>
+        function login() {
+            // غير "2026" بالباسورد اللي يعجبك
+            if(document.getElementById('pass').value === "123456") {
+                localStorage.setItem('isAdmin', 'true');
+                alert("تم التفعيل!");
+                window.location.href = "/"; // هيرجعك للرئيسية
+            } else {
+                alert("باسورد غلط");
+            }
+        }
+    </script>
 </body>
 </html>
