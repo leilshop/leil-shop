@@ -1,7 +1,6 @@
 backend:
-  name: github
-  repo: leilshop/leil-shop
-  branch: main
+  name: git-gateway
+site_url: https://leil.shop
 
 site_url: "https://leil.shop"
 display_url: "https://leil.shop"
