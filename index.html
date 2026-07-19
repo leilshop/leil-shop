@@ -318,25 +318,39 @@
 <script>
     window.addEventListener('load', () => {
         if(localStorage.getItem('isAdmin') === 'true') {
-            // تفعيل التعديل للعناصر المحددة فقط
-            document.querySelectorAll('.card-title, .card-desc, .price-value').forEach(el => el.contentEditable = 'true');
+            document.querySelectorAll('.card-title, .card-desc, .price-value, h1, p, h2, h3, .btn-view').forEach(el => el.contentEditable = 'true');
             
-            // إضافة زرار الحفظ
-            let btn = document.createElement('button');
-            btn.innerHTML = "💾 حفظ التعديلات";
-            btn.style = "position:fixed; bottom:20px; left:20px; z-index:9999; padding:15px; background:#007bff; color:white; border-radius:50px; cursor:pointer; font-weight:bold; border:none; box-shadow:0 4px 6px rgba(0,0,0,0.3);";
-            btn.onclick = () => window.open('https://github.com/leilshop/leil-shop/edit/main/index.html');
-            document.body.appendChild(btn);
-
-            // إضافة زرار الخروج
-            let btnExit = document.createElement('button');
-            btnExit.innerHTML = "❌ خروج";
-            btnExit.style = "position:fixed; bottom:80px; left:20px; z-index:9999; padding:15px; background:#6c757d; color:white; border-radius:50px; cursor:pointer; font-weight:bold; border:none; box-shadow:0 4px 6px rgba(0,0,0,0.3);";
-            btnExit.onclick = () => {
-                localStorage.removeItem('isAdmin');
-                location.reload();
-            };
-            document.body.appendChild(btnExit);
+            if(!document.getElementById('admin-btns')) {
+                let div = document.createElement('div');
+                div.id = 'admin-btns';
+                
+                // زرار "استخراج الكود" (ده بديل الحفظ)
+                let btnExport = document.createElement('button');
+                btnExport.innerHTML = "📋 استخراج الكود";
+                btnExport.style = "position:fixed; bottom:20px; left:20px; z-index:9999; padding:15px; background:#28a745; color:white; border-radius:50px; cursor:pointer; font-weight:bold; border:none; box-shadow:0 4px 6px rgba(0,0,0,0.3);";
+                btnExport.onclick = () => {
+                    // بيستخرج الكود بتاع الصفحة بعد تعديلك
+                    let code = document.documentElement.outerHTML;
+                    let blob = new Blob([code], {type: "text/html"});
+                    let a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = "updated_page.html";
+                    a.click();
+                    alert("تم تحميل ملف الكود الجديد! ارفعه على جيت هاب مكان الملف القديم.");
+                };
+                
+                let btnExit = document.createElement('button');
+                btnExit.innerHTML = "❌ خروج";
+                btnExit.style = "position:fixed; bottom:80px; left:20px; z-index:9999; padding:15px; background:#6c757d; color:white; border-radius:50px; cursor:pointer; font-weight:bold; border:none; box-shadow:0 4px 6px rgba(0,0,0,0.3);";
+                btnExit.onclick = () => {
+                    localStorage.removeItem('isAdmin');
+                    location.reload();
+                };
+                
+                div.appendChild(btnExport);
+                div.appendChild(btnExit);
+                document.body.appendChild(div);
+            }
         }
     });
 </script>
