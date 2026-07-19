@@ -179,6 +179,42 @@ function changeQty(amount) {
         if(countEl) countEl.innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
     }
     window.onload = checkCartState;
+
+<script>
+    // السكربت ده يتحط في نهاية كل صفحة (قبل قفلة الـ body)
+    window.addEventListener('load', () => {
+        if(localStorage.getItem('isAdmin') === 'true') {
+            // تفعيل التعديل
+            document.querySelectorAll('.card-title, .card-desc, .price-value, h1, p, h2, h3, .btn-view').forEach(el => el.contentEditable = 'true');
+            
+            // إضافة الأزرار بشرط عدم وجودها مسبقاً
+            if(!document.getElementById('admin-btns')) {
+                let div = document.createElement('div');
+                div.id = 'admin-btns';
+                
+                let btn = document.createElement('button');
+                btn.innerHTML = "💾 حفظ";
+                btn.style = "position:fixed; bottom:20px; left:20px; z-index:9999; padding:15px; background:#007bff; color:white; border-radius:50px; cursor:pointer; font-weight:bold; border:none; box-shadow:0 4px 6px rgba(0,0,0,0.3);";
+                btn.onclick = () => {
+                    let path = window.location.pathname.split("/").pop();
+                    if(!path || path === "") path = "index.html"; 
+                    window.open('https://github.com/leilshop/leil-shop/edit/main/' + path);
+                };
+                
+                let btnExit = document.createElement('button');
+                btnExit.innerHTML = "❌ خروج";
+                btnExit.style = "position:fixed; bottom:80px; left:20px; z-index:9999; padding:15px; background:#6c757d; color:white; border-radius:50px; cursor:pointer; font-weight:bold; border:none; box-shadow:0 4px 6px rgba(0,0,0,0.3);";
+                btnExit.onclick = () => {
+                    localStorage.removeItem('isAdmin');
+                    location.reload();
+                };
+                
+                div.appendChild(btn);
+                div.appendChild(btnExit);
+                document.body.appendChild(div);
+            }
+        }
+    });
 </script>
 </body>
 </html>
