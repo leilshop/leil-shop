@@ -320,5 +320,23 @@
     // مراقبة كل العناصر اللي واخده كلاس reveal
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 </script>
+<script>
+    window.addEventListener('load', () => {
+        if(localStorage.getItem('isAdmin') === 'true') {
+            document.body.contentEditable = 'true'; // تفعيل التعديل
+            
+            // إضافة زرار الحفظ
+            let btn = document.createElement('button');
+            btn.innerHTML = "💾 حفظ التعديلات";
+            btn.style = "position:fixed; bottom:20px; right:20px; z-index:9999; padding:15px; background:#007bff; color:white; border-radius:50px; cursor:pointer; font-weight:bold; border:none; box-shadow:0 4px 6px rgba(0,0,0,0.3);";
+            
+            btn.onclick = () => {
+                alert('هتفتح صفحة جيت هاب.. انسخ الكود اللي جوا الصفحة لو عدلت حاجة، أو استنى تحديثنا الجاي!');
+                window.open('https://github.com/leilshop/leil-shop/edit/main/index.html');
+            };
+            document.body.appendChild(btn);
+        }
+    });
+</script>
 </body>
 </html>
