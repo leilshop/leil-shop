@@ -1,17 +1,18 @@
 <style>
-    /* استدعاء خط نوتو نستعليق للوجو فقط */
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
+    /* استدعاء خط الموقع الأساسي (تاجوال) وخط اللوجو (نستعليق) */
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
 
-    /* تنسيق الفوتر الأساسي - تم حذف سطر الخط ليرث خط الموقع الأصلي بشكل طبيعي */
+    /* تنسيق الفوتر الأساسي - تطبيق خط الموقع */
     .leil-footer {
         background-color: #350000 !important;
         padding: 50px 5% 20px !important;
         color: white !important;
         direction: rtl !important;
         margin-top: auto !important;
+        font-family: 'Tajawal', sans-serif !important; /* تم تطبيق خط ليل */
     }
 
-    /* التوزيع المثالي للمسافات باستخدام Grid */
+    /* التصميم للكمبيوتر (Grid) */
     .leil-footer-container {
         display: grid !important;
         grid-template-columns: 1fr 1fr 1fr !important; /* 3 أعمدة متساوية */
@@ -24,7 +25,7 @@
     /* القسم الأول: اللوجو (أقصى اليمين) */
     .leil-footer-brand {
         display: flex !important;
-        justify-self: start !important; /* محاذاة لليمين */
+        justify-self: start !important; 
     }
     .leil-footer-logo {
         font-family: 'Noto Nastaliq Urdu', serif !important; /* الخط المخصص للوجو فقط */
@@ -41,11 +42,11 @@
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        justify-self: center !important; /* محاذاة في المنتصف */
+        justify-self: center !important; 
     }
     .leil-footer-title {
-        font-size: 16px !important;
-        font-weight: bold !important;
+        font-size: 17px !important;
+        font-weight: 700 !important; /* بولد في خط تاجوال */
         margin-bottom: 12px !important;
         color: rgba(255, 255, 255, 0.95) !important;
     }
@@ -54,18 +55,18 @@
         align-items: center !important;
         justify-content: center !important;
         gap: 8px !important;
-        background: transparent !important; /* خلفية شفافة */
-        border: 1px solid rgba(255, 255, 255, 0.3) !important; /* إطار زي السوشيال ميديا */
+        background: transparent !important; 
+        border: 1px solid rgba(255, 255, 255, 0.3) !important; 
         padding: 8px 32px !important;
         border-radius: 50px !important;
         color: white !important;
         text-decoration: none !important;
         font-size: 16px !important;
-        font-weight: 500 !important;
+        font-weight: 700 !important;
         transition: all 0.3s ease !important;
     }
     .leil-whatsapp-btn:hover {
-        background: rgba(255, 255, 255, 0.1) !important; /* تأثير عند الوقوف بالماوس */
+        background: rgba(255, 255, 255, 0.1) !important; 
         border-color: rgba(255, 255, 255, 0.8) !important;
         transform: scale(1.05) !important;
     }
@@ -75,7 +76,7 @@
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important; /* توسيط كلمة تابعنا فوق الأيقونات */
-        justify-self: end !important; /* محاذاة البلوك بالكامل لليسار */
+        justify-self: end !important; /* دفع البلوك لليسار على الكمبيوتر */
     }
     .leil-social-icons {
         display: flex !important;
@@ -105,37 +106,54 @@
         margin-top: 40px !important;
         padding-top: 20px !important;
         border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-        font-size: 13px !important;
+        font-size: 14px !important;
         color: rgba(255, 255, 255, 0.6) !important;
         line-height: 1.8 !important;
     }
     .leil-tax-number {
         display: block !important;
-        font-size: 12px !important;
+        font-size: 13px !important;
         color: rgba(255, 255, 255, 0.5) !important;
         margin-top: 5px !important;
+        font-family: sans-serif !important; /* للحفاظ على شكل الأرقام */
     }
 
-    /* تجاوب الفوتر مع الموبايل */
+    /* 📱 تجاوب الفوتر مع الموبايل (تصميم مخصص) */
     @media (max-width: 768px) {
-        .leil-footer-container {
-            grid-template-columns: 1fr !important;
-            gap: 40px !important;
+        .leil-footer {
+            padding: 40px 5% 20px !important; /* تقليل الحواف العلوية قليلاً للموبايل */
         }
         
-        .leil-footer-brand,
-        .leil-footer-contact,
-        .leil-footer-socials {
-            justify-self: center !important; /* توسيط كل العناصر على الموبايل */
-            order: initial !important;
+        .leil-footer-container {
+            display: flex !important; /* استخدام فليكس بدلاً من جريد لتوزيع أفضل على الموبايل */
+            flex-direction: column !important;
+            gap: 35px !important; /* مسافة مريحة بين الأقسام */
+        }
+        
+        /* توسيط اللوجو وتكبيره */
+        .leil-footer-brand {
+            justify-content: center !important;
+        }
+        .leil-footer-logo {
+            font-size: 55px !important; 
         }
 
-        .leil-footer-brand { order: 1 !important; }
-        .leil-footer-contact { order: 2 !important; }
-        .leil-footer-socials { order: 3 !important; }
+        /* تنسيق الأقسام بشكل عمودي في المنتصف */
+        .leil-footer-contact,
+        .leil-footer-socials {
+            width: 100% !important;
+            align-items: center !important; 
+        }
 
-        .leil-footer-logo {
-            font-size: 50px !important;
+        /* تعديل زر الواتس ليكون أوضح كهدف لللمس (Touch Target) */
+        .leil-whatsapp-btn {
+            width: 70% !important;
+            max-width: 250px !important;
+            padding: 10px 20px !important;
+        }
+        
+        .leil-footer-bottom {
+            margin-top: 30px !important;
         }
     }
 </style>
