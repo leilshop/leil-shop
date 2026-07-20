@@ -2,14 +2,13 @@
     /* استدعاء خط نوتو نستعليق للوجو فقط */
     @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
 
-    /* تنسيق الفوتر الأساسي */
+    /* تنسيق الفوتر الأساسي - تم حذف سطر الخط ليرث خط الموقع الأصلي بشكل طبيعي */
     .leil-footer {
         background-color: #350000 !important;
         padding: 50px 5% 20px !important;
         color: white !important;
         direction: rtl !important;
         margin-top: auto !important;
-        font-family: inherit !important; /* هيسحب خط موقع ليل الأساسي أوتوماتيك */
     }
 
     /* التوزيع المثالي للمسافات باستخدام Grid */
@@ -25,7 +24,7 @@
     /* القسم الأول: اللوجو (أقصى اليمين) */
     .leil-footer-brand {
         display: flex !important;
-        justify-content: flex-start !important;
+        justify-self: start !important; /* محاذاة لليمين */
     }
     .leil-footer-logo {
         font-family: 'Noto Nastaliq Urdu', serif !important; /* الخط المخصص للوجو فقط */
@@ -42,6 +41,7 @@
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
+        justify-self: center !important; /* محاذاة في المنتصف */
     }
     .leil-footer-title {
         font-size: 16px !important;
@@ -74,7 +74,8 @@
     .leil-footer-socials {
         display: flex !important;
         flex-direction: column !important;
-        align-items: flex-end !important;
+        align-items: center !important; /* توسيط كلمة تابعنا فوق الأيقونات */
+        justify-self: end !important; /* محاذاة البلوك بالكامل لليسار */
     }
     .leil-social-icons {
         display: flex !important;
@@ -122,21 +123,19 @@
             gap: 40px !important;
         }
         
-        .leil-footer-brand {
-            justify-content: center !important;
-            order: 1 !important;
+        .leil-footer-brand,
+        .leil-footer-contact,
+        .leil-footer-socials {
+            justify-self: center !important; /* توسيط كل العناصر على الموبايل */
+            order: initial !important;
         }
+
+        .leil-footer-brand { order: 1 !important; }
+        .leil-footer-contact { order: 2 !important; }
+        .leil-footer-socials { order: 3 !important; }
+
         .leil-footer-logo {
             font-size: 50px !important;
-        }
-
-        .leil-footer-contact {
-            order: 2 !important;
-        }
-
-        .leil-footer-socials {
-            align-items: center !important;
-            order: 3 !important;
         }
     }
 </style>
