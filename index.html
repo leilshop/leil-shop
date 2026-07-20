@@ -35,7 +35,6 @@
         height: 60px;
         bottom: 20px;
         right: 20px;
-        /* تثبيت اللون حتى بعد الزيارة */
         background-color: #25d366 !important; 
         color: #FFF !important;
         border-radius: 50px !important;
@@ -48,11 +47,9 @@
         justify-content: center;
         text-decoration: none !important;
         transition: transform 0.3s ease;
-        /* إضافة الأنيميشن */
         animation: pulse-animation 2s infinite;
     }
 
-    /* عشان نمنع تغير اللون بعد الزيارة */
     .whatsapp-float:visited {
         background-color: #25d366 !important;
     }
@@ -62,13 +59,12 @@
         background-color: #25d366 !important;
     }
 
-    /* كود حركة النبض */
     @keyframes pulse-animation {
         0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
         70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
         100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
     }
-    /* باقي كود الهيدر الخاص بيك */
+    
     .leil-header { 
         background: #3d0000 !important; 
         padding: 10px 4% !important; 
@@ -84,8 +80,7 @@
         :root { --main: #600a1c; --bg-site: #3d0000; }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
         
-        html, body { overflow-x: hidden; width: 100%; }
-        body { background: var(--bg-site); }
+        html, body { overflow-x: hidden; width: 100%; background: var(--bg-site); }
 
         .hero {
             height: 80vh;
@@ -110,28 +105,20 @@
             gap: 30px; 
         }
 
-.card { 
-    /* إضاءة خفيفة (لمعة) وزاوية إضاءة */
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); 
-    
-    /* البلور اللي طلبته */
-    backdrop-filter: blur(15px); 
-    
-    /* حدود شفافة وإضاءة خفيفة عليها */
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    border-radius: 15px; 
-    
-    /* الظل اللي بيخلي الكارت "يتحس" ويبان أفتح من الخلفية */
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
-    
-    transition: 0.4s; 
-    overflow: hidden; 
-}
-.card:hover { 
-    transform: translateY(-5px); 
-    border: 1px solid rgba(255, 255, 255, 0.3); /* البوردر بيفتح أكتر لما تقف عليه */
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)); /* بيزيد لمعان */
-}
+        .card { 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 15px; 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
+            transition: 0.4s; 
+            overflow: hidden; 
+        }
+        .card:hover { 
+            transform: translateY(-5px); 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)); 
+        }
         .card-img { width: 100%; height: 380px; object-fit: cover; background: #222; transition: transform 0.5s ease; }
         .card:hover .card-img { transform: scale(1.05); }
         .card-info { padding: 25px; text-align: center; }
@@ -141,9 +128,14 @@
         .btn-view { display: block; width: 100%; padding: 14px; background: var(--main); text-decoration: none; font-weight: 700; text-align: center; transition: 0.2s; }
         .btn-view:active { transform: scale(0.97); filter: brightness(0.8); }
 
-        /* قسم أراء العملاء الجديد الفخم لليل */
-        .testimonials-sec { padding: 60px 5%; overflow: hidden; background: var(--bg-site); position: relative; margin-top: 40px;}
-        /* إضافة تأثير الإضاءة الخلفية للقسم */
+        /* قسم أراء العملاء الفخم لليل (تعديل الخلفية) */
+        .testimonials-sec { 
+            padding: 60px 5%; 
+            overflow: hidden; 
+            background-color: transparent; /* إزالة الخلفية لتأخذ لون الموقع */
+            position: relative; 
+            margin-top: 40px;
+        }
         .testimonials-sec::before {
             content: '';
             position: absolute;
@@ -161,7 +153,6 @@
         .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform; }
         .testimonial-slide { flex: 0 0 100%; width: 100%; box-sizing: border-box; padding: 0 15px; }
         
-        /* تصميم الكارت الزجاجي الفخم لليل */
         .review-card { 
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); 
             backdrop-filter: blur(15px); 
@@ -195,7 +186,6 @@
         .quote-mark { color: rgba(255, 255, 255, 0.2); font-size: 35px; margin-bottom: 20px; }
         .review-card p { font-size: 18px; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 2; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
         
-        /* أزرار السلايدر للكمبيوتر */
         .carousel-btn { 
             position: absolute; 
             top: 50%; 
@@ -220,6 +210,9 @@
         .btn-prev { right: -30px; } 
         .btn-next { left: -30px; } 
 
+        /* إخفاء الأزرار */
+        .hidden-btn { display: none !important; }
+
         @media (max-width: 768px) {
             .carousel-btn { display: none; }
             .review-card { padding: 40px 20px; }
@@ -240,7 +233,6 @@
         .then(r => r.text())
         .then(data => {
             document.getElementById('header-container').innerHTML = data;
-            // تحديث عدد السلة بعد جلب الهيدر
             let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
             document.getElementById('cart-count').innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
         });
@@ -359,7 +351,7 @@
     </div>
 </div>
 
-<!-- قسم آراء عملائنا الفخم الجديد -->
+<!-- قسم آراء عملائنا -->
 <div class="sub-title">آراء عملائنا</div>
 <div class="line-divider"></div>
 <section class="testimonials-sec" id="testimonials">
@@ -370,57 +362,83 @@
         
         <div class="carousel-track" id="sliderTrack">
             
-            <!-- كومنت 1 -->
             <div class="testimonial-slide">
                 <div class="review-card">
                     <div class="review-avatar"><i class="fas fa-user"></i></div>
                     <i class="fas fa-quote-right quote-mark"></i>
-                    <p>دكتور ايمن فوق الممتاز واخلاق عاليه جدا ولو حد محتاج دكتور جراح ارشحه طبعا ربنا يباركله ويذيده من فضله</p>
+                    <p>أنا دخلت أجرب لقيت نفسي أدمنت 😂 ريحتها تحفه وناعمة كده مش بتخنق خالص ❤️❤️</p>
                 </div>
             </div>
 
-            <!-- كومنت 2 -->
             <div class="testimonial-slide">
                 <div class="review-card">
                     <div class="review-avatar"><i class="fas fa-user"></i></div>
                     <i class="fas fa-quote-right quote-mark"></i>
-                    <p>خدمة طبية ممتازة وبصراحة هما دول ملائكة الرحمة بجد والله خدمة طبية فوق الممتازة وكل الشكر والتقدير والاحترام لدكتور ايمن جمعة والأستاذة شروق الاتعبت معانا بجد المتبعة قبل وبعد العملية والرد على كل استفسار وبسرعة كبيرة وكل الشكر والتقدير والاحترام ليهم كلهم</p>
+                    <p>ميرسى لزوؤقك جدااا الاوردر وصلنى واتشرفت بيكى اوووى وبجد المخمرية نحفة تحفة ريحتها تجنن. وزوؤقك ف اختيار المخمرية يجنن منحرمش من زوؤقك ياقمراية. مش هيبقى اخر تعامل باذن الله</p>
                 </div>
             </div>
 
-            <!-- كومنت 3 -->
             <div class="testimonial-slide">
                 <div class="review-card">
                     <div class="review-avatar"><i class="fas fa-user"></i></div>
                     <i class="fas fa-quote-right quote-mark"></i>
-                    <p>الدكتور ممتاز ربنا يباركله والمستشفى رائعه والتمريض من المعامله والنظافه والاهتمام وارشح اى حد مريض غدة يعمله مع دكتور ايمن جمعه ويمشى وراء فى كل كلمه هو هيقوله للمريض وهو مغمض واشكر برضو استاذة شروق على تعبه معايا شكرا للكل فريق الدكتور وشكرا للدكتور ايمن جمعه لاهتمامه وسواله عليا يوميا بعد العمليه</p>
+                    <p>هيا ايييييه المخمرية ددددددى خطييييرة</p>
                 </div>
             </div>
 
-            <!-- كومنت 4 -->
             <div class="testimonial-slide">
                 <div class="review-card">
                     <div class="review-avatar"><i class="fas fa-user"></i></div>
                     <i class="fas fa-quote-right quote-mark"></i>
-                    <p>السلام عليكم ورحمة الله حضرتك يادكتور ايمن ماشاء الله عليك شاطر جدا وماهر جدا بتعرف تتعامل مع المرضى سواء فى العملية الجراحية او لمتابعتهم بعد العملية وقبل العملية ربنا يحسن ما بين ايديك مهما اقول مش هقدر اوصف شطاره حضرتك ماشاء الله ربنا يحميك ويحفظك بحفظه يارب تسلم ايدك على العملية اللى عملتهالى فى استئصال الورم فى القولون الف شكر 🌹</p>
+                    <p>خطيره بجد تستحق التجربة 🥰❤️❤️</p>
                 </div>
             </div>
 
-            <!-- كومنت 5 -->
             <div class="testimonial-slide">
                 <div class="review-card">
                     <div class="review-avatar"><i class="fas fa-user"></i></div>
                     <i class="fas fa-quote-right quote-mark"></i>
-                    <p>الحمد لله بخير دكتور محترم جدا جدا كفايه ذوقه واخلاقه وعنده ضمير مهني اتمنا تكون عند كل دكتور ومتابعة دقيقه بعد العمليه واستجابة للرد على اي استفسار ورعاية طبية عاليه جدا جدا انا بشكره وربنا يجزي كل خير يارب</p>
+                    <p>خطيره بجد وريحتها خطيره وسعرها كتكوت 🤍🤍🤍😻</p>
                 </div>
             </div>
 
-            <!-- كومنت 6 -->
             <div class="testimonial-slide">
                 <div class="review-card">
                     <div class="review-avatar"><i class="fas fa-user"></i></div>
                     <i class="fas fa-quote-right quote-mark"></i>
-                    <p>السلام عليكم احب اشكر دكتور /ايمن جمعه بجد هو انسان قبل ان يكون دكتور محترم جدا واهتمامه بالحاله الي عنده كبير وبيقدم دايما النصيحه المظبوطه للحاله ولايمل من الاسأله بل بالعكس بيطمن جدا الحاله بيحاول تبسيط العمليه للحاله وبالنسبه للعمليه فهو دكتور ممتاز واهتمامه بعد العمليه بيطمن المريض ودايما متابع بجد من افضل الدكاتره الي بنصح التوجهه ليهم قليل لما تكون دكتور انسان بالشكل ده شكراً دكتور/ ايمن جمعه 🌹</p>
+                    <p>تحفه اوي بجد بترطب ترطيب خطير وريحتها جميله اوي وثابته 💗💗💗💗💗💗</p>
+                </div>
+            </div>
+
+            <div class="testimonial-slide">
+                <div class="review-card">
+                    <div class="review-avatar"><i class="fas fa-user"></i></div>
+                    <i class="fas fa-quote-right quote-mark"></i>
+                    <p>مشاءالله تبارك الرحمن ربنا يحسن مابين ايديكي يحبيبتى تحفه وثابتها قوى جدا جدا</p>
+                </div>
+            </div>
+
+            <div class="testimonial-slide">
+                <div class="review-card">
+                    <div class="review-avatar"><i class="fas fa-user"></i></div>
+                    <i class="fas fa-quote-right quote-mark"></i>
+                    <p>تحفه تحفه تحفه بجد اتمني يكون في منتجات تاني. زي كده</p>
+                </div>
+            </div>
+            
+            <div class="testimonial-slide">
+                <div class="review-card">
+                    <div class="review-avatar"><i class="fas fa-user"></i></div>
+                    <i class="fas fa-quote-right quote-mark"></i>
+                    <p>كلمه تحفه دي قليله والله و ريحه وثبات وترطيب كلهم احلى من بعض بجد 😂❤️ كل ده والسعر عبيط اصلا شكرا جدا على التحفه دي 🫶🏼</p>
+                </div>
+            </div>
+            
+            <div class="testimonial-slide">
+                <div class="review-card">
+                    <div class="review-avatar"><i class="fas fa-user"></i></div>
+                    <i class="fas fa-quote-right quote-mark"></i>
+                    <p>تحفه بجد ريحه وثبات حلو اوي ❤️❤️❤️❤️</p>
                 </div>
             </div>
 
@@ -470,7 +488,7 @@
     });
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-    // سكريبت سلايدر أراء العملاء
+    // سكريبت سلايدر أراء العملاء المعدل للأسهم
     const sliderTrack = document.getElementById('sliderTrack');
     const slides = document.querySelectorAll('.testimonial-slide');
     const btnNext = document.getElementById('btnNext');
@@ -484,6 +502,25 @@
     function updateSliderPosition() {
         // التحريك بالموجب لأن اتجاه الموقع من اليمين لليسار (RTL)
         sliderTrack.style.transform = `translateX(${currentIndex * 100}%)`;
+        updateButtonsVisibility();
+    }
+
+    function updateButtonsVisibility() {
+        if(btnNext && btnPrev) {
+            // إخفاء السهم اليمين في أول كومنت (اليمين هنا btnPrev بسبب اتجاه RTL)
+            if(currentIndex === 0) {
+                btnPrev.classList.add('hidden-btn');
+            } else {
+                btnPrev.classList.remove('hidden-btn');
+            }
+            
+            // إخفاء السهم الشمال في آخر كومنت (الشمال هنا btnNext بسبب اتجاه RTL)
+            if(currentIndex === totalSlides - 1) {
+                btnNext.classList.add('hidden-btn');
+            } else {
+                btnNext.classList.remove('hidden-btn');
+            }
+        }
     }
 
     function showNextSlide() {
@@ -521,6 +558,7 @@
         });
     }
 
+    updateButtonsVisibility(); // لتحديث حالة الأزرار عند التحميل الأول
     startAutoSlide();
 
     // برمجة السحب (Swipe) للموبايل
