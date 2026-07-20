@@ -9,14 +9,18 @@
 
 <style>
     .leil-header { 
-        /* التعديل هنا: تدريج لوني لشفافية متغيرة تعطي إحساس انعكاس الضوء */
-        background: linear-gradient(135deg, rgba(61, 0, 0, 0.65), rgba(61, 0, 0, 0.35)) !important; 
-        /* التعديل هنا: زيادة البلور مع تشبع ألوان (saturate) لإبراز الخلفية */
-        backdrop-filter: blur(25px) saturate(200%) !important; 
-        -webkit-backdrop-filter: blur(25px) saturate(200%) !important; 
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important; 
-        /* التعديل هنا: إضافة لمعة داخلية (inset) لإعطاء سمك وملمس زجاجي */
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.1) !important; 
+        /* شفافية قليلة جداً للون العنابي مع لمعة بيضاء خفيفة تمثل انعكاس الضوء على الزجاج */
+        background: rgba(61, 0, 0, 0.25) !important; 
+        background-image: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%) !important;
+        
+        /* بلور قوي جداً مع زيادة تشبع الألوان للخلفية */
+        backdrop-filter: blur(30px) saturate(180%) !important; 
+        -webkit-backdrop-filter: blur(30px) saturate(180%) !important; 
+        
+        /* حافة سفلية مضيئة لتعزيز ملمس الزجاج */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important; 
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important; 
+        
         padding: 10px 4% !important; 
         display: flex !important; 
         justify-content: space-between !important; 
@@ -29,23 +33,27 @@
     .leil-logo { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: 20px !important; color: white !important; text-decoration: none !important; }
     
     .leil-nav { display: flex !important; gap: 15px !important; align-items: center !important; }
-    .leil-nav a { color: white !important; text-decoration: none !important; font-size: 13px !important; cursor: pointer !important; }
+    .leil-nav a { color: white !important; text-decoration: none !important; font-size: 13px !important; cursor: pointer !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;} /* ظل خفيف للكلام عشان يقرأ بوضوح فوق الزجاج */
     
     .leil-dropdown { position: relative !important; padding: 10px 0 !important; }
     
     .leil-dropdown-content { 
         display: none !important; 
         position: absolute !important; 
-        background: linear-gradient(135deg, rgba(61, 0, 0, 0.75), rgba(61, 0, 0, 0.55)) !important;
-        backdrop-filter: blur(25px) saturate(200%) !important;
-        -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
+        
+        /* نفس التأثير الزجاجي للقائمة المنسدلة */
+        background: rgba(61, 0, 0, 0.35) !important;
+        background-image: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%) !important;
+        backdrop-filter: blur(30px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+        
         min-width: 140px; 
         top: 100% !important; 
         left: 0 !important; 
         right: auto !important; 
-        border: 1px solid rgba(255, 255, 255, 0.15) !important; 
+        border: 1px solid rgba(255, 255, 255, 0.2) !important; 
         border-radius: 6px !important; 
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
         overflow: hidden !important;
     }
     
@@ -54,7 +62,7 @@
     .leil-dropdown-content a:hover { background: rgba(255, 255, 255, 0.15) !important; }
     
     .leil-cart { position: relative; display: flex !important; align-items: center !important; }
-    .leil-cart-count { position: absolute; top: -5px; left: -5px; background: #600a1c !important; width: 15px !important; height: 15px !important; border-radius: 50% !important; font-size: 10px !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-weight: 700; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
+    .leil-cart-count { position: absolute; top: -5px; left: -5px; background: #600a1c !important; width: 15px !important; height: 15px !important; border-radius: 50% !important; font-size: 10px !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-weight: 700; border: 1px solid rgba(255, 255, 255, 0.3) !important; box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;}
 </style>
 
 <header class="leil-header">
