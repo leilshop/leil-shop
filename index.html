@@ -128,25 +128,13 @@
         .btn-view { display: block; width: 100%; padding: 14px; background: var(--main); text-decoration: none; font-weight: 700; text-align: center; transition: 0.2s; }
         .btn-view:active { transform: scale(0.97); filter: brightness(0.8); }
 
-        /* قسم أراء العملاء الفخم لليل (تعديل الخلفية) */
+        /* قسم أراء العملاء */
         .testimonials-sec { 
             padding: 60px 5%; 
             overflow: hidden; 
-            background-color: transparent; /* إزالة الخلفية لتأخذ لون الموقع */
+            background-color: transparent; 
             position: relative; 
             margin-top: 40px;
-        }
-        .testimonials-sec::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: 80%;
-            background: radial-gradient(circle, rgba(96, 10, 28, 0.4) 0%, rgba(61, 0, 0, 0) 70%);
-            z-index: 0;
-            pointer-events: none;
         }
 
         .carousel-wrapper { position: relative; max-width: 900px; margin: 0 auto; direction: rtl; padding: 20px 0; z-index: 1;}
@@ -156,7 +144,7 @@
         .review-card { 
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); 
             backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border: none; /* إخفاء الأطراف الحادة لتبدو سايحة مع الخلفية */
             border-radius: 20px; 
             padding: 50px 40px; 
             box-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.4); 
