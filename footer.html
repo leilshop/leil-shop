@@ -1,0 +1,181 @@
+<style>
+    /* تنسيق الفوتر الزجاجي */
+    .leil-footer {
+        background: linear-gradient(135deg, rgba(61, 0, 0, 0.45), rgba(61, 0, 0, 0.15)) !important;
+        backdrop-filter: blur(25px) saturate(200%) !important;
+        -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+        padding: 40px 5% 20px !important;
+        color: white !important;
+        direction: rtl !important;
+        margin-top: auto !important;
+        font-family: inherit;
+    }
+
+    .leil-footer-container {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        gap: 30px !important;
+    }
+
+    /* القسم الأول: اللوجو */
+    .leil-footer-brand {
+        flex: 1 !important;
+        min-width: 250px !important;
+    }
+    .leil-footer-logo {
+        font-family: 'Noto Nastaliq Urdu', serif !important;
+        font-size: 32px !important;
+        color: white !important;
+        text-decoration: none !important;
+        display: inline-block !important;
+        margin-bottom: 5px !important;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.3) !important;
+    }
+    .leil-footer-slogan {
+        font-size: 13px !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        margin: 0 !important;
+    }
+
+    /* القسم الثاني: التواصل */
+    .leil-footer-contact {
+        flex: 1 !important;
+        min-width: 250px !important;
+        text-align: center !important;
+    }
+    .leil-footer-title {
+        font-size: 18px !important;
+        font-weight: bold !important;
+        margin-bottom: 15px !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+    .leil-whatsapp-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        padding: 10px 24px !important;
+        border-radius: 50px !important;
+        color: white !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    }
+    .leil-whatsapp-btn:hover {
+        background: rgba(37, 211, 102, 0.25) !important;
+        border-color: #25D366 !important;
+        transform: translateY(-3px) !important;
+    }
+
+    /* القسم الثالث: السوشيال ميديا */
+    .leil-footer-socials {
+        flex: 1 !important;
+        min-width: 250px !important;
+        text-align: left !important;
+    }
+    .leil-social-icons {
+        display: flex !important;
+        gap: 12px !important;
+        justify-content: flex-end !important;
+    }
+    .leil-social-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 42px !important;
+        height: 42px !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 50% !important;
+        color: white !important;
+        transition: all 0.3s ease !important;
+    }
+    .leil-social-icon:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+        transform: scale(1.1) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* شريط الحقوق السفلي */
+    .leil-footer-bottom {
+        text-align: center !important;
+        margin-top: 30px !important;
+        padding-top: 20px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        font-size: 13px !important;
+        color: rgba(255, 255, 255, 0.6) !important;
+        line-height: 1.8 !important;
+    }
+    .leil-tax-number {
+        display: block !important;
+        font-size: 12px !important;
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* تجاوب الفوتر مع الموبايل */
+    @media (max-width: 768px) {
+        .leil-footer-container {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 40px !important;
+        }
+        .leil-footer-socials {
+            text-align: center !important;
+        }
+        .leil-social-icons {
+            justify-content: center !important;
+        }
+    }
+</style>
+
+<footer class="leil-footer">
+    <div class="leil-footer-container">
+        
+        <!-- القسم الأول: اللوجو -->
+        <div class="leil-footer-brand">
+            <a href="index.html" class="leil-footer-logo">ليل</a>
+            <p class="leil-footer-slogan">جمالك يبدأ من هنا</p>
+        </div>
+
+        <!-- القسم الثاني: زر الواتساب -->
+        <div class="leil-footer-contact">
+            <div class="leil-footer-title">تواصل معنا</div>
+            <a href="https://wa.me/201037322374" target="_blank" class="leil-whatsapp-btn">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                </svg>
+                راسلنا عبر واتساب
+            </a>
+        </div>
+
+        <!-- القسم الثالث: السوشيال ميديا -->
+        <div class="leil-footer-socials">
+            <div class="leil-footer-title">تابعنا</div>
+            <div class="leil-social-icons">
+                <a href="https://www.facebook.com/profile.php?id=61573290656729&rdid=JeewtvUfysmDykeY&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F18PxkZfTCH%2F#" target="_blank" class="leil-social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/leilshop/" target="_blank" class="leil-social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2H16.2C19.4 2 22 4.6 22 7.8V16.2C22 19.4 19.4 22 16.2 22H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2ZM7.6 4C5.6 4 4 5.6 4 7.6V16.4C4 18.4 5.6 20 7.6 20H16.4C18.4 20 20 18.4 20 16.4V7.6C20 5.6 18.4 4 16.4 4H7.6ZM12 6.8C14.87 6.8 17.2 9.13 17.2 12C17.2 14.87 14.87 17.2 12 17.2C9.13 17.2 6.8 14.87 6.8 12C6.8 9.13 9.13 6.8 12 6.8ZM12 8.8C10.23 8.8 8.8 10.23 8.8 12C8.8 13.77 10.23 15.2 12 15.2C13.77 15.2 15.2 13.77 15.2 12C15.2 10.23 13.77 8.8 12 8.8ZM17.4 5.4C18.06 5.4 18.6 5.94 18.6 6.6C18.6 7.26 18.06 7.8 17.4 7.8C16.74 7.8 16.2 7.26 16.2 6.6C16.2 5.94 16.74 5.4 17.4 5.4Z"/></svg>
+                </a>
+                <a href="https://www.tiktok.com/@leil.shop" target="_blank" class="leil-social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.04.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.24-2.37.59-4.84 2.27-6.52 1.46-1.48 3.52-2.3 5.58-2.22V12.5c-1.2-.01-2.42.33-3.41 1.05-.76.54-1.31 1.34-1.5 2.26-.2 1.02-.03 2.11.49 2.99.55.95 1.54 1.63 2.63 1.83.99.18 2.05.02 2.93-.45.89-.47 1.56-1.32 1.81-2.29.13-.53.15-1.09.15-1.64V.02h4.03Z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- شريط الحقوق والرقم الضريبي -->
+    <div class="leil-footer-bottom">
+        جميع الحقوق محفوظة &copy; 2024 ليل
+        <span class="leil-tax-number">الرقم الضريبي: 781-379-644</span>
+    </div>
+</footer>
