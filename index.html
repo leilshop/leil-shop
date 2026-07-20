@@ -144,7 +144,7 @@
         .review-card { 
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); 
             backdrop-filter: blur(15px); 
-            border: none; /* إخفاء الأطراف الحادة لتبدو سايحة مع الخلفية */
+            border: none; 
             border-radius: 20px; 
             padding: 50px 40px; 
             box-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.4); 
@@ -198,8 +198,8 @@
         .btn-prev { right: -30px; } 
         .btn-next { left: -30px; } 
 
-        /* إخفاء الأزرار */
-        .hidden-btn { display: none !important; }
+        /* إخفاء الأزرار عند الأطراف */
+        .hidden-btn { opacity: 0; pointer-events: none; }
 
         @media (max-width: 768px) {
             .carousel-btn { display: none; }
@@ -418,7 +418,7 @@
                 <div class="review-card">
                     <div class="review-avatar"><i class="fas fa-user"></i></div>
                     <i class="fas fa-quote-right quote-mark"></i>
-                    <p>كلمه تحفه دي قليله والله و ريحه وثبات وترطيب كلهم احلى من بعض بجد 😂❤️ كل ده والسعر بسيط اصلا شكرا جدا على التحفه دي 🫶🏼</p>
+                    <p>كلمه تحفه دي قليله والله و ريحه وثبات وترطيب كلهم احلى من بعض بجد 😂❤️ كل ده والسعر عبيط اصلا شكرا جدا على التحفه دي 🫶🏼</p>
                 </div>
             </div>
             
@@ -476,7 +476,7 @@
     });
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-    // سكريبت سلايدر أراء العملاء المعدل للأسهم
+    // سكريبت سلايدر أراء العملاء
     const sliderTrack = document.getElementById('sliderTrack');
     const slides = document.querySelectorAll('.testimonial-slide');
     const btnNext = document.getElementById('btnNext');
@@ -486,23 +486,23 @@
     let currentIndex = 0;
     const totalSlides = slides.length;
     let slideInterval;
+    let slideDirection = 1; // متغير لتحديد اتجاه السلايدر التلقائي
 
     function updateSliderPosition() {
-        // التحريك بالموجب لأن اتجاه الموقع من اليمين لليسار (RTL)
         sliderTrack.style.transform = `translateX(${currentIndex * 100}%)`;
         updateButtonsVisibility();
     }
 
     function updateButtonsVisibility() {
         if(btnNext && btnPrev) {
-            // إخفاء السهم اليمين في أول كومنت (اليمين هنا btnPrev بسبب اتجاه RTL)
+            // إخفاء الزر لو في الأول
             if(currentIndex === 0) {
                 btnPrev.classList.add('hidden-btn');
             } else {
                 btnPrev.classList.remove('hidden-btn');
             }
             
-            // إخفاء السهم الشمال في آخر كومنت (الشمال هنا btnNext بسبب اتجاه RTL)
+            // إخفاء الزر لو في الآخر
             if(currentIndex === totalSlides - 1) {
                 btnNext.classList.add('hidden-btn');
             } else {
@@ -512,20 +512,34 @@
     }
 
     function showNextSlide() {
+        if (currentIndex >= totalSlides - 1) return; // قفل التقليب عند النهاية
         currentIndex++;
-        if (currentIndex >= totalSlides) currentIndex = 0;
+        slideDirection = 1; // تحديث الاتجاه للأمام
         updateSliderPosition();
     }
 
     function showPrevSlide() {
+        if (currentIndex <= 0) return; // قفل التقليب قبل البداية
         currentIndex--;
-        if (currentIndex < 0) currentIndex = totalSlides - 1;
+        slideDirection = -1; // تحديث الاتجاه للخلف
         updateSliderPosition();
     }
 
-    // تشغيل أوتوماتيكي كل 4 ثواني
+    // حركة أوتوماتيكية بتمشي للأمام، ولما توصل للآخر بترجع للخلف بنعومة بدون لفة سريعة
     function startAutoSlide() {
-        slideInterval = setInterval(showNextSlide, 4000);
+        slideInterval = setInterval(() => {
+            if (currentIndex >= totalSlides - 1) {
+                slideDirection = -1; // أعكس الاتجاه لو وصلت للنهاية
+            } else if (currentIndex <= 0) {
+                slideDirection = 1;  // أعكس الاتجاه لو وصلت للبداية
+            }
+            
+            if (slideDirection === 1) {
+                showNextSlide();
+            } else {
+                showPrevSlide();
+            }
+        }, 4000);
     }
 
     function stopAutoSlide() {
@@ -546,16 +560,15 @@
         });
     }
 
-    updateButtonsVisibility(); // لتحديث حالة الأزرار عند التحميل الأول
+    updateButtonsVisibility();
     startAutoSlide();
 
-    // برمجة السحب (Swipe) للموبايل
     let startX = 0;
     let endX = 0;
 
     carouselWrapper.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
-        stopAutoSlide(); // إيقاف الأوتوماتيك وقت السحب
+        stopAutoSlide(); 
     }, {passive: true});
 
     carouselWrapper.addEventListener('touchmove', (e) => {
@@ -573,7 +586,7 @@
         }
         startX = 0;
         endX = 0;
-        startAutoSlide(); // إعادة تشغيل الأوتوماتيك
+        startAutoSlide(); 
     });
 </script>
 </body>
