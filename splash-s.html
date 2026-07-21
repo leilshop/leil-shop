@@ -289,7 +289,15 @@ function changeQty(amount) {
         const countEl = document.getElementById('cart-count');
         if(countEl) countEl.innerText = total;
     }
+    
 </script>
-
+  <div id="footer-container"></div>
+  <script>
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-container').innerHTML = data;
+        });
+</script>
 </body>
 </html>
