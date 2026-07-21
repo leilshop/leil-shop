@@ -223,7 +223,15 @@
         if(countEl) countEl.innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
     }
     window.onload = checkCartState;
-
+  
+</script>
+  <div id="footer-container"></div>
+  <script>
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-container').innerHTML = data;
+        });
 </script>
 </body>
 </html>
