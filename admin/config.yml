@@ -1,0 +1,24 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "products"
+    label: "المنتجات"
+    folder: "_data/products"
+    create: true
+    format: "json"
+    fields:
+      - { label: "اسم المنتج", name: "title", widget: "string" }
+      - { label: "الوصف القصير (السلوجن)", name: "slogan", widget: "string", required: false }
+      - label: "الأحجام والأسعار"
+        name: "sizes"
+        widget: "list"
+        fields:
+          - { label: "اسم الحجم (مثل: 10 مل)", name: "size", widget: "string" }
+          - { label: "السعر الحالي", name: "price", widget: "number" }
+          - { label: "السعر القديم (إن وجد)", name: "old_price", widget: "number", required: false }
+          - { label: "متوفر بالمخزون؟", name: "in_stock", widget: "boolean", default: true }
