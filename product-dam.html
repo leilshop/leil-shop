@@ -123,24 +123,39 @@
 
     function selectSize(btn, sizeName, imgIndex) {
         currentSelectedSize = sizeName;
-        document.querySelectorAll('.size-btn, .pinky-btn').forEach(b => b.classList.remove('active-size'));
+        document.querySelectorAll('.size-selector button').forEach(b => b.classList.remove('active-size'));
         btn.classList.add('active-size');
+
+        // تحديث السعر الفردي والسعر القديم للحجم المختار فوراً
         currentUnitPrice = parseInt(btn.getAttribute('data-price')) || 0;
         currentOldPrice = parseInt(btn.getAttribute('data-old')) || 0;
-        if (typeof imgIndex !== 'undefined') swiper.slideTo(imgIndex, 400, true);
+
+        if (typeof imgIndex !== 'undefined' && swiper) swiper.slideTo(imgIndex, 400, true);
         
         const isAvailable = btn.getAttribute('data-instock') !== 'false';
         const addBtn = document.getElementById('add-btn');
+        const qtyGroup = document.getElementById('qty-group');
 
         if (!isAvailable) {
+            // حالة نفاد الكمية: تعطيل الزر وإخفاء العداد وتحديث الأسعار
             addBtn.innerText = "نفدت الكمية";
             addBtn.disabled = true;
             addBtn.style.opacity = '0.5';
             addBtn.style.cursor = 'not-allowed';
             addBtn.style.display = 'block';
-            const qtyGroup = document.getElementById('qty-group');
             if (qtyGroup) qtyGroup.style.display = 'none';
+
+            // عرض سعر الحجم غير المتوفر بشكل صحيح
+            document.getElementById('main-price').innerText = currentUnitPrice + " ج.م";
+            const oldPriceEl = document.getElementById('old-price');
+            if (currentOldPrice > 0) {
+                oldPriceEl.innerText = currentOldPrice + " ج.م";
+                oldPriceEl.style.display = 'inline';
+            } else {
+                oldPriceEl.style.display = 'none';
+            }
         } else {
+            // حالة التوفر: تفعيل الزر ومراجعة كمية الحجم في السلة
             addBtn.innerText = "أضف إلى السلة";
             addBtn.disabled = false;
             addBtn.style.opacity = '1';
