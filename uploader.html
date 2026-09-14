@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>رافع منتجات ليل إلى Sanity</title>
+    <style>
+        body { font-family: sans-serif; background: #1a1a1a; color: white; padding: 40px; text-align: center; }
+        .box { max-width: 600px; margin: 0 auto; background: #2a2a2a; padding: 30px; border-radius: 12px; }
+        button { background: #600a1c; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 20px; }
+        button:hover { background: #800d25; }
+        #log { margin-top: 20px; text-align: right; background: #111; padding: 15px; border-radius: 8px; max-height: 250px; overflow-y: auto; font-family: monospace; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>رافع منتجات المتجر إلى Sanity تلقائياً</h2>
+        <p>اضغط على الزرار التالي لجمع كل المنتجات من الصفحات ورفعها إلى Sanity دفعة واحدة:</p>
+        <button id="start-btn" onclick="startImport()">ابدأ رفع كل المنتجات الآن 🚀</button>
+        <div id="log">في انتظار البدء...</div>
+    </div>
+
+    <script>
+        const PROJECT_ID = 'ouygoq48';
+        const DATASET = 'production';
+        const TOKEN = 'skbxxq09Vg5oMFdAdfT2TxoBef72bxhsSpgZZA4dgQeitKNFAOlmd2xkvngZEn4oGJopxHzcLqR6Z4ZwIIIrrhzpbtKzLAp8LBkuIJUzYTiInqFQh6uoBehdMtXISrmR0l8H03kdOS6rRXO8iozlfhqvcRN1U3Xhcesdr9OvN9vyGaWRXXQO';
+
+        // قائمة ملفات المنتجات في المتجر
+        const productFiles = [
+            'product-dam.html',
+            'product-sarab.html',
+            'Lip-Balm-1.html',
+            'Lip-Balm-2.html',
+            'splash-d.html',
+            'splash-h.html',
+            'splash-s.html',
+            'splash.html'
+        ];
+
+        function log(msg) {
+            const el = document.getElementById('log');
+            el.innerHTML += `<div>> ${msg}</div>`;
+            el.scrollTop = el.scrollHeight;
+        }
+
+        async function startImport() {
+            const btn = document.getElementById('start-btn');
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            document.getElementById('log').innerHTML = '';
+
+            log('جاري جلب وقراءة صفحات المنتجات...');
+            const mutations = [];
+
+            for (const file of productFiles) {
+                try {
+                    const res = await fetch(file);
+                    if (!res.ok) continue;
+                    const htmlText = await res.text();
+                    const doc = new DOMParser().parseFromString(htmlText, 'text/html');
+
+                    const titleEl = doc.querySelector('.product-details h1');
+                    if (!titleEl) continue;
+                    const title = titleEl.innerText.trim();
+
+                    const sloganEl = doc.querySelector('.product-details .slogan');
+                    const slogan = sloganEl ? sloganEl.innerText.trim() : '';
+
+                    const descEl = doc.querySelector('.product-desc p');
+                    const description = descEl ? descEl.innerText.trim() : '';
+
+                    const sizes = [];
+                    const buttons = doc.querySelectorAll('.size-selector button');
+                    buttons.forEach((b, idx) => {
+                        const sizeName = b.innerText.trim();
+                        const price = parseInt(b.getAttribute('data-price')) || 0;
+                        const oldPrice = parseInt(b.getAttribute('data-old')) || null;
+                        
+                        const sizeObj = {
+                            _key: 'size_' + (idx + 1),
+                            size: sizeName,
+                            price: price,
+                            inStock: true
+                        };
+                        if (oldPrice) sizeObj.originalPrice = oldPrice;
+                        sizes.push(sizeObj);
+                    });
+
+                    mutations.push({
+                        createOrReplace: {
+                            _type: 'product',
+                            title: title,
+                            slogan: slogan,
+                            description: description,
+                            sizes: sizes
+                        }
+                    });
+
+                    log(`تم استخراج: ${title} (${sizes.length} أحجام)`);
+                } catch (e) {
+                    log(`تخطي الملف ${file} (غير موجود أو تعذر قراءته)`);
+                }
+            }
+
+            if (mutations.length === 0) {
+                log('لم يتم العثور على منتجات!');
+                btn.disabled = false;
+                return;
+            }
+
+            log(`جاري إرسال ${mutations.length} منتج إلى Sanity...`);
+
+            try {
+                const sanityRes = await fetch(`https://${PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${DATASET}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${TOKEN}`
+                    },
+                    body: JSON.stringify({ mutations: mutations })
+                });
+
+                if (sanityRes.ok) {
+                    log('<strong style="color:#00ff66;">مبروك! تم رفع كل المنتجات إلى Sanity بنجاح 🎉</strong>');
+                } else {
+                    const err = await sanityRes.json();
+                    log('<span style="color:red;">خطأ من Sanity: ' + JSON.stringify(err) + '</span>');
+                }
+            } catch (err) {
+                log('<span style="color:red;">خطأ اتصال: ' + err.message + '</span>');
+            }
+            btn.disabled = false;
+            btn.style.opacity = '1';
+        }
+    </script>
+</body>
+</html>
