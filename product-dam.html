@@ -198,8 +198,8 @@ function changeQty(amount) {
 
   async function fetchSanityProduct() {
     const query = encodeURIComponent(`*[_type == "product" && title == "${PRODUCT_NAME}"][0]`);
-const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/query/${SANITY_DATASET}?query=${query}&_t=${new Date().getTime()}`;
-
+const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/query/${SANITY_DATASET}?query=${query}&_t=${Date.now()}`;
+    
     try {
       const response = await fetch(url);
       const data = await response.json();
