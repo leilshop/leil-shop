@@ -190,11 +190,11 @@ function changeQty(amount) {
         });
 </script>
   <!-- Sanity Client Script -->
+<!-- Sanity Client Script -->
 <script>
-  // إعدادات الربط مع مشروع Sanity الخاص بك
-  const SANITY_PROJECT_ID = 'ouygoq48';
+  const SANITY_PROJECT_ID = 'oqnepsnix';
   const SANITY_DATASET = 'production';
-  const PRODUCT_NAME = 'مخمرية دم الغزال'; // تأكد إنه نفس الاسم المسجل في Sanity Studio
+  const PRODUCT_NAME = 'مخمرية دم الغزال';
 
   async function fetchSanityProduct() {
     const query = encodeURIComponent(`*[_type == "product" && title == "${PRODUCT_NAME}"][0]`);
@@ -220,7 +220,7 @@ function changeQty(amount) {
       // 2. تحديث قائمة الأحجام والأسعار
       if (product.sizes && product.sizes.length > 0) {
         const sizeContainer = document.querySelector('.size-selector');
-        sizeContainer.innerHTML = ''; // تفريغ الأزرار القديمة
+        sizeContainer.innerHTML = '';
 
         product.sizes.forEach((item, index) => {
           const btn = document.createElement('button');
@@ -230,15 +230,18 @@ function changeQty(amount) {
           btn.innerText = item.size;
           btn.setAttribute('data-price', item.price);
           btn.setAttribute('data-old', item.originalPrice || '');
-          btn.setAttribute('data-instock', item.inStock !== false && item.quantity > 0);
+          
+          // التأكد من التوفر
+          const isAvailable = item.inStock !== false && (item.quantity === undefined || item.quantity > 0);
+          btn.setAttribute('data-instock', isAvailable);
 
-          // تحديد الحجم الأول كافتراضي
+          // تحديد أول حجم كافتراضي
           if (index === 0) {
             btn.classList.add('active-size');
-            updateDisplayPrice(item.price, item.originalPrice, item.inStock !== false && item.quantity > 0);
+            updateDisplayPrice(item.price, item.originalPrice, isAvailable);
           }
 
-          // الضغط على زر الحجم
+          // عند الضغط على الحجم
           btn.onclick = function () {
             document.querySelectorAll('.size-selector button').forEach(b => b.classList.remove('active-size'));
             this.classList.add('active-size');
@@ -247,12 +250,13 @@ function changeQty(amount) {
             const oldPrice = this.getAttribute('data-old');
             const inStock = this.getAttribute('data-instock') === 'true';
 
-            updateDisplayPrice(price, oldPrice, inStock);
-
-            // استدعاء دالة موقعك الأصلية لتغيير الصور أو الشرائح إن وجدت
+            // استدعاء دالة موقعك الأصلية لتغيير السلايدر/الصور
             if (typeof selectSize === 'function') {
               selectSize(this, item.size, isPinky ? 4 : 0);
             }
+
+            // تطبيق حالة المخزون والسعر فوراً بعد التبديل
+            updateDisplayPrice(price, oldPrice, inStock);
           };
 
           sizeContainer.appendChild(btn);
@@ -263,11 +267,11 @@ function changeQty(amount) {
     }
   }
 
-  // دالة لتحديث الأسعار وحالة الزر (متوفر / نفدت الكمية)
   function updateDisplayPrice(price, oldPrice, inStock) {
     const mainPriceEl = document.getElementById('main-price');
     const oldPriceEl = document.getElementById('old-price');
     const addBtn = document.getElementById('add-btn');
+    const qtyGroup = document.getElementById('qty-group');
 
     if (mainPriceEl) mainPriceEl.innerText = `${price} ج.م`;
     if (oldPriceEl) {
@@ -281,16 +285,20 @@ function changeQty(amount) {
         addBtn.disabled = false;
         addBtn.style.opacity = '1';
         addBtn.style.cursor = 'pointer';
+        addBtn.style.display = 'block';
+        addBtn.removeAttribute('onclick-disabled');
       } else {
+        // قفل الزر تماماً وإخفاء عداد الكمية لو كان ظاهر
         addBtn.innerText = 'نفدت الكمية';
         addBtn.disabled = true;
         addBtn.style.opacity = '0.5';
         addBtn.style.cursor = 'not-allowed';
+        addBtn.style.display = 'block';
+        if (qtyGroup) qtyGroup.style.display = 'none';
       }
     }
   }
 
-  // تشغيل الجلب فور تحميل الصفحة
   window.addEventListener('DOMContentLoaded', fetchSanityProduct);
 </script>
 </body>
