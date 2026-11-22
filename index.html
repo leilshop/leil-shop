@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<!-- Open Graph Meta Tags -->
+<!-- SEO & Meta Tags -->
+<title>Leil | ليل</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="اكتشف منتجات ليل الطبيعية 100% من مخمريات، بادي سبلاش، وزبدة كاكاو بأسعار مميزة.">
 <meta property="og:title" content="ليل | Leil">
 <meta property="og:description" content="اكتشف منتجات ليل الطبيعية 100%.">
 <meta property="og:image" content="https://leil.shop/Open-Graph-Tags-IMG.webp">
 <meta property="og:url" content="https://leil.shop">
 <meta property="og:type" content="website">
 
-<!-- Google Analytics (Deferred to not block rendering) -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MKNYQQW90W"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -16,210 +20,70 @@
   gtag('js', new Date());
   gtag('config', 'G-MKNYQQW90W');
 </script>
-    
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leil | ليل</title>
 
 <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
 <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
 
-<!-- 🚀 أسطر تسريع السرعة (Performance Fixes) -->
-<link rel="preload" as="image" href="LogoonIMG.webp">
+<!-- 🚀 أسطر تسريع السرعة -->
+<link rel="preload" as="image" href="LogoonIMG.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- ========================================== -->
-
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-<!-- تأجيل تحميل ايقونات FontAwesome عشان متبطئش الصفحة -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
 
 <style>
-/* ... هنا هتحط الـ CSS بتاعك العادي جداً بدون تغيير ... */
-    .whatsapp-float {
-        position: fixed;
-        width: 60px;
-        height: 60px;
-        bottom: 20px;
-        right: 20px;
-        background-color: #25d366 !important; 
-        color: #FFF !important;
-        border-radius: 50px !important;
-        text-align: center;
-        font-size: 30px;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-        z-index: 10000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none !important;
-        transition: transform 0.3s ease;
-        animation: pulse-animation 2s infinite;
-    }
-
-    .whatsapp-float:visited {
-        background-color: #25d366 !important;
-    }
-
-    .whatsapp-float:hover {
-        transform: scale(1.1);
-        background-color: #25d366 !important;
-    }
-
-    @keyframes pulse-animation {
-        0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-        70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-    }
+    .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background-color: #25d366 !important; color: #FFF !important; border-radius: 50px !important; text-align: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 10000; display: flex; align-items: center; justify-content: center; text-decoration: none !important; transition: transform 0.3s ease; animation: pulse-animation 2s infinite; }
+    .whatsapp-float:visited { background-color: #25d366 !important; }
+    .whatsapp-float:hover { transform: scale(1.1); background-color: #25d366 !important; }
+    @keyframes pulse-animation { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
     
-    .leil-header { 
-        background: #3d0000 !important; 
-        padding: 10px 4% !important; 
-        display: flex !important; 
-        justify-content: space-between !important; 
-        align-items: center !important; 
-        width: 100% !important; 
-        position: sticky !important; 
-        top: 0 !important; 
-        z-index: 9999 !important; 
-    }
-   
-        :root { --main: #600a1c; --bg-site: #3d0000; }
-        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
-        
-        html, body { overflow-x: hidden; width: 100%; background: var(--bg-site); }
+    .leil-header { background: #3d0000 !important; padding: 10px 4% !important; display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; position: sticky !important; top: 0 !important; z-index: 9999 !important; }
+    :root { --main: #600a1c; --bg-site: #3d0000; }
+    * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: white; }
+    html, body { overflow-x: hidden; width: 100%; background: var(--bg-site); }
 
-        .hero {
-            height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), url('./LogoonIMG.webp');
-            background-size: cover; background-position: center;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-        }
+    .hero { height: 80vh; background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), url('LogoonIMG.webp'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+    .hero h1 { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: clamp(70px, 18vw, 130px); text-shadow: 0px 4px 20px rgba(0,0,0,0.4); }
+    .hero-btn { padding: 8px 20px; border: 1px solid white; background: none; color: white; text-decoration: none; font-weight: 700; border-radius: 2px; margin-top: 20px; }
+    .hero-btn:hover { background: white; color: black; }
 
-        .hero h1 { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: clamp(70px, 18vw, 130px); text-shadow: 0px 4px 20px rgba(0,0,0,0.4); }
-        .hero-btn { padding: 8px 20px; border: 1px solid white; background: none; color: white; text-decoration: none; font-weight: 700; border-radius: 2px; margin-top: 20px; }
-        .hero-btn:hover { background: white; color: black; }
+    .sub-title { text-align: center; padding-top: 60px; font-size: 28px; font-weight: 700; margin-bottom: 15px; }
+    .line-divider { width: 60px; height: 1px; background: rgba(255, 255, 255, 0.2); margin: 0 auto 15px auto; display: block; }
+    
+    .container { max-width: 1100px; margin: auto; padding: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    .card { background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); transition: 0.4s; overflow: hidden; }
+    .card:hover { transform: translateY(-5px); border: 1px solid rgba(255, 255, 255, 0.3); background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)); }
+    .card-img { width: 100%; height: 380px; object-fit: cover; background: #222; transition: transform 0.5s ease; }
+    .card:hover .card-img { transform: scale(1.05); }
+    .card-info { padding: 25px; text-align: center; }
+    .card-title { font-size: 24px; margin-bottom: 5px; font-weight: 700; }
+    .card-desc { font-size: 14px; opacity: 0.7; margin-bottom: 10px; }
+    .price-value { font-size: 24px; font-weight: 700; }
+    .old-price { font-size: 16px; text-decoration: line-through; opacity: 0.5; margin-right: 8px; font-weight: 400; }
+    .btn-view { display: block; width: 100%; padding: 14px; background: var(--main); text-decoration: none; font-weight: 700; text-align: center; transition: 0.2s; }
+    .btn-view:active { transform: scale(0.97); filter: brightness(0.8); }
 
-        .sub-title { text-align: center; padding-top: 60px; font-size: 28px; font-weight: 700; margin-bottom: 15px; }
-        .line-divider { width: 60px; height: 1px; background: rgba(255, 255, 255, 0.2); margin: 0 auto 15px auto; display: block; }
-        
-        .container { 
-            max-width: 1100px; 
-            margin: auto; 
-            padding: 20px; 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 30px; 
-        }
+    .testimonials-sec { padding: 10px 5% 60px; overflow: hidden; background-color: transparent; position: relative; margin-top: 10px; }
+    .carousel-wrapper { position: relative; max-width: 900px; margin: 0 auto; direction: rtl; padding: 20px 0; z-index: 1;}
+    .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform; }
+    .testimonial-slide { flex: 0 0 100%; width: 100%; box-sizing: border-box; padding: 0 15px; }
+    
+    .review-card { background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); backdrop-filter: blur(15px); border: none; border-radius: 20px; padding: 50px 40px; box-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.4); display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
+    .review-avatar { width: 80px; height: 80px; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; color: rgba(255, 255, 255, 0.6); font-size: 70px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+    .quote-mark { color: rgba(255, 255, 255, 0.2); font-size: 35px; margin-bottom: 20px; }
+    .review-card p { font-size: 18px; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 2; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
+    
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; width: 55px; height: 55px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; color: white; font-size: 22px; z-index: 10; transition: 0.3s; }
+    .carousel-btn:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.4); transform: translateY(-50%) scale(1.05); }
+    .btn-prev { right: -30px; } 
+    .btn-next { left: -30px; } 
+    .hidden-btn { opacity: 0; pointer-events: none; }
 
-        .card { 
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 15px; 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
-            transition: 0.4s; 
-            overflow: hidden; 
-        }
-        .card:hover { 
-            transform: translateY(-5px); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)); 
-        }
-        .card-img { width: 100%; height: 380px; object-fit: cover; background: #222; transition: transform 0.5s ease; }
-        .card:hover .card-img { transform: scale(1.05); }
-        .card-info { padding: 25px; text-align: center; }
-        .card-title { font-size: 24px; margin-bottom: 5px; font-weight: 700; }
-        .card-desc { font-size: 14px; opacity: 0.7; margin-bottom: 10px; }
-        .price-value { font-size: 24px; font-weight: 700; }
-        .old-price { font-size: 16px; text-decoration: line-through; opacity: 0.5; margin-right: 8px; font-weight: 400; }
-        .btn-view { display: block; width: 100%; padding: 14px; background: var(--main); text-decoration: none; font-weight: 700; text-align: center; transition: 0.2s; }
-        .btn-view:active { transform: scale(0.97); filter: brightness(0.8); }
-
-        /* قسم أراء العملاء */
-.testimonials-sec { 
-    padding: 10px 5% 60px; /* خلينا اللي فوق 10 بيكسل بس، وسبنا اللي تحت 60 عشان شكل الموقع */
-    overflow: hidden; 
-    background-color: transparent; 
-    position: relative; 
-    margin-top: 10px; /* قللنا المسافة الخارجية جداً */
-}
-
-        .carousel-wrapper { position: relative; max-width: 900px; margin: 0 auto; direction: rtl; padding: 20px 0; z-index: 1;}
-        .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform; }
-        .testimonial-slide { flex: 0 0 100%; width: 100%; box-sizing: border-box; padding: 0 15px; }
-        
-        .review-card { 
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); 
-            backdrop-filter: blur(15px); 
-            border: none; 
-            border-radius: 20px; 
-            padding: 50px 40px; 
-            box-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.4); 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
-        
-        .review-avatar { 
-            width: 80px; 
-            height: 80px; 
-            background-color: rgba(255, 255, 255, 0.1); 
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: flex-end; 
-            overflow: hidden;
-            color: rgba(255, 255, 255, 0.6); 
-            font-size: 70px; 
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .quote-mark { color: rgba(255, 255, 255, 0.2); font-size: 35px; margin-bottom: 20px; }
-        .review-card p { font-size: 18px; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 2; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
-        
-        .carousel-btn { 
-            position: absolute; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            border-radius: 50%; 
-            width: 55px; 
-            height: 55px; 
-            cursor: pointer; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            color: white; 
-            font-size: 22px; 
-            z-index: 10;
-            transition: 0.3s;
-        }
-        .carousel-btn:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.4); transform: translateY(-50%) scale(1.05); }
-        .btn-prev { right: -30px; } 
-        .btn-next { left: -30px; } 
-
-        /* إخفاء الأزرار عند الأطراف */
-        .hidden-btn { opacity: 0; pointer-events: none; }
-
-        @media (max-width: 768px) {
-            .carousel-btn { display: none; }
-            .review-card { padding: 40px 20px; }
-            .review-card p { font-size: 16px; line-height: 1.8;}
-        }
-
-        @media (max-width: 480px) {
-            .card-img { height: 320px; }
-            .container { grid-template-columns: 1fr; }
-        }
-    </style>
+    @media (max-width: 768px) { .carousel-btn { display: none; } .review-card { padding: 40px 20px; } .review-card p { font-size: 16px; line-height: 1.8;} }
+    @media (max-width: 480px) { .card-img { height: 320px; } .container { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
@@ -234,244 +98,173 @@
         });
 </script>
 
-<section class="hero">
-    <h1>ليـل</h1>
-    <a href="contact.html" class="hero-btn">تواصل معنا</a>
-</section>
+<main>
+    <section class="hero">
+        <h1>ليـل</h1>
+        <a href="contact.html" class="hero-btn">تواصل معنا</a>
+    </section>
 
-<!-- قسم عروض الوايت فرايدي -->
-<div class="sub-title">عروض الوايت فرايدي</div>
-<div class="line-divider"></div>
-<div class="container">
-    <div class="card">
-        <img src="offerwf1-1.webp" class="card-img" alt="عرض الوايت فرايدي 1" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">عرض الوايت فرايدي 1</h3>
-            <p class="card-desc">2 بادي سبلاش + 2 مخمرية</p>
-            <div style="margin-bottom: 20px;">
-                <span class="price-value">80 ج.م</span>
-                <span class="old-price">120 ج.م</span>
-            </div>
-            <a href="offer-wf1.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="offerwf2.webp" class="card-img" alt="عرض الوايت فرايدي 2" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">عرض الوايت فرايدي 2</h3>
-            <p class="card-desc">مجموعة بادي سبلاش</p>
-            <div style="margin-bottom: 20px;">
-                <span class="price-value">100 ج.م</span>
-                <span class="old-price">150 ج.م</span>
-            </div>
-            <a href="offer-wf2.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-</div>
-
-<div class="sub-title">بادي سبلاش</div>
-<div class="line-divider"></div>
-<div class="container">
-    <div class="card">
-        <img src="SPLASH_9703.webp" class="card-img" alt="دم الغزال" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">دم الغزال</h3>
-            <p class="card-desc">عطر من الخيال</p>
-            <div style="margin-bottom: 20px;">
-                <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
-                <span class="price-value">35 ج.م</span>
-            </div>
-            <a href="splash-d.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="SPLASH_9704.webp" class="card-img" alt="سراب" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">سراب</h3>
-            <p class="card-desc">أثر لا يغيب</p>
-            <div style="margin-bottom: 20px;">
-                <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
-                <span class="price-value">35 ج.م</span>
-            </div>
-            <a href="splash-s.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="ATHER_5ml.webp" class="card-img" alt="أثر" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">أثر</h3>
-            <p class="card-desc">أثراً لا ينسى</p>
-            <div style="margin-bottom: 20px;">
-                <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
-                <span class="price-value">35 ج.م</span>
-            </div>
-            <a href="splash-a.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="HELM_5ml.webp" class="card-img" alt="حلم" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">حلم</h3>
-            <p class="card-desc">عالم من الخيال</p>
-            <div style="margin-bottom: 20px;">
-                <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
-                <span class="price-value">35 ج.م</span>
-            </div>
-            <a href="splash-h.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-</div>
-
-<div class="sub-title">مخمريات</div>
-<div class="line-divider"></div>
-<div class="container">
-    <div class="card">
-        <img src="FIMG9626WEB.webp" class="card-img" alt="دم الغزال" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">دم الغزال</h3>
-            <p class="card-desc">عطر من الخيال</p>
-            <div style="margin-bottom: 20px;">
-                <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
-                <span class="price-value">30 ج.م</span>
-            </div>
-            <a href="product-dam.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="FIMG9631WEB.webp" class="card-img" alt="سراب" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">سراب</h3>
-            <p class="card-desc">أثر لا يغيب</p>
-            <div style="margin-bottom: 20px;">
-                <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
-                <span class="price-value">30 ج.م</span>
-            </div>
-            <a href="product-sarab.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-</div>
-
-<div class="sub-title">زبدة كاكاو</div>
-<div class="line-divider"></div>
-<div class="container" style="padding-bottom: 40px;">
-    <div class="card">
-        <img src="Lip1_5gm.webp" class="card-img" alt="زبدة كاكاو فانيليا" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">فانيليا</h3>
-            <p class="card-desc">منتج طبيعي 100%</p>
-            <div style="margin-bottom: 20px;">
-                <span class="price-value">35 ج.م</span>
-            </div>
-            <a href="Lip-Balm-1.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="Lip2_5gm.webp" class="card-img" alt="زبدة كاكاو فراولة" loading="lazy">
-        <div class="card-info">
-            <h3 class="card-title">فراولة</h3>
-            <p class="card-desc">منتج طبيعي 100%</p>
-            <div style="margin-bottom: 20px;">
-                <span class="price-value">35 ج.م</span>
-            </div>
-            <a href="Lip-Balm-2.html" class="btn-view">عرض المزيد</a>
-        </div>
-    </div>
-</div>
-
-<!-- قسم آراء عملائنا -->
-<div class="sub-title">آراء عملائنا</div>
-<div class="line-divider"></div>
-<section class="testimonials-sec" id="testimonials">
-    <div class="carousel-wrapper" id="carouselWrapper">
-        
-        <button class="carousel-btn btn-prev" id="btnPrev"><i class="fas fa-chevron-right"></i></button>
-        <button class="carousel-btn btn-next" id="btnNext"><i class="fas fa-chevron-left"></i></button>
-        
-        <div class="carousel-track" id="sliderTrack">
-            
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>أنا دخلت أجرب لقيت نفسي أدمنت 😂 ريحتها تحفه وناعمة كده مش بتخنق خالص ❤️❤️</p>
+    <!-- قسم عروض الوايت فرايدي -->
+    <h2 class="sub-title">عروض الوايت فرايدي</h2>
+    <div class="line-divider"></div>
+    <div class="container">
+        <div class="card">
+            <img src="offerwf1-1.webp" class="card-img" alt="عرض الوايت فرايدي 1" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">عرض الوايت فرايدي 1</h3>
+                <p class="card-desc">2 بادي سبلاش + 2 مخمرية</p>
+                <div style="margin-bottom: 20px;">
+                    <span class="price-value">80 ج.م</span>
+                    <span class="old-price">120 ج.م</span>
                 </div>
+                <a href="offer-wf1.html" class="btn-view">عرض المزيد</a>
             </div>
-
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>ميرسى لزوؤقك جدااا الاوردر وصلنى واتشرفت بيكى اوووى وبجد المخمرية نحفة تحفة ريحتها تجنن. وزوؤقك ف اختيار المخمرية يجنن منحرمش من زوؤقك ياقمراية. مش هيبقى اخر تعامل باذن الله</p>
+        </div>
+        <div class="card">
+            <img src="offerwf2.webp" class="card-img" alt="عرض الوايت فرايدي 2" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">عرض الوايت فرايدي 2</h3>
+                <p class="card-desc">مجموعة بادي سبلاش</p>
+                <div style="margin-bottom: 20px;">
+                    <span class="price-value">100 ج.م</span>
+                    <span class="old-price">150 ج.م</span>
                 </div>
+                <a href="offer-wf2.html" class="btn-view">عرض المزيد</a>
             </div>
-
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>هيا ايييييه المخمرية ددددددى خطييييرة</p>
-                </div>
-            </div>
-
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>خطيره بجد تستحق التجربة 🥰❤️❤️</p>
-                </div>
-            </div>
-
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>خطيره بجد وريحتها خطيره وسعرها كتكوت 🤍🤍🤍😻</p>
-                </div>
-            </div>
-
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>تحفه اوي بجد بترطب ترطيب خطير وريحتها جميله اوي وثابته 💗💗💗💗💗💗</p>
-                </div>
-            </div>
-
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>مشاءالله تبارك الرحمن ربنا يحسن مابين ايديكي يحبيبتى تحفه وثابتها قوى جدا جدا</p>
-                </div>
-            </div>
-
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>تحفه تحفه تحفه بجد اتمني يكون في منتجات تاني. زي كده</p>
-                </div>
-            </div>
-            
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>كلمه تحفه دي قليله والله و ريحه وثبات وترطيب كلهم احلى من بعض بجد 😂❤️ كل ده والسعر بسيط اصلا شكرا جدا على التحفه دي</p>
-                </div>
-            </div>
-            
-            <div class="testimonial-slide">
-                <div class="review-card">
-                    <div class="review-avatar"><i class="fas fa-user"></i></div>
-                    <i class="fas fa-quote-right quote-mark"></i>
-                    <p>تحفه بجد ريحه وثبات حلو اوي ❤️❤️❤️❤️</p>
-                </div>
-            </div>
-
         </div>
     </div>
-</section>
+
+    <h2 class="sub-title">بادي سبلاش</h2>
+    <div class="line-divider"></div>
+    <div class="container">
+        <div class="card">
+            <img src="SPLASH_9703.webp" class="card-img" alt="دم الغزال" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">دم الغزال</h3>
+                <p class="card-desc">عطر من الخيال</p>
+                <div style="margin-bottom: 20px;">
+                    <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
+                    <span class="price-value">35 ج.م</span>
+                </div>
+                <a href="splash-d.html" class="btn-view">عرض المزيد</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="SPLASH_9704.webp" class="card-img" alt="سراب" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">سراب</h3>
+                <p class="card-desc">أثر لا يغيب</p>
+                <div style="margin-bottom: 20px;">
+                    <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
+                    <span class="price-value">35 ج.م</span>
+                </div>
+                <a href="splash-s.html" class="btn-view">عرض المزيد</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="ATHER_5ml.webp" class="card-img" alt="أثر" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">أثر</h3>
+                <p class="card-desc">أثراً لا ينسى</p>
+                <div style="margin-bottom: 20px;">
+                    <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
+                    <span class="price-value">35 ج.م</span>
+                </div>
+                <a href="splash-a.html" class="btn-view">عرض المزيد</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="HELM_5ml.webp" class="card-img" alt="حلم" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">حلم</h3>
+                <p class="card-desc">عالم من الخيال</p>
+                <div style="margin-bottom: 20px;">
+                    <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
+                    <span class="price-value">35 ج.م</span>
+                </div>
+                <a href="splash-h.html" class="btn-view">عرض المزيد</a>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="sub-title">مخمريات</h2>
+    <div class="line-divider"></div>
+    <div class="container">
+        <div class="card">
+            <img src="FIMG9626WEB.webp" class="card-img" alt="دم الغزال" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">دم الغزال</h3>
+                <p class="card-desc">عطر من الخيال</p>
+                <div style="margin-bottom: 20px;">
+                    <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
+                    <span class="price-value">30 ج.م</span>
+                </div>
+                <a href="product-dam.html" class="btn-view">عرض المزيد</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="FIMG9631WEB.webp" class="card-img" alt="سراب" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">سراب</h3>
+                <p class="card-desc">أثر لا يغيب</p>
+                <div style="margin-bottom: 20px;">
+                    <span style="font-size: 12px; opacity: 0.6; display: block;">يبدأ من</span>
+                    <span class="price-value">30 ج.م</span>
+                </div>
+                <a href="product-sarab.html" class="btn-view">عرض المزيد</a>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="sub-title">زبدة كاكاو</h2>
+    <div class="line-divider"></div>
+    <div class="container" style="padding-bottom: 40px;">
+        <div class="card">
+            <img src="Lip1_5gm.webp" class="card-img" alt="زبدة كاكاو فانيليا" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">فانيليا</h3>
+                <p class="card-desc">منتج طبيعي 100%</p>
+                <div style="margin-bottom: 20px;">
+                    <span class="price-value">35 ج.م</span>
+                </div>
+                <a href="Lip-Balm-1.html" class="btn-view">عرض المزيد</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="Lip2_5gm.webp" class="card-img" alt="زبدة كاكاو فراولة" loading="lazy">
+            <div class="card-info">
+                <h3 class="card-title">فراولة</h3>
+                <p class="card-desc">منتج طبيعي 100%</p>
+                <div style="margin-bottom: 20px;">
+                    <span class="price-value">35 ج.م</span>
+                </div>
+                <a href="Lip-Balm-2.html" class="btn-view">عرض المزيد</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم آراء عملائنا -->
+    <h2 class="sub-title">آراء عملائنا</h2>
+    <div class="line-divider"></div>
+    <section class="testimonials-sec" id="testimonials">
+        <div class="carousel-wrapper" id="carouselWrapper">
+            <button class="carousel-btn btn-prev" id="btnPrev" aria-label="السابق"><i class="fas fa-chevron-right"></i></button>
+            <button class="carousel-btn btn-next" id="btnNext" aria-label="التالي"><i class="fas fa-chevron-left"></i></button>
+            <div class="carousel-track" id="sliderTrack">
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>أنا دخلت أجرب لقيت نفسي أدمنت 😂 ريحتها تحفه وناعمة كده مش بتخنق خالص ❤️❤️</p></div></div>
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>ميرسى لزوؤقك جدااا الاوردر وصلنى واتشرفت بيكى اوووى وبجد المخمرية نحفة تحفة ريحتها تجنن. وزوؤقك ف اختيار المخمرية يجنن منحرمش من زوؤقك ياقمراية.</p></div></div>
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>هيا ايييييه المخمرية ددددددى خطييييرة</p></div></div>
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>خطيره بجد تستحق التجربة 🥰❤️❤️</p></div></div>
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>خطيره بجد وريحتها خطيره وسعرها كتكوت 🤍🤍🤍😻</p></div></div>
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>تحفه اوي بجد بترطب ترطيب خطير وريحتها جميله اوي وثابته 💗💗💗💗💗💗</p></div></div>
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>مشاءالله تبارك الرحمن ربنا يحسن مابين ايديكي يحبيبتى تحفه وثابتها قوى جدا جدا</p></div></div>
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>تحفه تحفه تحفه بجد اتمني يكون في منتجات تاني. زي كده</p></div></div>
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>كلمه تحفه دي قليله والله و ريحه وثبات وترطيب كلهم احلى من بعض بجد 😂❤️ كل ده والسعر بسيط اصلا شكرا جدا على التحفه دي</p></div></div>
+                <div class="testimonial-slide"><div class="review-card"><div class="review-avatar"><i class="fas fa-user"></i></div><i class="fas fa-quote-right quote-mark"></i><p>تحفه بجد ريحه وثبات حلو اوي ❤️❤️❤️❤️</p></div></div>
+            </div>
+        </div>
+    </section>
+</main>
 
 <script>
     fetch('header.html')
@@ -499,23 +292,13 @@
     }
 </script>
 
-<a href="https://wa.me/201037322374" class="whatsapp-float" target="_blank">
+<a href="https://wa.me/201037322374" class="whatsapp-float" target="_blank" aria-label="تواصل معنا عبر واتساب">
     <svg viewBox="0 0 24 24" fill="white" width="35" height="35">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.955c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.549 4.142 1.594 5.945L0 24l6.333-1.666a11.85 11.85 0 005.718 1.457h.005c6.555 0 11.89-5.335 11.894-11.893a11.82 11.82 0 00-3.475-8.411z"/>
     </svg>
 </a>
 
 <script>
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    });
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-
-    // سكريبت سلايدر أراء العملاء
     const sliderTrack = document.getElementById('sliderTrack');
     const slides = document.querySelectorAll('.testimonial-slide');
     const btnNext = document.getElementById('btnNext');
