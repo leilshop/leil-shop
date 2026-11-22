@@ -62,7 +62,7 @@
 
         /* ستايل الـ Custom Alert */
         .leil-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--bg); border: 1px solid rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; z-index: 9999; width: 90%; max-width: 400px; }
-        .leil-alert p { margin-bottom: 20px; font-size: 16px; color: white; }
+        .leil-alert p { margin-bottom: 20px; font-size: 16px; color: white; line-height: 1.6; }
         .leil-alert button { background: var(--main); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
         .coupon-box { display: flex; gap: 10px; margin-top: 5px; }
@@ -182,7 +182,7 @@
     <div class="summary-details">
         <div class="summary-line"><span>المشتريات:</span> <span id="subtotal">0</span></div>
         <div id="discount-row" class="discount-row">
-            <span>الخصم (10%):</span> <span style="direction: ltr; display: inline-block;">-<span id="discount-amount">0</span></span>
+            <span id="discount-label">الخصم:</span> <span style="direction: ltr; display: inline-block;">-<span id="discount-amount">0</span></span>
         </div>
         <div class="summary-line"><span>التوصيل:</span> <span id="ship_cost">30</span></div>
         <div class="total-line"><span>الإجمالي:</span> <span><span id="total_amount">0</span></span></div>
@@ -224,7 +224,7 @@
         document.getElementById('leil-alert').style.display = 'none';
     }
 
-    let isCouponApplied = false;
+    let appliedCoupon = null;
     const SHEET_URL = "https://script.google.com/macros/s/AKfycby0_h1h_G70aZ7iDII3Xsy-cmlWRKZmZbePY4fpclNDqGnTwvqtS_iGJ5b6iAhggrxf/exec";
 
     fetch('header.html')
@@ -233,35 +233,93 @@
             document.getElementById('header-container').innerHTML = data;
         });
 
+    function isOfferItem(key) {
+        return key.includes("عرض");
+    }
+
+    function getCartTotals() {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        let totalSub = 0;
+        let productsSub = 0;
+        let hasOffers = false;
+
+        Object.keys(cart).forEach(key => {
+            let itemData = cart[key];
+            let q = typeof itemData === 'object' ? itemData.qty : itemData;
+            let p = typeof itemData === 'object' ? itemData.price : 30;
+            let lineTotal = p * q;
+            totalSub += lineTotal;
+
+            if (isOfferItem(key)) {
+                hasOffers = true;
+            } else {
+                productsSub += lineTotal;
+            }
+        });
+
+        return { totalSub, productsSub, hasOffers };
+    }
+
     function applyCoupon() {
         const code = document.getElementById('coupon_code').value.trim().toUpperCase();
         const inputField = document.getElementById('coupon_code');
-        const sub = parseInt(document.getElementById('subtotal').innerText) || 0;
-        
-        if (code !== "LEIL2026") {
-            isCouponApplied = false;
-            inputField.classList.remove('coupon-success');
-            inputField.classList.add('coupon-error');
-            inputField.value = ""; 
-            showLeilAlert("كود الخصم غير صحيح");
+        const { totalSub, productsSub, hasOffers } = getCartTotals();
+
+        if (totalSub === 0) {
+            appliedCoupon = null;
+            inputField.classList.remove('coupon-success', 'coupon-error');
+            showLeilAlert("السلة فارغة حالياً، أضف منتجات أولاً.");
             updateTotal();
             return;
         }
 
-        if (sub < 100) {
-            isCouponApplied = false;
-            inputField.classList.remove('coupon-success');
-            inputField.classList.add('coupon-error');
-            inputField.value = ""; 
-            showLeilAlert("عذراً، الحد الأدنى لتطبيق<br>الخصم هو 100 جنيه.");
+        if (code === "LEIL25") {
+            if (productsSub <= 0) {
+                appliedCoupon = null;
+                inputField.classList.remove('coupon-success');
+                inputField.classList.add('coupon-error');
+                inputField.value = "";
+                showLeilAlert("عذراً، كود الخصم لا يسري على العروض.<br>يمكنك استخدامه على المنتجات الفردية فقط.");
+                updateTotal();
+                return;
+            }
+
+            appliedCoupon = "LEIL25";
+            inputField.classList.remove('coupon-error');
+            inputField.classList.add('coupon-success');
+            if (hasOffers) {
+                showLeilAlert("تم تطبيق خصم 25% على المنتجات بنجاح!<br>(ملحوظة: الخصم لا يشمل العروض)");
+            } else {
+                showLeilAlert("تم تطبيق خصم 25% بنجاح!");
+            }
             updateTotal();
             return;
         }
 
-        isCouponApplied = true;
-        inputField.classList.remove('coupon-error');
-        inputField.classList.add('coupon-success');
-        showLeilAlert("تم تطبيق خصم 10% بنجاح!");
+        if (code === "LEIL2026") {
+            if (totalSub < 100) {
+                appliedCoupon = null;
+                inputField.classList.remove('coupon-success');
+                inputField.classList.add('coupon-error');
+                inputField.value = "";
+                showLeilAlert("عذراً، الحد الأدنى لتطبيق<br>الخصم هو 100 جنيه.");
+                updateTotal();
+                return;
+            }
+
+            appliedCoupon = "LEIL2026";
+            inputField.classList.remove('coupon-error');
+            inputField.classList.add('coupon-success');
+            showLeilAlert("تم تطبيق خصم 10% بنجاح!");
+            updateTotal();
+            return;
+        }
+
+        appliedCoupon = null;
+        inputField.classList.remove('coupon-success');
+        inputField.classList.add('coupon-error');
+        inputField.value = "";
+        showLeilAlert("كود الخصم غير صحيح");
         updateTotal();
     }
 
@@ -275,6 +333,10 @@
                 <a href="/" style="display:block; text-align:center; margin-top:20px; color:white; text-decoration:underline;">استمر في التسوق</a>
             `;
             document.getElementById('subtotal').innerText = "0";
+            appliedCoupon = null;
+            const couponInput = document.getElementById('coupon_code');
+            couponInput.value = "";
+            couponInput.classList.remove('coupon-success', 'coupon-error');
             updateTotal();
             return;
         }
@@ -316,29 +378,49 @@
     }
 
     function updateTotal() {
-        const sub = parseInt(document.getElementById('subtotal').innerText) || 0;
+        const { totalSub, productsSub, hasOffers } = getCartTotals();
         const ship = parseInt(document.getElementById('cust_city').value) || 0;
         const discountRow = document.getElementById('discount-row');
+        const discountLabel = document.getElementById('discount-label');
         const couponInput = document.getElementById('coupon_code');
         let discount = 0;
 
-        if (isCouponApplied && sub < 100) {
-            isCouponApplied = false;
-            discountRow.style.display = 'none';
-            couponInput.value = "";
-            showLeilAlert("تم إلغاء الخصم لأن إجمالي المشتريات<br>أصبح أقل من 100 جنيه.");
-        }
-
-        if (isCouponApplied && sub >= 100) {
-            discount = Math.floor(sub * 0.10);
-            discountRow.style.display = 'grid';
-            document.getElementById('discount-amount').innerText = discount;
+        if (appliedCoupon === "LEIL2026") {
+            if (totalSub < 100) {
+                appliedCoupon = null;
+                discountRow.style.display = 'none';
+                couponInput.value = "";
+                couponInput.classList.remove('coupon-success', 'coupon-error');
+                if (totalSub > 0) {
+                    showLeilAlert("تم إلغاء الخصم لأن إجمالي المشتريات<br>أصبح أقل من 100 جنيه.");
+                }
+            } else {
+                discount = Math.floor(totalSub * 0.10);
+                discountLabel.innerText = "الخصم (10%):";
+                discountRow.style.display = 'grid';
+                document.getElementById('discount-amount').innerText = discount;
+            }
+        } else if (appliedCoupon === "LEIL25") {
+            if (productsSub <= 0) {
+                appliedCoupon = null;
+                discountRow.style.display = 'none';
+                couponInput.value = "";
+                couponInput.classList.remove('coupon-success', 'coupon-error');
+                if (totalSub > 0) {
+                    showLeilAlert("تم إلغاء كود الخصم لأن السلة تحتوي على عروض فقط.<br>الكود يسري على المنتجات الفردية فقط.");
+                }
+            } else {
+                discount = Math.floor(productsSub * 0.25);
+                discountLabel.innerText = hasOffers ? "الخصم (25% على المنتجات):" : "الخصم (25%):";
+                discountRow.style.display = 'grid';
+                document.getElementById('discount-amount').innerText = discount;
+            }
         } else {
             discountRow.style.display = 'none';
         }
 
         document.getElementById('ship_cost').innerText = ship;
-        document.getElementById('total_amount').innerText = (sub - discount) + ship;
+        document.getElementById('total_amount').innerText = (totalSub - discount) + ship;
     }
 
     function submitOrder() {
@@ -346,21 +428,34 @@
         const phone = document.getElementById('cust_phone').value;
         const address = document.getElementById('cust_address').value;
         const city = document.getElementById("select-selected").innerText;
-        const total = document.getElementById('total_amount').innerText;
         const couponInput = document.getElementById('coupon_code').value.trim();
-        
-        if(!name || !phone || !address) return showLeilAlert("من فضلك أكمل البيانات");
-        
-        if (couponInput !== "" && couponInput.toUpperCase() !== "LEIL2026") {
-            showLeilAlert("كود الخصم غير صحيح");
-            document.getElementById('coupon_code').value = ""; 
-            return; 
-        }
+        const upperCoupon = couponInput.toUpperCase();
         
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        if (Object.keys(cart).length === 0) return showLeilAlert("السلة فارغة حالياً");
+        if (!name || !phone || !address) return showLeilAlert("من فضلك أكمل البيانات");
+        
+        if (couponInput !== "") {
+            if (upperCoupon !== "LEIL2026" && upperCoupon !== "LEIL25") {
+                showLeilAlert("كود الخصم غير صحيح");
+                document.getElementById('coupon_code').value = "";
+                appliedCoupon = null;
+                updateTotal();
+                return;
+            }
+            if (appliedCoupon !== upperCoupon) {
+                applyCoupon();
+                return;
+            }
+        } else if (appliedCoupon !== null) {
+            appliedCoupon = null;
+            updateTotal();
+        }
+
+        const total = document.getElementById('total_amount').innerText;
         let orderString = Object.keys(cart).map(k => `${k} (${typeof cart[k] === 'object' ? cart[k].qty : cart[k]})`).join(' | ');
 
-        const finalUrl = `${SHEET_URL}?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&city=${encodeURIComponent(city)}&address=${encodeURIComponent(address)}&order=${encodeURIComponent(orderString)}&total=${encodeURIComponent(total + " ج.م")}&coupon=${encodeURIComponent(couponInput)}`;
+        const finalUrl = `${SHEET_URL}?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&city=${encodeURIComponent(city)}&address=${encodeURIComponent(address)}&order=${encodeURIComponent(orderString)}&total=${encodeURIComponent(total + " ج.م")}&coupon=${encodeURIComponent(appliedCoupon || "")}`;
         
         const btn = document.getElementById('submit-btn');
         btn.innerHTML = '<span class="spinner"></span> جاري إتمام الطلب...';
