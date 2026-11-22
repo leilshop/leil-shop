@@ -35,9 +35,10 @@
         .cart-container h1 { margin-bottom: 60px; }
         
         .cart-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 15px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; border-radius: 8px; }
-        .item-info { display: flex; align-items: center; overflow: hidden; }
+        .item-info { display: flex; align-items: center; overflow: hidden; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; }
+        .item-info:hover .item-text h3 { text-decoration: underline; opacity: 0.85; }
         .item-text { margin-right: 15px; min-width: 0; }
-        .item-text h3 { font-size: 15px; line-height: 1.4; word-wrap: break-word; }
+        .item-text h3 { font-size: 15px; line-height: 1.4; word-wrap: break-word; transition: 0.2s; }
         .item-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
         .qty-controls { display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; flex-shrink: 0; }
         .qty-btn { background: white; color: black; border: none; width: 27px; height: 27px; cursor: pointer; font-weight: bold; font-size: 16px; }
@@ -237,6 +238,55 @@
         return key.includes("عرض");
     }
 
+    // تحديد رابط صفحة المنتج أو العرض تلقائياً
+    function getProductUrl(key, img, itemData) {
+        if (typeof itemData === 'object' && itemData.url) return itemData.url;
+
+        const k = (key || "").trim();
+        const imgLower = (img || "").toLowerCase();
+
+        // 1. العروض
+        if (k.includes("عرض الوايت فرايدي 1") || k.includes("عرض التوفير 1") || imgLower.includes("offerwf1") || imgLower.includes("offer50")) {
+            return "offer-wf1.html";
+        }
+        if (k.includes("عرض الوايت فرايدي 2") || k.includes("عرض التوفير 2") || imgLower.includes("offerwf2") || imgLower.includes("offer100")) {
+            return "offer-wf2.html";
+        }
+
+        // 2. زبدة الكاكاو
+        if (k.includes("فانيلي") || k.includes("فانيلا") || imgLower.includes("lip1")) {
+            return "Lip-Balm-1.html";
+        }
+        if (k.includes("فراول") || imgLower.includes("lip2")) {
+            return "Lip-Balm-2.html";
+        }
+
+        // 3. بادي سبلاش
+        if (k.includes("أثر") || k.includes("اثر") || imgLower.includes("ather")) {
+            return "splash-a.html";
+        }
+        if (k.includes("حلم") || imgLower.includes("helm")) {
+            return "splash-h.html";
+        }
+        if (imgLower.includes("9703") || ((k.includes("سبلاش") || imgLower.includes("splash") || k.includes("مل")) && k.includes("دم الغزال"))) {
+            return "splash-d.html";
+        }
+        if (imgLower.includes("9704") || ((k.includes("سبلاش") || imgLower.includes("splash") || k.includes("مل")) && k.includes("سراب"))) {
+            return "splash-s.html";
+        }
+
+        // 4. المخمريات
+        if (imgLower.includes("9626") || k.includes("دم الغزال")) {
+            return "product-dam.html";
+        }
+        if (imgLower.includes("9631") || k.includes("سراب")) {
+            return "product-sarab.html";
+        }
+
+        // افتراضي: الصفحة الرئيسية
+        return "index.html";
+    }
+
     function getCartTotals() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let totalSub = 0;
@@ -348,16 +398,17 @@
             let q = typeof itemData === 'object' ? itemData.qty : itemData;
             let p = typeof itemData === 'object' ? itemData.price : 30;
             let img = typeof itemData === 'object' && itemData.img ? itemData.img : '';
+            let productUrl = getProductUrl(key, img, itemData);
             sub += p * q;
             list.innerHTML += `
             <div class="cart-item">
-                <div class="item-info">
+                <a href="${productUrl}" class="item-info">
                     <img src="${img}" class="item-img" onerror="this.style.display='none'">
                     <div class="item-text">
                         <h3>${key}</h3>
                         <p>${p} ج.م</p>
                     </div>
-                </div>
+                </a>
                 <div class="qty-controls">
                     <button class="qty-btn" onclick="editQty('${key}', 1)">+</button>
                     <span class="qty-val">${q}</span>
