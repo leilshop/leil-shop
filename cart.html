@@ -113,7 +113,7 @@
             <div class="custom-select-wrapper">
                 <div class="select-selected" id="select-selected">الإسماعيلية</div>
                 <div class="select-items" id="select-items">
-                    <div data-value="30">الإسماعيلية</div>
+                    <div data-value="35">الإسماعيلية</div>
                     <div data-value="100">القاهرة</div>
                     <div data-value="100">الجيزة</div>
                     <div data-value="100">الإسكندرية</div>
@@ -200,6 +200,16 @@
 </div>
 
 <script>
+    // =========================================================================
+    // ⚙️ منطقة تعديل أكواد الخصم (اضبط الأكواد ونسبة الخصم من هنا بسهولة جداً)
+    // تقدر تضيف أي كود جديد بنفس الطريقة: "اسم الكود": نسبة الخصم
+    // =========================================================================
+    const DISCOUNT_CODES = {
+        "LEIL25": 25,     // كود LEIL25 بيعمل خصم 25% (ممكن تغير الرقم ده لو حابب تخليه 30 أو 50 مثلاً)
+        // "WINTER50": 50 // لو عايز تضيف كود جديد شيل الـ // اللي في الأول واكتب اسم الكود ونسبته هنا
+    };
+    // =========================================================================
+
     const selected = document.getElementById("select-selected");
     const items = document.getElementById("select-items");
     const realSelect = document.getElementById("cust_city");
@@ -247,23 +257,18 @@
         const k = String(key || "").trim();
         const imgLower = String(img || "").toLowerCase();
 
-        // 1. العروض
         if (k.includes("عرض الوايت فرايدي 1") || k.includes("عرض التوفير 1") || imgLower.includes("offerwf1") || imgLower.includes("offer50")) {
             return "offer-wf1.html";
         }
         if (k.includes("عرض الوايت فرايدي 2") || k.includes("عرض التوفير 2") || imgLower.includes("offerwf2") || imgLower.includes("offer100")) {
             return "offer-wf2.html";
         }
-
-        // 2. زبدة الكاكاو
         if (k.includes("فانيلي") || k.includes("فانيلا") || imgLower.includes("lip1")) {
             return "Lip-Balm-1.html";
         }
         if (k.includes("فراول") || imgLower.includes("lip2")) {
             return "Lip-Balm-2.html";
         }
-
-        // 3. بادي سبلاش
         if (k.includes("أثر") || k.includes("اثر") || imgLower.includes("ather")) {
             return "splash-a.html";
         }
@@ -276,8 +281,6 @@
         if (imgLower.includes("9704") || ((k.includes("سبلاش") || imgLower.includes("splash") || k.includes("مل")) && k.includes("سراب"))) {
             return "splash-s.html";
         }
-
-        // 4. المخمريات
         if (imgLower.includes("9626") || k.includes("دم الغزال")) {
             return "product-dam.html";
         }
@@ -312,70 +315,64 @@
         return { totalSub, productsSub, hasOffers };
     }
 
-    function applyCoupon() {
+    // الدالة المسؤولة عن تفعيل الخصم
+    function applyCoupon(isAutoLoad = false) {
         const inputField = document.getElementById('coupon_code');
         const code = inputField.value.trim().toUpperCase();
         const { totalSub, productsSub, hasOffers } = getCartTotals();
 
+        if (code === "") {
+            removeCoupon();
+            return;
+        }
+
         if (totalSub <= 0) {
-            appliedCoupon = null;
-            inputField.classList.remove('coupon-success', 'coupon-error');
-            renderCart();
-            showLeilAlert("السلة فارغة حالياً، أضف منتجات أولاً.");
+            removeCoupon();
+            if (!isAutoLoad) showLeilAlert("السلة فارغة حالياً، أضف منتجات أولاً.");
             return;
         }
 
-        if (code === "LEIL25") {
+        // لو الكود مكتوب وموجود في القائمة اللي فوق (DISCOUNT_CODES)
+        if (DISCOUNT_CODES.hasOwnProperty(code)) {
             if (productsSub <= 0) {
-                appliedCoupon = null;
-                inputField.classList.remove('coupon-success');
-                inputField.classList.add('coupon-error');
-                inputField.value = "";
-                renderCart();
-                showLeilAlert("عذراً، كود الخصم لا يسري على العروض.<br>يمكنك استخدامه على المنتجات الفردية فقط.");
+                removeCoupon();
+                if (!isAutoLoad) showLeilAlert("عذراً، كود الخصم لا يسري على العروض.<br>يمكنك استخدامه على المنتجات الفردية فقط.");
                 return;
             }
 
-            appliedCoupon = "LEIL25";
+            appliedCoupon = code;
+            localStorage.setItem('leilDiscountCode', code); // حفظ الكود في ذاكرة المتصفح
             inputField.classList.remove('coupon-error');
             inputField.classList.add('coupon-success');
-            renderCart();
-            if (hasOffers) {
-                showLeilAlert("تم تطبيق خصم 25% على المنتجات بنجاح!<br>(ملحوظة: الخصم لا يشمل العروض)");
-            } else {
-                showLeilAlert("تم تطبيق خصم 25% بنجاح!");
+            
+            let discountPercent = DISCOUNT_CODES[code];
+            
+            if (!isAutoLoad) {
+                if (hasOffers) {
+                    showLeilAlert(`تم تطبيق خصم ${discountPercent}% على المنتجات بنجاح!<br>(ملحوظة: الخصم لا يشمل العروض)`);
+                } else {
+                    showLeilAlert(`تم تطبيق خصم ${discountPercent}% بنجاح!`);
+                }
             }
-            return;
+            
+            updateTotal();
+            renderCartHTML();
+        } else {
+            removeCoupon();
+            if (!isAutoLoad) showLeilAlert("كود الخصم غير صحيح");
         }
-
-        if (code === "LEIL2026") {
-            if (totalSub < 100) {
-                appliedCoupon = null;
-                inputField.classList.remove('coupon-success');
-                inputField.classList.add('coupon-error');
-                inputField.value = "";
-                renderCart();
-                showLeilAlert("عذراً، الحد الأدنى لتطبيق<br>الخصم هو 100 جنيه.");
-                return;
-            }
-
-            appliedCoupon = "LEIL2026";
-            inputField.classList.remove('coupon-error');
-            inputField.classList.add('coupon-success');
-            renderCart();
-            showLeilAlert("تم تطبيق خصم 10% بنجاح!");
-            return;
-        }
-
-        appliedCoupon = null;
-        inputField.classList.remove('coupon-success');
-        inputField.classList.add('coupon-error');
-        inputField.value = "";
-        renderCart();
-        showLeilAlert("كود الخصم غير صحيح");
     }
 
-    function renderCart() {
+    function removeCoupon() {
+        appliedCoupon = null;
+        localStorage.removeItem('leilDiscountCode'); // مسح الكود من الذاكرة
+        const inputField = document.getElementById('coupon_code');
+        inputField.classList.remove('coupon-success');
+        updateTotal();
+        renderCartHTML();
+    }
+
+    function renderCartHTML() {
         let cartData = localStorage.getItem('leilCart');
         const list = document.getElementById('items-list');
         
@@ -385,11 +382,7 @@
                 <a href="/" style="display:block; text-align:center; margin-top:20px; color:white; text-decoration:underline;">استمر في التسوق</a>
             `;
             document.getElementById('subtotal').innerText = "0";
-            appliedCoupon = null;
-            const couponInput = document.getElementById('coupon_code');
-            couponInput.value = "";
-            couponInput.classList.remove('coupon-success', 'coupon-error');
-            updateTotal();
+            removeCoupon();
             return;
         }
 
@@ -407,10 +400,11 @@
             let offerFlag = isOfferItem(key);
 
             let badgeHtml = "";
-            if (appliedCoupon === "LEIL25") {
+            if (appliedCoupon && DISCOUNT_CODES.hasOwnProperty(appliedCoupon)) {
+                let discountPercent = DISCOUNT_CODES[appliedCoupon];
                 badgeHtml = offerFlag
                     ? `<span class="item-offer-badge">(عرض - لا يشمله الكود)</span>`
-                    : `<span class="item-discount-badge">(مشمول بخصم 25%)</span>`;
+                    : `<span class="item-discount-badge">(مشمول بخصم ${discountPercent}%)</span>`;
             }
 
             sub += p * q;
@@ -432,7 +426,6 @@
         });
 
         document.getElementById('subtotal').innerText = sub;
-        updateTotal();
     }
 
     function editQty(k, d) {
@@ -445,7 +438,13 @@
             if (cart[k] <= 0) delete cart[k];
         }
         localStorage.setItem('leilCart', JSON.stringify(cart));
-        renderCart();
+        renderCartHTML();
+        updateTotal();
+        
+        // التحقق مرة تانية من الخصم لو السلة اتعدلت (لو مسح كل المنتجات وساب عروض مثلاً)
+        if (appliedCoupon) {
+            applyCoupon(true); 
+        }
     }
 
     function updateTotal() {
@@ -457,33 +456,19 @@
         const couponInput = document.getElementById('coupon_code');
         let discount = 0;
 
-        if (appliedCoupon === "LEIL2026") {
-            if (totalSub < 100) {
-                appliedCoupon = null;
-                if (discountRow) discountRow.style.display = 'none';
-                couponInput.value = "";
-                couponInput.classList.remove('coupon-success', 'coupon-error');
-                if (totalSub > 0) {
-                    showLeilAlert("تم إلغاء الخصم لأن إجمالي المشتريات<br>أصبح أقل من 100 جنيه.");
-                }
-            } else {
-                discount = Math.round(totalSub * 0.10);
-                if (discountLabel) discountLabel.innerText = "الخصم (10%):";
-                if (discountAmountEl) discountAmountEl.innerText = discount;
-                if (discountRow) discountRow.style.display = 'grid';
-            }
-        } else if (appliedCoupon === "LEIL25") {
+        if (appliedCoupon && DISCOUNT_CODES.hasOwnProperty(appliedCoupon)) {
             if (productsSub <= 0) {
+                // مفيش منتجات ينفع يتطبق عليها كود
                 appliedCoupon = null;
+                localStorage.removeItem('leilDiscountCode');
                 if (discountRow) discountRow.style.display = 'none';
                 couponInput.value = "";
                 couponInput.classList.remove('coupon-success', 'coupon-error');
-                if (totalSub > 0) {
-                    showLeilAlert("تم إلغاء كود الخصم لأن السلة تحتوي على عروض فقط.<br>الكود يسري على المنتجات الفردية فقط.");
-                }
             } else {
-                discount = Math.round(productsSub * 0.25);
-                if (discountLabel) discountLabel.innerText = hasOffers ? "الخصم (25% على المنتجات):" : "الخصم (25%):";
+                let discountPercent = DISCOUNT_CODES[appliedCoupon];
+                discount = Math.round(productsSub * (discountPercent / 100));
+                
+                if (discountLabel) discountLabel.innerText = hasOffers ? `الخصم (${discountPercent}% على المنتجات):` : `الخصم (${discountPercent}%):`;
                 if (discountAmountEl) discountAmountEl.innerText = discount;
                 if (discountRow) discountRow.style.display = 'grid';
             }
@@ -509,20 +494,16 @@
         if (!name || !phone || !address) return showLeilAlert("من فضلك أكمل البيانات");
         
         if (couponInput !== "") {
-            if (upperCoupon !== "LEIL2026" && upperCoupon !== "LEIL25") {
+            if (!DISCOUNT_CODES.hasOwnProperty(upperCoupon)) {
                 showLeilAlert("كود الخصم غير صحيح");
                 document.getElementById('coupon_code').value = "";
-                appliedCoupon = null;
-                renderCart();
+                removeCoupon();
                 return;
             }
             if (appliedCoupon !== upperCoupon) {
                 applyCoupon();
                 return;
             }
-        } else if (appliedCoupon !== null) {
-            appliedCoupon = null;
-            renderCart();
         }
 
         const total = document.getElementById('total_amount').innerText;
@@ -537,14 +518,32 @@
         fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
         .then(() => { 
             localStorage.removeItem('leilCart'); 
+            localStorage.removeItem('leilDiscountCode'); // مسح الكود بعد نجاح الطلب
             window.location.href = "thankyou.html";
         })
         .catch(() => { 
-            localStorage.removeItem('leilCart'); 
+            localStorage.removeItem('leilCart');
+            localStorage.removeItem('leilDiscountCode'); 
             window.location.href = "thankyou.html";
         });
     }
-    window.onload = renderCart;
+
+    // دالة بداية التحميل (لو في كود متسيف بيتم استدعاؤه تلقائياً)
+    window.onload = () => {
+        let savedCoupon = localStorage.getItem('leilDiscountCode');
+        if (savedCoupon && DISCOUNT_CODES.hasOwnProperty(savedCoupon)) {
+            document.getElementById('coupon_code').value = savedCoupon;
+            appliedCoupon = savedCoupon;
+        }
+        
+        renderCartHTML();
+        updateTotal();
+
+        // لو كان في كود متسيف، يعمل حساب للخصم من غير ما يطلع Alert مزعجة لليوزر وهو بيفتح الصفحة
+        if (savedCoupon) {
+            applyCoupon(true);
+        }
+    };
 </script>
 </body>
 </html>
