@@ -6,10 +6,8 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-MKNYQQW90W');
 </script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مخمرية دم الغزال | ليل</title>
@@ -39,6 +37,8 @@
         .size-btn, .pinky-btn { padding: 12px 20px; border: 1px solid rgba(255,255,255,0.4); background: none; border-radius: 25px; cursor: pointer; transition: 0.3s; font-size: 14px; color: white; }
         .pinky-btn { border-radius: 50px; padding: 12px 25px; }
         .active-size { background: white !important; color: black !important; border-color: white !important; }
+        
+        /* تصميم الزر الغير متوفر */
         .out-of-stock { opacity: 0.4; border-style: dashed; cursor: pointer; text-decoration: line-through; }
 
         .price-container { margin-bottom: 30px; display: flex; align-items: baseline; gap: 15px; }
@@ -83,7 +83,7 @@
         <span class="label">الحجم</span>
         <div class="size-selector">
             <button class="size-btn active-size" data-price="30" data-old="35" onclick="selectSize(this, '3 جرام', 0)">3 جرام</button>
-            <button class="size-btn" data-price="60" data-old="70" onclick="selectSize(this, '10 جرام', 0)">10 جرام</button>
+            <button class="size-btn out-of-stock" data-instock="false" data-price="60" data-old="70" onclick="selectSize(this, '10 جرام', 0)">10 جرام</button>
             <button class="pinky-btn" data-price="70" data-old="80" onclick="selectSize(this, '10 جرام Pinky Edition', 4)">10 جرام Pinky Edition</button>
             <button class="size-btn" data-price="135" data-old="150" onclick="selectSize(this, '35 جرام', 0)">35 جرام</button>
         </div>
@@ -126,36 +126,36 @@
         document.querySelectorAll('.size-selector button').forEach(b => b.classList.remove('active-size'));
         btn.classList.add('active-size');
 
-        // تحديث السعر الفردي والسعر القديم للحجم المختار فوراً
         currentUnitPrice = parseInt(btn.getAttribute('data-price')) || 0;
         currentOldPrice = parseInt(btn.getAttribute('data-old')) || 0;
 
-        if (typeof imgIndex !== 'undefined' && swiper) swiper.slideTo(imgIndex, 400, true);
+        if (typeof imgIndex !== 'undefined' && imgIndex !== -1 && swiper) {
+            swiper.slideTo(imgIndex, 400, true);
+        }
         
         const isAvailable = btn.getAttribute('data-instock') !== 'false';
         const addBtn = document.getElementById('add-btn');
         const qtyGroup = document.getElementById('qty-group');
 
         if (!isAvailable) {
-            // حالة نفاد الكمية: تعطيل الزر وإخفاء العداد وتحديث الأسعار
-            addBtn.innerText = "نفدت الكمية";
+            addBtn.innerText = "غير متوفر";
             addBtn.disabled = true;
             addBtn.style.opacity = '0.5';
             addBtn.style.cursor = 'not-allowed';
             addBtn.style.display = 'block';
             if (qtyGroup) qtyGroup.style.display = 'none';
 
-            // عرض سعر الحجم غير المتوفر بشكل صحيح
             document.getElementById('main-price').innerText = currentUnitPrice + " ج.م";
             const oldPriceEl = document.getElementById('old-price');
-            if (currentOldPrice > 0) {
-                oldPriceEl.innerText = currentOldPrice + " ج.م";
-                oldPriceEl.style.display = 'inline';
-            } else {
-                oldPriceEl.style.display = 'none';
+            if (oldPriceEl) {
+                if (currentOldPrice > 0) {
+                    oldPriceEl.innerText = currentOldPrice + " ج.م";
+                    oldPriceEl.style.display = 'inline';
+                } else {
+                    oldPriceEl.style.display = 'none';
+                }
             }
         } else {
-            // حالة التوفر: تفعيل الزر ومراجعة كمية الحجم في السلة
             addBtn.innerText = "أضف إلى السلة";
             addBtn.disabled = false;
             addBtn.style.opacity = '1';
@@ -168,19 +168,36 @@
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         const itemKey = currentProductName + " - " + currentSelectedSize;
         const q = cart[itemKey] ? (typeof cart[itemKey] === 'object' ? cart[itemKey].qty : cart[itemKey]) : 0;
-        document.getElementById('add-btn').style.display = q > 0 ? "none" : "block";
-        document.getElementById('qty-group').style.display = q > 0 ? "grid" : "none";
-        if(q > 0) document.getElementById('current-qty').innerText = q;
-        document.getElementById('main-price').innerText = (currentUnitPrice * (q || 1)) + " ج.م";
         
-        const oldPriceEl = document.getElementById('old-price');
-        if (currentOldPrice > 0) {
-            oldPriceEl.innerText = (currentOldPrice * (q || 1)) + " ج.م";
-            oldPriceEl.style.display = 'inline';
+        const activeBtn = document.querySelector('.size-btn.active-size') || document.querySelector('.pinky-btn.active-size');
+        const isAvailable = activeBtn ? activeBtn.getAttribute('data-instock') !== 'false' : true;
+
+        const addBtn = document.getElementById('add-btn');
+        const qtyGroup = document.getElementById('qty-group');
+
+        if (!isAvailable) return; // الـ selectSize بتعالجها أصلا
+
+        if (q > 0) {
+            addBtn.style.display = "none";
+            if (qtyGroup) qtyGroup.style.display = "grid";
+            document.getElementById('current-qty').innerText = q;
         } else {
-            oldPriceEl.style.display = 'none';
+            addBtn.style.display = "block";
+            if (qtyGroup) qtyGroup.style.display = "none";
         }
-        updateHeaderCart();
+        
+        document.getElementById('main-price').innerText = (currentUnitPrice * (q || 1)) + " ج.م";
+        const oldPriceEl = document.getElementById('old-price');
+        if (oldPriceEl) {
+            if (currentOldPrice > 0) {
+                oldPriceEl.innerText = (currentOldPrice * (q || 1)) + " ج.م";
+                oldPriceEl.style.display = 'inline';
+            } else {
+                oldPriceEl.style.display = 'none';
+            }
+        }
+        
+        if (typeof updateHeaderCart === 'function') updateHeaderCart();
     }
 
     function initAdd() { changeQty(1); }
@@ -191,37 +208,29 @@
         let activeImg = document.querySelector('.swiper-slide-active img')?.getAttribute('src') || document.querySelector('.image-section img')?.getAttribute('src') || "";
 
         if (!cart[itemKey]) {
-            cart[itemKey] = { 
-                qty: 0, 
-                price: currentUnitPrice, 
-                img: activeImg, 
-                displayName: currentProductName + " (" + currentSelectedSize + ")" 
-            };
+            cart[itemKey] = { qty: 0, price: currentUnitPrice, img: activeImg };
         }
         
         cart[itemKey].qty += amount;
-        
         if (cart[itemKey].qty <= 0) delete cart[itemKey];
         
         localStorage.setItem('leilCart', JSON.stringify(cart));
         checkCartState();
     }
 
-    function updateHeaderCart() {
-        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-        const countEl = document.getElementById('cart-count');
-        if(countEl) countEl.innerText = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
-    }
-    window.onload = checkCartState;
+    window.onload = () => {
+        const activeBtn = document.querySelector('.active-size');
+        if (activeBtn) {
+            selectSize(activeBtn, currentSelectedSize, -1);
+        }
+    };
 </script>
 
 <div id="footer-container"></div>
 <script>
     fetch('footer.html')
         .then(response => response.text())
-        .then(data => {
-            document.getElementById('footer-container').innerHTML = data;
-        });
+        .then(data => { document.getElementById('footer-container').innerHTML = data; });
 </script>
 </body>
 </html>
