@@ -12,7 +12,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض التوفير 1 | ليل</title>
+    <title>عرض الوايت فرايدي 1 | ليل</title>
     <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
     <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
     <link rel="icon" type="image/png" sizes="192x192" href="WebsiteIcon180px.png">
@@ -59,11 +59,11 @@
         .product-desc { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .product-desc p { line-height: 1.8; opacity: 0.8; font-size: 15px; white-space: pre-line; }
         @media (max-width: 480px) { header { padding: 10px 4%; } nav { gap: 15px; } nav a { font-size: 12px; display: flex; align-items: center; } .logo { font-size: 18px; } .product-wrapper { flex-direction: column; } }
-                #lipBalmToggle .dropdown-content {
-    right: auto !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-}
+        #lipBalmToggle .dropdown-content {
+            right: auto !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+        }
     </style>
 
     <script>
@@ -76,7 +76,7 @@
       ttq.page();
     }(window, document, 'ttq');
     </script>
-    </head>
+</head>
 <body>
 <header>
     <a href="index.html" class="logo">ليل</a>
@@ -118,20 +118,41 @@
     </div>
 </header>
 <div class="product-wrapper">
-    <div class="image-section"><div class="swiper"><div class="swiper-wrapper"><div class="swiper-slide"><img src="Offer50-IMG1.webp" alt="عرض دم الغزال"></div><div class="swiper-slide"><img src="Offer50-IMG2.webp" alt="عرض سراب"></div></div><div class="swiper-pagination"></div></div></div>
+    <div class="image-section">
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="offerwf1-1.webp" alt="عرض دم الغزال"></div>
+                <div class="swiper-slide"><img src="offerwf1-2.webp" alt="عرض سراب"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
     <div class="product-details">
-        <h1>عرض التوفير 1</h1>
-        <span class="slogan">(بادي سبلاش + مخمرية)</span>
+        <h1>عرض الوايت فرايدي 1</h1>
+        <span class="slogan">(2 بادي سبلاش + 2 مخمرية)</span>
         <span class="label">اختر نوع العرض</span>
         <div class="size-selector">
-            <button class="size-btn active-size" data-price="50" data-old="60" onclick="selectOffer(this, 'عرض دم الغزال', 0)">دم الغزال</button>
-            <button class="size-btn" data-price="50" data-old="60" onclick="selectOffer(this, 'عرض سراب', 1)">سراب</button>
+            <button class="size-btn active-size" data-price="80" data-old="120" onclick="selectOffer(this, 'عرض دم الغزال', 0)">دم الغزال</button>
+            <button class="size-btn" data-price="80" data-old="120" onclick="selectOffer(this, 'عرض سراب', 1)">سراب</button>
         </div>
         <span class="label">السعر الحالي (لفترة محدودة)</span>
-        <div class="price-container"><span class="price-tag" id="main-price">50 ج.م</span><span class="old-price-tag" id="old-price">60 ج.م</span></div>
-        <div class="cart-controls"><button class="add-to-cart-btn" id="add-btn" onclick="initAdd()">أضف إلى السلة</button><div class="quantity-btn-group" id="qty-group"><button class="q-btn" onclick="changeQty(1)">+</button><div class="q-val" id="current-qty">1</div><button class="q-btn" onclick="changeQty(-1)">-</button></div></div>
-        <div class="product-desc"><h3>محتويات العرض:</h3><p>1. بادي سبلاش (10 ملي) لرائحة منعشة تدوم.
-2. مخمرية (3 جرام) لنعومة حريرية وثبات فائق.</p></div>
+        <div class="price-container">
+            <span class="price-tag" id="main-price">80 ج.م</span>
+            <span class="old-price-tag" id="old-price">120 ج.م</span>
+        </div>
+        <div class="cart-controls">
+            <button class="add-to-cart-btn" id="add-btn" onclick="initAdd()">أضف إلى السلة</button>
+            <div class="quantity-btn-group" id="qty-group">
+                <button class="q-btn" onclick="changeQty(1)">+</button>
+                <div class="q-val" id="current-qty">1</div>
+                <button class="q-btn" onclick="changeQty(-1)">-</button>
+            </div>
+        </div>
+        <div class="product-desc">
+            <h3>محتويات العرض:</h3>
+            <p>2 بادي سبلاش (3 مل) لرائحة منعشة تدوم.
+2 مخمرية (3 جرام) لنعومة حريرية وثبات فائق.</p>
+        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -142,17 +163,20 @@
     setupDropdown('lipBalmToggle');
     document.addEventListener('click', function() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); });
     const swiper = new Swiper('.swiper', { loop: false, speed: 400, pagination: { el: '.swiper-pagination', clickable: true }, });
-    let currentProductName = "عرض التوفير 1"; let currentSelectedSize = "عرض دم الغزال"; let currentUnitPrice = 50; let currentOldPrice = 60;
-    let currentProductImage = "Offer50-IMG1.webp";
+    let currentProductName = "عرض الوايت فرايدي 1";
+    let currentSelectedSize = "عرض دم الغزال";
+    let currentUnitPrice = 80;
+    let currentOldPrice = 120;
+    let currentProductImage = "offerwf1-1.webp";
     
     function updateDisplayPrice(price, oldPrice) {
         document.getElementById('main-price').innerText = price + " ج.م";
         document.getElementById('old-price').innerText = oldPrice + " ج.م";
     }
 
-function selectOffer(btn, offerName, imgIndex) {
+    function selectOffer(btn, offerName, imgIndex) {
         currentSelectedSize = offerName;
-        currentProductImage = (imgIndex === 0) ? "Offer50-IMG1.webp" : "Offer50-IMG2.webp"; // السطر اللي ضفناه
+        currentProductImage = (imgIndex === 0) ? "offerwf1-1.webp" : "offerwf1-2.webp";
         document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active-size'));
         btn.classList.add('active-size');
         swiper.slideTo(imgIndex, 400, true);
@@ -181,23 +205,24 @@ function selectOffer(btn, offerName, imgIndex) {
     }
 
     function initAdd() { changeQty(1); }
-function changeQty(amount) {
-    let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
-    const itemKey = currentProductName + " - " + currentSelectedSize;
-    
-    // السطر ده هو الحماية: لو نسينا نحط الصورة مش هيعطل الزرار
-    let safeImg = (typeof currentProductImage !== 'undefined') ? currentProductImage : "";
 
-    if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
-    if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
-    
-    cart[itemKey].qty += amount;
-    
-    if (cart[itemKey].qty <= 0) delete cart[itemKey];
-    
-    localStorage.setItem('leilCart', JSON.stringify(cart));
-    checkCartState();
-}
+    function changeQty(amount) {
+        let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
+        const itemKey = currentProductName + " - " + currentSelectedSize;
+        
+        let safeImg = (typeof currentProductImage !== 'undefined') ? currentProductImage : "";
+
+        if (!cart[itemKey]) cart[itemKey] = { qty: 0, price: currentUnitPrice, img: safeImg };
+        if (typeof cart[itemKey] !== 'object') cart[itemKey] = { qty: cart[itemKey], price: currentUnitPrice, img: safeImg };
+        
+        cart[itemKey].qty += amount;
+        
+        if (cart[itemKey].qty <= 0) delete cart[itemKey];
+        
+        localStorage.setItem('leilCart', JSON.stringify(cart));
+        checkCartState();
+    }
+
     function updateHeaderCart() {
         let cart = JSON.parse(localStorage.getItem('leilCart') || '{}');
         let total = Object.values(cart).reduce((a, b) => a + (typeof b === 'object' ? b.qty : b), 0);
