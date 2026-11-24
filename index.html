@@ -12,7 +12,7 @@
 <meta property="og:url" content="https://leil.shop">
 <meta property="og:type" content="website">
 
-<!-- Google Analytics (Deferred to not block rendering) -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MKNYQQW90W"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -20,11 +20,11 @@
   gtag('js', new Date());
   gtag('config', 'G-MKNYQQW90W');
 </script>
-    
+
 <link rel="icon" type="image/png" sizes="32x32" href="WebsiteIcon32px.png">
 <link rel="apple-touch-icon" sizes="180x180" href="WebsiteIcon180px.png">
 
-<!-- 🚀 أسطر تسريع السرعة + إضافة خط Cairo للبوكس -->
+<!-- 🚀 أسطر تسريع السرعة + إضافة خط Cairo -->
 <link rel="preload" as="image" href="LogoonIMG.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,34 +44,30 @@
 
     .hero { height: 80vh; background: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.05)), url('LogoonIMG.webp'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; }
     .hero h1 { font-family: 'Noto Nastaliq Urdu', serif !important; font-size: clamp(70px, 18vw, 130px); text-shadow: 0px 4px 20px rgba(0,0,0,0.4); margin-bottom: 5px; }
-    .hero-btn { padding: 8px 25px; border: 1px solid rgba(255,255,255,0.5); background: transparent; color: white; text-decoration: none; font-weight: 700; border-radius: 2px; margin-bottom: 25px; transition: 0.3s; }
+    .hero-btn { padding: 8px 25px; border: 1px solid rgba(255,255,255,0.5); background: transparent; color: white; text-decoration: none; font-weight: 700; border-radius: 2px; margin-bottom: 30px; transition: 0.3s; }
     .hero-btn:hover { background: rgba(255,255,255,0.1); border-color: white; }
 
-    /* 🔥 تنسيق بوكس الخصم الجديد المبرمج بالـ CSS */
+    /* 🔥 تنسيق النص الجديد المبرمج بالـ CSS */
     .hero-discount-box {
         font-family: 'Cairo', sans-serif;
-        background: rgba(10, 10, 10, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        padding: 15px 30px;
-        border-radius: 4px;
         text-align: center;
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
+        margin-top: 15px; /* تنزيل الكلام لتحت */
     }
     .hero-discount-box .discount-title {
         font-family: 'Cairo', sans-serif;
         font-size: 32px;
         font-weight: 900;
-        color: white;
+        color: #ffffff;
         margin: 0 0 2px 0;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        text-shadow: 1px 2px 6px rgba(0,0,0,0.8); /* شادو أسود قوي وناعم */
     }
     .hero-discount-box .discount-code {
         font-family: 'Cairo', sans-serif;
         font-size: 22px;
         font-weight: 700;
-        color: rgba(255, 255, 255, 0.9);
+        color: #ffffff;
         margin: 0;
+        text-shadow: 1px 2px 6px rgba(0,0,0,0.8);
     }
     .hero-discount-box .discount-code span {
         font-family: Arial, sans-serif;
@@ -81,8 +77,9 @@
         font-family: 'Cairo', sans-serif;
         font-size: 16px;
         font-weight: 700;
-        color: rgba(255, 255, 255, 0.5);
+        color: #ffffff; /* تم تحويله للون الأبيض */
         margin: 8px 0 0 0;
+        text-shadow: 1px 2px 6px rgba(0,0,0,0.8);
     }
 
     .sub-title { text-align: center; padding-top: 60px; font-size: 28px; font-weight: 700; margin-bottom: 15px; }
@@ -117,10 +114,10 @@
     .btn-next { left: -30px; } 
     .hidden-btn { opacity: 0; pointer-events: none; }
 
-    /* تجاوب الموبايل للبوكس الجديد */
+    @media (max-width: 768px) { .carousel-btn { display: none; } .review-card { padding: 40px 20px; } .review-card p { font-size: 16px; line-height: 1.8;} }
     @media (max-width: 480px) { 
         .card-img { height: 320px; } .container { grid-template-columns: 1fr; } 
-        .hero-discount-box { padding: 12px 20px; }
+        .hero-discount-box { margin-top: 10px; }
         .hero-discount-box .discount-title { font-size: 24px; }
         .hero-discount-box .discount-code { font-size: 18px; }
         .hero-discount-box .discount-limit { font-size: 14px; }
@@ -136,7 +133,7 @@
         <h1>ليـل</h1>
         <a href="contact.html" class="hero-btn">تواصل معنا</a>
         
-        <!-- 🔥 بوكس الخصم المبرمج (نظيف، سريع، وجودة لا نهائية) -->
+        <!-- 🔥 النص المبرمج بدون بوكس مع الشادو -->
         <div class="hero-discount-box">
             <h2 class="discount-title">أحصل علي خصم 25%</h2>
             <p class="discount-code">كود الخصم: <span>LEIL25</span></p>
